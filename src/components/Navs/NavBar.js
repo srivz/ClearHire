@@ -12,7 +12,7 @@ class NavBar extends Component {
           bg="light"
           variant="light">
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <img
                 src={logo}
                 alt="Logo"
@@ -20,13 +20,13 @@ class NavBar extends Component {
             </Navbar.Brand>
             <Nav className="justify-content-end">
               <Nav.Item>
-                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="/">Home</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="link-2">How It Work</Nav.Link>
+                <Nav.Link href="/welcome-steps">How It Work</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="link-1">Support</Nav.Link>
+                <Nav.Link href="/search-results">Support</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Button

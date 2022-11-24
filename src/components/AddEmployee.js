@@ -3,6 +3,8 @@ import star_icon from "../assets/img/star-icon.svg";
 import image_icon from "../assets/img/image-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class AddEmployee extends Component {
   render() {
@@ -345,9 +347,14 @@ class AddEmployee extends Component {
                               </div>
                               <div class="row form-group">
                                 <div class="col-md-12 mt-4">
-                                  <button class="btn btn-success w-100">
-                                    Add Employee
-                                  </button>
+                                  <Link to="/employee-details">
+                                    <Button
+                                      block
+                                      variant="success"
+                                      class="w-100">
+                                      Add Employee
+                                    </Button>
+                                  </Link>
                                 </div>
                               </div>
                             </div>

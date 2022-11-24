@@ -13,7 +13,7 @@ class NavBar2 extends Component {
           bg="light"
           variant="light">
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <img
                 src={logo}
                 alt="Logo"

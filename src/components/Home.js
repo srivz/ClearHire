@@ -10,6 +10,7 @@ import "../assets/css/style.css";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   render() {
@@ -77,11 +78,13 @@ class Home extends Component {
                           <br />
                           <Row className="form-group">
                             <Col md={12}>
-                              <Button
-                                variant="success"
-                                className="btn btn-success mt-4 w-100">
-                                Login
-                              </Button>
+                              <Link to="/welcome">
+                                <Button
+                                  variant="success"
+                                  className="btn btn-success mt-4 w-100">
+                                  login
+                                </Button>
+                              </Link>
                             </Col>
                           </Row>
                         </form>

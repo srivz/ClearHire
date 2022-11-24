@@ -8,6 +8,7 @@ import person_add_icon from "../assets/img/person-add-icon.svg";
 import upload_pic from "../assets/img/upload-pic.jpg";
 import wishlist_icon from "../assets/img/wishlist-icon.svg";
 import rating_icon from "../assets/img/rating-icon.svg";
+import { Link } from "react-router-dom";
 
 class SearchResult extends Component {
   render() {
@@ -51,7 +52,7 @@ class SearchResult extends Component {
                       </div>
                     </div>
                     <div className="upload-emp-details">
-                      <a href="/">
+                      <Link to="/add-employee">
                         <span className="uploaddtls">
                           <Image
                             src={person_add_icon}
@@ -59,7 +60,7 @@ class SearchResult extends Component {
                           />
                           Upload Employee
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </Col>
