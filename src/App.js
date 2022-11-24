@@ -9,10 +9,6 @@ import WelcomeSteps from "./components/WelcomeSteps";
 import SearchResult from "./components/SearchResult";
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   render() {
     return (
       <Router>

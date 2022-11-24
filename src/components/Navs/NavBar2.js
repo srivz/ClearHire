@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Container, Form, Image, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/img/logo.svg";
 import upload_pic from "../../assets/img/upload-pic.jpg";
 
@@ -15,70 +14,80 @@ class NavBar2 extends Component {
           variant="light">
           <Container>
             <Navbar.Brand href="/">
-              <img
+              <Image
                 src={logo}
                 alt="Logo"
               />
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <div class="main-serach-wrap">
-                <Nav className="me-auto">
-                  <Form className="d-flex ul">
-                    <Nav.Item
-                      className="li"
-                      style={{ marginLeft: "50px" }}>
-                      <Form.Control
-                        style={{ width: "300px" }}
-                        size="md"
-                        type="search"
-                        placeholder="Employee Name Or Company"
-                        className="search-input"
-                        aria-label="Search"
-                      />
-                    </Nav.Item>
-                    <Nav.Item className="li">
-                      <Form.Select
-                        size="md"
-                        className="options"
-                        aria-label="Default select example">
-                        <option>Designation</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </Form.Select>
-                    </Nav.Item>
-                    <Nav.Item className="li">
-                      <Form.Select
-                        size="md"
-                        className="options"
-                        aria-label="Default select example">
-                        <option>Location</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </Form.Select>
-                    </Nav.Item>
-                    <Nav.Item className="li">
-                      <Link to="/search-results">
-                        <Button
-                          size="md"
-                          variant="success">
-                          Search
-                        </Button>
-                      </Link>
-                    </Nav.Item>
-                    <Nav.Item className="li">
-                      <div class="profile-pic">
-                        <img
-                          src={upload_pic}
-                          alt=""
-                        />
-                      </div>
-                    </Nav.Item>
-                  </Form>
-                </Nav>
-              </div>
+            <Navbar.Toggle aria-controls="navbarScroll" />
+            <Navbar.Collapse id="navbarScroll">
+              <Nav
+                className="me-auto justify-content-center"
+                navbarScroll
+                style={{
+                  marginLeft: "35px",
+                }}>
+                <Form className="d-flex">
+                  <Form.Control
+                    style={{
+                      width: "300px",
+                      marginTop: "7px",
+                    }}
+                    size="md"
+                    type="text"
+                    className="mb-2"
+                    placeholder="Employee Name Or Company"
+                    aria-label="Search"
+                  />
+                </Form>
+                <Form className="d-flex">
+                  <Form.Select
+                    size="md"
+                    style={{
+                      marginLeft: "5px",
+                      width: "150px",
+                      marginTop: "7px",
+                    }}
+                    className="mb-2 options"
+                    aria-label="Default select example">
+                    <option>Designation</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form>
+                <Form className="d-flex">
+                  <Form.Select
+                    size="md"
+                    style={{
+                      marginLeft: "5px",
+                      width: "150px",
+                      marginTop: "7px",
+                    }}
+                    className="mb-2 options"
+                    aria-label="Default select example">
+                    <option>Location</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </Form.Select>
+                </Form>
+                <Form className="d-flex">
+                  <Button
+                    style={{ marginLeft: "5px", marginTop: "7px" }}
+                    size="md"
+                    block
+                    className="mb-2"
+                    variant="success">
+                    Search
+                  </Button>
+                </Form>
+                <div
+                  className="profile-pic-nav"
+                  style={{ marginLeft: "15px" }}>
+                  <Image src={upload_pic} />
+                </div>
+              </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>

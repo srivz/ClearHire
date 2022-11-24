@@ -344,43 +344,10 @@ a:hover {
   -webkit-transform: scale(1.02) perspective(1000px);
   transform: scale(1.02) perspective(1000px);
 }
-.main-serach-wrap {
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  align-items: center;
-}
-.main-serach-wrap .ul {
-  list-style: none;
-  margin: 0px;
-  padding: 0;
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-}
-.main-serach-wrap .li {
-  display: inline-block;
-  margin-right: 10px;
-}
-.main-serach-wrap .ul .li:last-of-type {
-  margin-right: 0px;
-  margin-left: 10px;
-}
-.main-serach-wrap .profile-pic img {
+.profile-pic-nav img {
   width: 48px;
   height: 48px;
   border-radius: 30px;
-}
-.main-serach-wrap .search-input .form-control {
-  width: 300px;
-}
-.main-serach-wrap select {
-  box-shadow: 0px 0px 6px #00000029;
-  border: none;
-  width: 170px;
-}
-.main-serach-wrap .btn-success {
-  margin-left: 0px;
 }
 .search-result-wrap {
   margin: 100px 0 0;
