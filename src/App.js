@@ -18,7 +18,7 @@ class App extends Component {
       <Router>
         <Routes>
           <Route
-            path="/home"
+            path="/"
             element={<Home />}></Route>
           <Route
             path="/welcome"
