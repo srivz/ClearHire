@@ -10,8 +10,8 @@ class NavBar2 extends Component {
       <div>
         <Navbar
           fixed="top"
-          size="lg"
           bg="light"
+          expand="lg"
           variant="light">
           <Container>
             <Navbar.Brand href="/">
@@ -23,7 +23,7 @@ class NavBar2 extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <div class="main-serach-wrap">
-                <Nav className="me-auto ">
+                <Nav className="me-auto">
                   <Form className="d-flex ul">
                     <Nav.Item
                       className="li"
