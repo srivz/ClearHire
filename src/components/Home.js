@@ -10,7 +10,6 @@ import "../assets/css/style.css";
 import { Form } from "react-bootstrap";
 import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
-// import { Link } from "react-router-dom";
 
 class Home extends Component {
   render() {
