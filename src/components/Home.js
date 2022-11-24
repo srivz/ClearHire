@@ -7,7 +7,7 @@ import simple_work_icon from "../assets/img/simple-work-icon.svg";
 import youtube_searched_icon from "../assets/img/youtube-searched-icon.svg";
 import search_dollar_icon from "../assets/img/search-dollar-icon.svg";
 import "../assets/css/style.css";
-import { Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
 
@@ -18,153 +18,165 @@ class Home extends Component {
         <div>
           <NavBar />
         </div>
-        <div class="main">
-          <section class="home-login">
-            <div class="container-fluid">
-              <div class="row justify-content-center align-items-center">
-                <div class="col-md-6 pl-0">
-                  <div class="banner-img">
+        <div className="main">
+          <section className="home-login">
+            <div className="container-fluid">
+              <Row className="justify-content-center align-items-center">
+                <Col
+                  md={6}
+                  className="pl-0">
+                  <div className="banner-img">
                     <img
                       src={home_bg}
                       alt=""
-                      class="img-fluid"
+                      className="img-fluid"
                     />
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="row">
-                    <div class="col-md-3">&nbsp;</div>
-                    <div class="col-md-6">
-                      <div class="loginwrap">
-                        <div class="text-center">
-                          <h4 class="mb-5">Login to your account</h4>
+                </Col>
+                <Col md={6}>
+                  <Row>
+                    <Col md={3}>&nbsp;</Col>
+                    <Col md={6}>
+                      <div className="loginwrap">
+                        <div className="text-center">
+                          <h4 className="mb-5">Login to your account</h4>
                         </div>
                         <form action="">
-                          <div class="row form-group">
-                            <div class="col-md-12">
+                          <Row className="form-group">
+                            <Col md={12}>
                               <Form.Control
                                 type="text"
-                                class="form-control"
+                                className="form-control"
                                 placeholder="Email address"
                               />
-                            </div>
-                          </div>
+                            </Col>
+                          </Row>
                           <br />
-                          <div class="row form-group">
-                            <div class="col-md-12">
+                          <Row className="form-group">
+                            <Col md={12}>
                               <Form.Control
                                 type="password"
-                                class="form-control"
+                                className="form-control"
                                 placeholder="Password"
                               />
-                            </div>
-                          </div>
+                            </Col>
+                          </Row>
                           <br />
-                          <div class="row form-group">
-                            <div class="col-md-12">
-                              <p class="mt-2 forgot-label">
+                          <Row className="form-group">
+                            <Col md={12}>
+                              <p className="mt-2 forgot-label">
                                 Forgot password?
                                 <a
                                   href="/"
-                                  class="text-green">
+                                  className="text-green">
                                   <strong>click here</strong>
                                 </a>
                               </p>
-                            </div>
-                          </div>
+                            </Col>
+                          </Row>
                           <br />
-                          <div class="row form-group">
-                            <div class="col-md-12">
-                              <button class="btn btn-success mt-4 w-100">
+                          <Row className="form-group">
+                            <Col md={12}>
+                              <Button
+                                variant="success"
+                                className="btn btn-success mt-4 w-100">
                                 Login
-                              </button>
-                            </div>
-                          </div>
+                              </Button>
+                            </Col>
+                          </Row>
                         </form>
                       </div>
-                    </div>
-                    <div class="col-md-3">&nbsp;</div>
-                  </div>
-                </div>
-              </div>
+                    </Col>
+                    <Col md={3}>&nbsp;</Col>
+                  </Row>
+                </Col>
+              </Row>
             </div>
           </section>
-          <section class="gray-bg ourservice pt-pb-50">
-            <div class="container">
-              <div class="text-center">
-                <h3 class="section-main-title">
+          <section className="gray-bg ourservice pt-pb-50">
+            <Container>
+              <div className="text-center">
+                <h3 className="section-main-title">
                   Eprehenderit in voluptate velit esse cillum
                 </h3>
               </div>
-              <div class="row">
-                <div class="col-md-3 text-center">
-                  <div class="s-icon">
+              <Row>
+                <Col
+                  md={3}
+                  className="text-center">
+                  <div className="s-icon">
                     <img
                       src={search_icon}
                       alt=""
-                      class="mb-4"
+                      className="mb-4"
                     />
                   </div>
-                  <div class="s-title">
+                  <div className="s-title">
                     <h5>Voluptas sit aspernatu</h5>
                   </div>
-                </div>
-                <div class="col-md-3 text-center">
-                  <div class="s-icon">
+                </Col>
+                <Col
+                  md={3}
+                  className="text-center">
+                  <div className="s-icon">
                     <img
                       src={chat_icon}
                       alt=""
-                      class="mb-4"
+                      className="mb-4"
                     />
                   </div>
-                  <div class="s-title">
+                  <div className="s-title">
                     <h5>Voluptas sit aspernatu</h5>
                   </div>
-                </div>
-                <div class="col-md-3 text-center">
-                  <div class="s-icon">
+                </Col>
+                <Col
+                  md={3}
+                  className="text-center">
+                  <div className="s-icon">
                     <img
                       src={work_icon}
                       alt=""
-                      class="mb-4"
+                      className="mb-4"
                     />
                   </div>
-                  <div class="s-title">
+                  <div className="s-title">
                     <h5>Voluptas sit aspernatu</h5>
                   </div>
-                </div>
-                <div class="col-md-3 text-center">
-                  <div class="s-icon">
+                </Col>
+                <Col
+                  md={3}
+                  className="text-center">
+                  <div className="s-icon">
                     <img
                       src={simple_work_icon}
                       alt=""
-                      class="mb-4"
+                      className="mb-4"
                     />
                   </div>
-                  <div class="s-title">
+                  <div className="s-title">
                     <h5>Voluptas sit aspernatu</h5>
                   </div>
-                </div>
-              </div>
-            </div>
+                </Col>
+              </Row>
+            </Container>
           </section>
-          <section class="green-bg pt-pb-50 signup-green">
-            <div class="container">
-              <div class="row justify-content-center align-items-center mt-4">
-                <div class="col-md-2">
+          <section className="green-bg pt-pb-50 signup-green">
+            <Container>
+              <Row className="justify-content-center align-items-center mt-4">
+                <Col md={2}>
                   <img
                     src={youtube_searched_icon}
                     alt=""
                     width="180"
                   />
-                </div>
-                <div class="col-md-8">
-                  <div class="text-center">
-                    <h3 class="section-main-title mt-5">
+                </Col>
+                <Col md={8}>
+                  <div className="text-center">
+                    <h3 className="section-main-title mt-5">
                       Eprehenderit in voluptate velit esse cillum
                     </h3>
                   </div>
-                  <div class="text-center">
+                  <div className="text-center">
                     <p>
                       Nemo enim ipsam voluptatem quia voluptas sit aspernatur
                       aut odit aut fugit, sed quia
@@ -172,20 +184,22 @@ class Home extends Component {
                       consequuntur magni dolores eos qui ratione voluptatem
                       sequ.
                     </p>
-                    <button class="btn btn-default w-50 mt-4 mb-4">
+                    <Button
+                      variant="light"
+                      className="w-50 mt-4 mb-4">
                       Sign up
-                    </button>
+                    </Button>
                   </div>
-                </div>
-                <div class="col-md-2">
+                </Col>
+                <div className="col-md-2">
                   <img
                     src={search_dollar_icon}
                     alt=""
                     width="180"
                   />
                 </div>
-              </div>
-            </div>
+              </Row>
+            </Container>
           </section>
         </div>
         <Footer />
