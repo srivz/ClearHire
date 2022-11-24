@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.svg";
 import upload_pic from "../../assets/img/upload-pic.jpg";
 
@@ -59,11 +60,13 @@ class NavBar2 extends Component {
                       </Form.Select>
                     </Nav.Item>
                     <Nav.Item className="li">
-                      <Button
-                        size="md"
-                        variant="success">
-                        Search
-                      </Button>
+                      <Link to="/search-results">
+                        <Button
+                          size="md"
+                          variant="success">
+                          Search
+                        </Button>
+                      </Link>
                     </Nav.Item>
                     <Nav.Item className="li">
                       <div class="profile-pic">
