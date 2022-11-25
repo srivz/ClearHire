@@ -14,7 +14,7 @@ import { database, auth } from "../firebase-config.js";
 import { collection, onSnapshot } from "firebase/firestore";
 
 export default function SearchResult() {
-  const [user, setUser] = useState(1);
+  // const [user, setUser] = useState(1);
   const [infos, setInfos] = useState([]);
   console.log(infos);
   useEffect(

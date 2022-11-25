@@ -6,8 +6,8 @@ import previous_icon from "../assets/img/previous-icon.svg";
 import image_icon from "../assets/img/image-icon.svg";
 import NavBar from "./Navs/NavBar";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
-import { storage, database, auth, fire } from "../firebase-config.js";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { storage, database, auth } from "../firebase-config.js";
+import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
