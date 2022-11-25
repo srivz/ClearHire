@@ -70,7 +70,7 @@ export default function SearchResult() {
                     </div>
                   ))}
                   <div className="upload-emp-details">
-                    <Link to="/add-employee">
+                    <Link to="/addEmployee">
                       <span className="uploaddtls">
                         <Image
                           src={person_add_icon}
