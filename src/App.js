@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import Welcome from "./components/Welcome";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 import AddEmployee from "./components/AddEmployee";
 import EmployeeDetails from "./components/EmployeeDetails";
-import WelcomeSteps from "./components/WelcomeSteps";
+import SignUpWithEmail from "./components/SignUpWithEmail";
 import SearchResult from "./components/SearchResult";
 
 class App extends Component {
@@ -15,21 +15,21 @@ class App extends Component {
         <Routes>
           <Route
             path="/"
-            element={<Home />}></Route>
+            element={<Login />}></Route>
           <Route
-            path="/welcome"
-            element={<Welcome />}></Route>
+            path="/signUp"
+            element={<SignUp />}></Route>
           <Route
-            path="/welcome-steps"
-            element={<WelcomeSteps />}></Route>
+            path="/signUp/email"
+            element={<SignUpWithEmail />}></Route>
           <Route
-            path="/search-results"
+            path="/searchResults"
             element={<SearchResult />}></Route>
           <Route
-            path="/add-employee"
+            path="/addEmployee"
             element={<AddEmployee />}></Route>
           <Route
-            path="/employee-details"
+            path="/employeeDetails"
             element={<EmployeeDetails />}></Route>
         </Routes>
       </Router>

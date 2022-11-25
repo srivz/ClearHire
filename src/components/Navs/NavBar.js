@@ -12,7 +12,7 @@ class NavBar extends Component {
           expand="lg"
           variant="light">
           <Container>
-            <Navbar.Brand href="/">
+            <Navbar.Brand href="#">
               <Image
                 src={logo}
                 alt="Logo"
@@ -23,13 +23,12 @@ class NavBar extends Component {
               className="justify-content-end"
               id="basic-navbar-nav">
               <Nav>
-                <Nav.Link href="/welcome">Home</Nav.Link>
-                <Nav.Link href="/welcome-steps">How It Work</Nav.Link>
-                <Nav.Link href="/search-results">Support</Nav.Link>
+                <Nav.Link href="#">Home</Nav.Link>
+                <Nav.Link href="#">How It Work</Nav.Link>
+                <Nav.Link href="#">Support</Nav.Link>
                 <Button
-                  href="#"
-                  variant="success"
-                  size="md">
+                  href="/signUp"
+                  variant="success">
                   SignUp
                 </Button>
               </Nav>

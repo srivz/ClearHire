@@ -4,8 +4,9 @@ import Footer from "./Footer/Footer";
 import NavBar from "./Navs/NavBar";
 import linkedin_icon from "../assets/img/linkedin-icon.svg";
 import mail_outline_icon from "../assets/img/mail-outline-icon.svg";
+import { Link } from "react-router-dom";
 
-class Welcome extends Component {
+class SignUp extends Component {
   render() {
     return (
       <div>
@@ -22,8 +23,8 @@ class Welcome extends Component {
                       className="text-center">
                       <div className="loginwrap">
                         <h3 className="section-main-title mb-3">
-                          Welcome to{" "}
-                          <span className="text-green">clearhire</span>
+                          Welcome to
+                          <span className="text-green"> clearhire</span>
                         </h3>
                         <p className="mb-5">
                           clearhire helps you find that best employee
@@ -40,15 +41,17 @@ class Welcome extends Component {
                             />
                             CONTINUE WITH LINKEDIN
                           </Button>
-                          <Button
-                            variant="light"
-                            className="btn btn-default-outline">
-                            <Image
-                              src={mail_outline_icon}
-                              alt=""
-                            />
-                            CONTINUE WITH E-MAIL
-                          </Button>
+                          <Link to="/signUp/email">
+                            <Button
+                              variant="light"
+                              className="btn btn-default-outline">
+                              <Image
+                                src={mail_outline_icon}
+                                alt=""
+                              />
+                              CONTINUE WITH E-MAIL
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     </Col>
@@ -65,4 +68,4 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+export default SignUp;
