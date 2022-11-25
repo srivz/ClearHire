@@ -9,8 +9,11 @@ import upload_pic from "../assets/img/upload-pic.jpg";
 import rating_icon from "../assets/img/rating-icon.svg";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import { onAuthStateChanged } from "firebase/auth";
-import { database, auth } from "../firebase-config.js";
+// import { onAuthStateChanged } from "firebase/auth";
+import {
+  database,
+  // auth
+} from "../firebase-config.js";
 import { collection, onSnapshot } from "firebase/firestore";
 
 export default function SearchResult() {
@@ -25,9 +28,9 @@ export default function SearchResult() {
     []
   );
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  // onAuthStateChanged(auth, (currentUser) => {
+  //   setUser(currentUser);
+  // });
   return (
     <div>
       <NavBar2 />
