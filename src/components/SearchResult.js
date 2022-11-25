@@ -1,31 +1,48 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
 import NavBar2 from "./Navs/NavBar2";
-import c_logo from "../assets/img/clogo-1.png";
 import external_link_icon from "../assets/img/external-link-icon.svg";
 import person_add_icon from "../assets/img/person-add-icon.svg";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import upload_pic from "../assets/img/upload-pic.jpg";
-import wishlist_icon from "../assets/img/wishlist-icon.svg";
 import rating_icon from "../assets/img/rating-icon.svg";
 import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { onAuthStateChanged } from "firebase/auth";
+import { database, auth } from "../firebase-config.js";
+import { collection, onSnapshot } from "firebase/firestore";
 
-class SearchResult extends Component {
-  render() {
-    return (
-      <div>
-        <NavBar2 />
-        <main id="main">
-          <section className="search-result-wrap">
-            <Container>
-              <Row>
-                <Col md={3}>
-                  <div className="result-left-wrap">
+export default function SearchResult() {
+  const [user, setUser] = useState(1);
+  const [infos, setInfos] = useState([]);
+  console.log(infos);
+  useEffect(
+    () =>
+      onSnapshot(collection(database, "users"), (snapshot) => {
+        setInfos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }),
+    []
+  );
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+  return (
+    <div>
+      <NavBar2 />
+      <main id="main">
+        <section className="search-result-wrap">
+          <Container>
+            <Row>
+              <Col md={3}>
+                <div className="result-left-wrap">
+                  {infos.map((info) => (
                     <div className="company-details">
                       <div className="company-info">
                         <div className="c-logo">
                           <Image
-                            src={c_logo}
+                            src={info.profileImage}
                             alt=""
                           />
                         </div>
@@ -36,13 +53,13 @@ class SearchResult extends Component {
                         </div>
                       </div>
                       <div className="cmpny-other-dtls">
-                        <h4>Brand Moustache</h4>
-                        <p>Since 2013</p>
+                        <h4>{info.name}</h4>
+                        <p>Since {info.yearStarted}</p>
                         <p>
                           <a
-                            href="/"
+                            href={info.website}
                             style={{ color: "#4B9CBB" }}>
-                            www.brandmoustache.com
+                            {info.website}
                             <Image
                               src={external_link_icon}
                               alt=""
@@ -51,25 +68,136 @@ class SearchResult extends Component {
                         </p>
                       </div>
                     </div>
-                    <div className="upload-emp-details">
-                      <Link to="/add-employee">
-                        <span className="uploaddtls">
-                          <Image
-                            src={person_add_icon}
-                            alt=""
-                          />
-                          Upload Employee
-                        </span>
-                      </Link>
-                    </div>
+                  ))}
+                  <div className="upload-emp-details">
+                    <Link to="/add-employee">
+                      <span className="uploaddtls">
+                        <Image
+                          src={person_add_icon}
+                          alt=""
+                        />
+                        Upload Employee
+                      </span>
+                    </Link>
                   </div>
-                </Col>
-                <Col md={9}>
-                  <br />
-                  <Row className="result-right-wrap">
+                </div>
+              </Col>
+              <Col md={9}>
+                <br />
+                <Row className="result-right-wrap">
+                  <Col md={12}>
+                    <div className="section-title">
+                      <h2>Find from the recommendations.</h2>
+                    </div>
+                    <div className="tagline-text">
+                      <h5>
+                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur
+                        aut odit aut fugit.
+                      </h5>
+                    </div>
+                  </Col>
+                </Row>
+                {/* ONE MODAL EXAMPLE
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  STARTS HERE                  */}
+                <div className="searchlist-details-main">
+                  <Row>
+                    <Col md={6}>
+                      <div className="serach-list">
+                        <Row>
+                          <Col md={3}>
+                            <div className="userprofile">
+                              <Image
+                                src={upload_pic}
+                                alt=""
+                                width="60"
+                              />
+                            </div>
+                          </Col>
+                          <Col md={9}>
+                            <div className="pl-3">
+                              <div className="wishlist">
+                                <IconButton
+                                  aria-label="delete"
+                                  size="small">
+                                  <FavoriteRoundedIcon />
+                                </IconButton>
+                              </div>
+                              <h4 className="username">Vamshi</h4>
+                              <div className="user-role">Graphic Designer</div>
+                              <p className="comments">Dot it agency</p>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col md={4}>
+                            <small>Total Experience</small>
+                            <div className="title-3">06 years</div>
+                          </Col>
+                          <Col md={4}>
+                            <small>Current Comapny</small>
+                            <div className="title-3">02 years</div>
+                          </Col>
+                          <Col md={4}>
+                            <small>Salary</small>
+                            <div className="title-3">5.4 LPA</div>
+                          </Col>
+                        </Row>
+                        <Row className="mt-4">
+                          <Col md={6}>
+                            <div className="rating">
+                              <Image
+                                src={rating_icon}
+                                alt=""
+                              />
+                            </div>
+                          </Col>
+                          <Col md={6}>
+                            <div className="text-right">
+                              <Button variant="success">View</Button>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  {/* ONE MODAL EXAMPLE
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  ENDS HERE                      */}
+
+                  <Row>
+                    <Col md={12}>
+                      <div className="seemore">
+                        <a href="/">See more recomendations</a>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                <div className="result-right-wrap mt-4">
+                  <Row>
                     <Col md={12}>
                       <div className="section-title">
-                        <h2>Find from the recommendations.</h2>
+                        <h2>Saved Profiles</h2>
                       </div>
                       <div className="tagline-text">
                         <h5>
@@ -96,10 +224,13 @@ class SearchResult extends Component {
                             <Col md={9}>
                               <div className="pl-3">
                                 <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
+                                  <IconButton
+                                    color="success"
+                                    aria-label="wishlist"
+                                    size="small">
+                                    <FavoriteRoundedIcon />
+                                    {/* <WishListIcon fontSize="small" /> */}
+                                  </IconButton>
                                 </div>
                                 <h4 className="username">Vamshi</h4>
                                 <div className="user-role">
@@ -123,7 +254,7 @@ class SearchResult extends Component {
                               <div className="title-3">5.4 LPA</div>
                             </Col>
                           </Row>
-                          <Row className="mt-4">
+                          <div className="row mt-4">
                             <Col md={6}>
                               <div className="rating">
                                 <Image
@@ -137,308 +268,7 @@ class SearchResult extends Component {
                                 <Button variant="success">View</Button>
                               </div>
                             </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                      <Col md={6}>
-                        <div className="serach-list">
-                          <Row>
-                            <Col md={3}>
-                              <div className="userprofile">
-                                <Image
-                                  src={upload_pic}
-                                  alt=""
-                                  width="60"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={9}>
-                              <div className="pl-3">
-                                <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
-                                </div>
-                                <h4 className="username">Vamshi</h4>
-                                <div className="user-role">
-                                  Graphic Designer
-                                </div>
-                                <p className="comments">Dot it agency</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col md={4}>
-                              <small>Total Experience</small>
-                              <div className="title-3">06 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Current Comapny</small>
-                              <div className="title-3">02 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Salary</small>
-                              <div className="title-3">5.4 LPA</div>
-                            </Col>
-                          </Row>
-                          <Row className="mt-4">
-                            <Col md={6}>
-                              <div className="rating">
-                                <Image
-                                  src={rating_icon}
-                                  alt=""
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="text-right">
-                                <Button variant="success">View</Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col md={6}>
-                        <div className="serach-list">
-                          <Row>
-                            <Col md={3}>
-                              <div className="userprofile">
-                                <Image
-                                  src={upload_pic}
-                                  alt=""
-                                  width="60"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={9}>
-                              <div className="pl-3">
-                                <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
-                                </div>
-                                <h4 className="username">Vamshi</h4>
-                                <div className="user-role">
-                                  Graphic Designer
-                                </div>
-                                <p className="comments">Dot it agency</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col md={4}>
-                              <small>Total Experience</small>
-                              <div className="title-3">06 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Current Comapny</small>
-                              <div className="title-3">02 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Salary</small>
-                              <div className="title-3">5.4 LPA</div>
-                            </Col>
-                          </Row>
-                          <Row className="mt-4">
-                            <Col md={6}>
-                              <div className="rating">
-                                <Image
-                                  src={rating_icon}
-                                  alt=""
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="text-right">
-                                <Button variant="success">View</Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                      <Col md={6}>
-                        <div className="serach-list">
-                          <Row>
-                            <Col md={3}>
-                              <div className="userprofile">
-                                <Image
-                                  src={upload_pic}
-                                  alt=""
-                                  width="60"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={9}>
-                              <div className="pl-3">
-                                <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
-                                </div>
-                                <h4 className="username">Vamshi</h4>
-                                <div className="user-role">
-                                  Graphic Designer
-                                </div>
-                                <p className="comments">Dot it agency</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col md={4}>
-                              <small>Total Experience</small>
-                              <div className="title-3">06 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Current Comapny</small>
-                              <div className="title-3">02 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Salary</small>
-                              <div className="title-3">5.4 LPA</div>
-                            </Col>
-                          </Row>
-                          <Row className="mt-4">
-                            <Col md={6}>
-                              <div className="rating">
-                                <Image
-                                  src={rating_icon}
-                                  alt=""
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="text-right">
-                                <Button variant="success">View</Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col md={6}>
-                        <div className="serach-list">
-                          <Row>
-                            <Col md={3}>
-                              <div className="userprofile">
-                                <Image
-                                  src={upload_pic}
-                                  alt=""
-                                  width="60"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={9}>
-                              <div className="pl-3">
-                                <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
-                                </div>
-                                <h4 className="username">Vamshi</h4>
-                                <div className="user-role">
-                                  Graphic Designer
-                                </div>
-                                <p className="comments">Dot it agency</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col md={4}>
-                              <small>Total Experience</small>
-                              <div className="title-3">06 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Current Comapny</small>
-                              <div className="title-3">02 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Salary</small>
-                              <div className="title-3">5.4 LPA</div>
-                            </Col>
-                          </Row>
-                          <Row className="mt-4">
-                            <Col md={6}>
-                              <div className="rating">
-                                <Image
-                                  src={rating_icon}
-                                  alt=""
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="text-right">
-                                <Button variant="success">View</Button>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Col>
-                      <Col md={6}>
-                        <div className="serach-list">
-                          <Row>
-                            <Col md={3}>
-                              <div className="userprofile">
-                                <Image
-                                  src={upload_pic}
-                                  alt=""
-                                  width="60"
-                                />
-                              </div>
-                            </Col>
-                            <Col md={9}>
-                              <div className="pl-3">
-                                <div className="wishlist">
-                                  <Image
-                                    src={wishlist_icon}
-                                    alt=""
-                                  />
-                                </div>
-                                <h4 className="username">Vamshi</h4>
-                                <div className="user-role">
-                                  Graphic Designer
-                                </div>
-                                <p className="comments">Dot it agency</p>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col md={4}>
-                              <small>Total Experience</small>
-                              <div className="title-3">06 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Current Comapny</small>
-                              <div className="title-3">02 years</div>
-                            </Col>
-                            <Col md={4}>
-                              <small>Salary</small>
-                              <div className="title-3">5.4 LPA</div>
-                            </Col>
-                          </Row>
-                          <Row className="mt-4">
-                            <Col md={6}>
-                              <div className="rating">
-                                <Image
-                                  src={rating_icon}
-                                  alt=""
-                                />
-                              </div>
-                            </Col>
-                            <Col md={6}>
-                              <div className="text-right">
-                                <Button variant="success">View</Button>
-                              </div>
-                            </Col>
-                          </Row>
+                          </div>
                         </div>
                       </Col>
                     </Row>
@@ -450,402 +280,13 @@ class SearchResult extends Component {
                       </Col>
                     </Row>
                   </div>
-
-                  <div className="result-right-wrap mt-4">
-                    <Row>
-                      <Col md={12}>
-                        <div className="section-title">
-                          <h2>Saved Profiles</h2>
-                        </div>
-                        <div className="tagline-text">
-                          <h5>
-                            Nemo enim ipsam voluptatem quia voluptas sit
-                            aspernatur aut odit aut fugit.
-                          </h5>
-                        </div>
-                      </Col>
-                    </Row>
-                    <div className="searchlist-details-main">
-                      <Row>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <div className="row mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <div className="row mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <Row className="mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <div className="row mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
-
-                      <Row>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <div className="row mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <Image
-                                      src={wishlist_icon}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <h4 className="username">Vamshi</h4>
-                                  <div className="user-role">
-                                    Graphic Designer
-                                  </div>
-                                  <p className="comments">Dot it agency</p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">5.4 LPA</div>
-                              </Col>
-                            </Row>
-                            <Row className="mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <Image
-                                    src={rating_icon}
-                                    alt=""
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Button variant="success">View</Button>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={12}>
-                          <div className="seemore">
-                            <a href="/">See more recomendations</a>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
 }
-
-export default SearchResult;

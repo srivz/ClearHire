@@ -165,38 +165,34 @@ a:hover {
   transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 }
 #checkout-progress.step-2:after {
-  -webkit-transform: scaleX(0.333) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.1) translateY(-50%) perspective(1000px);
   transform: scaleX(0.1) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-3:after {
-  -webkit-transform: scaleX(0.666) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.25) translateY(-50%) perspective(1000px);
   transform: scaleX(0.25) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-4:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.35) translateY(-50%) perspective(1000px);
   transform: scaleX(0.35) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-5:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
-  transform: scaleX(0.45) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.5) translateY(-50%) perspective(1000px);
+  transform: scaleX(0.5) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-6:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
-  transform: scaleX(0.55) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.6) translateY(-50%) perspective(1000px);
+  transform: scaleX(0.6) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-7:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
-  transform: scaleX(0.65) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.75) translateY(-50%) perspective(1000px);
+  transform: scaleX(0.75) translateY(-50%) perspective(1000px);
 }
 #checkout-progress.step-8:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
-  transform: scaleX(0.8) translateY(-50%) perspective(1000px);
-}
-#checkout-progress.step-9:after {
-  -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
+  -webkit-transform: scaleX(0.9) translateY(-50%) perspective(1000px);
   transform: scaleX(0.9) translateY(-50%) perspective(1000px);
 }
-#checkout-progress.step-10:after {
+#checkout-progress.step-9:after {
   -webkit-transform: scaleX(1) translateY(-50%) perspective(1000px);
   transform: scaleX(1) translateY(-50%) perspective(1000px);
 }
@@ -471,10 +467,16 @@ a:hover {
 }
 .wishlist {
   float: right;
+  border-radius: 50%;
+  width: 24px;
 }
+
 .wishlist img {
+  position: relative;
+  right: 15px;
   width: 28px;
 }
+
 .serach-list small {
   font-size: 75%;
 }
