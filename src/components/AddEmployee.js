@@ -1,54 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import image_icon from "../assets/img/image-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
-import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import StarRateIcon from "@mui/icons-material/StarRate";
-import { storage, database } from "../firebase-config.js";
-import { doc, setDoc } from "firebase/firestore";
+import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
+import { storage, database, auth } from "../firebase-config.js";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { IconButton } from "@mui/material";
+import { RatingStar } from "rating-star";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
     name: "",
     employeeImage: "",
+    dateOfBirth: "",
     dateJoined: "",
-    yourDesignation: "",
+    designation: "",
     linkedIn: "",
     salary: "",
     recommendationFrom: "",
-    designation: "",
+    recommenderDesignation: "",
     recommendationMessage: "",
-    communication: "",
-    attitude: "",
-    abilityToLearn: "",
-    punctuality: "",
-    commitment: "",
-    trustworthiness: "",
-    skill: "",
-    teamPlayer: "",
+    communication: 1,
+    attitude: 1,
+    abilityToLearn: 1,
+    punctuality: 1,
+    commitment: 1,
+    trustworthiness: 1,
+    skill: 1,
+    teamPlayer: 1,
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+  const [infos, setInfos] = useState([]);
 
+  const userId = localStorage.getItem("userId");
+  useEffect(
+    () =>
+      onSnapshot(collection(database, "users"), (snapshot) => {
+        setInfos(
+          snapshot.docs
+            .filter((info) => info.id === userId)
+            .map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      }),
+    [userId]
+  );
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setEmployee({ ...employee, ...newInput });
-    console.log(employee);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     registerEmployee();
   };
 
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+    }
+  });
   function handleFileChange(event) {
     if (event.target.files[0]) {
       setFile(event.target.files[0]);
     }
   }
   function handleUpload() {
-    const imageRef = ref(storage, `/profileImages/${file.name}`);
+    const imageRef = ref(storage, `/employeeImages/${file.name}`);
     uploadBytes(imageRef, file)
       .then(() => {
         getDownloadURL(imageRef)
@@ -65,14 +81,72 @@ export default function AddEmployee() {
       });
   }
   const registerEmployee = async () => {
-    await setDoc(doc(database, "employees", ""), employee)
+    const docData = {
+      name: employee.name,
+      employeeImage: employee.employeeImage,
+      dateOfBirth: employee.dateOfBirth,
+      dateJoined: employee.dateJoined,
+      designation: employee.designation,
+      linkedIn: employee.linkedIn,
+      salary: employee.salary,
+      recommendation: {
+        recommendationFrom: employee.recommendationFrom,
+        recommenderDesignation: employee.recommenderDesignation,
+        recommendationMessage: employee.recommendationMessage,
+      },
+      rating: {
+        communication: employee.communication,
+        attitude: employee.attitude,
+        abilityToLearn: employee.abilityToLearn,
+        punctuality: employee.punctuality,
+        commitment: employee.commitment,
+        trustworthiness: employee.trustworthiness,
+        skill: employee.skill,
+        teamPlayer: employee.teamPlayer,
+      },
+    };
+    await addDoc(
+      collection(database, "companies", infos[0].companyName, "employees"),
+      docData
+    )
       .then(() => {
-        console.log("Data Added " + employee);
         window.location.href = "/searchResults";
       })
       .catch((err) => {
         console.log(err.message + " " + employee);
       });
+  };
+  const onCommunicationRatingChange = (score) => {
+    let newInput = { communication: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onAttitudeRatingChange = (score) => {
+    let newInput = { attitude: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onAbilityToLearnRatingChange = (score) => {
+    let newInput = { abilityToLearn: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onPunctualityRatingChange = (score) => {
+    let newInput = { punctuality: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onCommitmentRatingChange = (score) => {
+    let newInput = { commitment: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onTrustworthinessRatingChange = (score) => {
+    let newInput = { trustworthiness: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onSkillRatingChange = (score) => {
+    let newInput = { skill: score };
+    setEmployee({ ...employee, ...newInput });
+  };
+  const onTeamPlayerRatingChange = (score) => {
+    let newInput = { teamPlayer: score };
+    setEmployee({ ...employee, ...newInput });
   };
   return (
     <div>
@@ -90,10 +164,11 @@ export default function AddEmployee() {
                         className="text-left ml-auto mr-auto">
                         <div
                           className="addemp-emp"
-                          style={{ "margin-top": "150px" }}>
+                          style={{ marginTop: "150px" }}>
                           <div className="text-center">
                             <h3 className="section-main-title mb-3">
                               Add new emloyee
+                              {/* {user.email} */}
                             </h3>
                             <p className="mb-4">
                               Nemo enim ipsam voluptatem quia voluptas sit
@@ -119,17 +194,32 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <div className="input-group">
-                                    <Form.Control
-                                      type="text"
-                                      required
-                                      name="name"
-                                      placeholder="Employee Name"
-                                      defaultValue={employee.name}
-                                      onChange={handleChange}
-                                    />
-                                    <Form.Text className="text-muted"></Form.Text>
-                                  </div>
+                                  <Form.Label>Employee Name*</Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    required
+                                    name="name"
+                                    placeholder="Employee Name"
+                                    defaultValue={employee.name}
+                                    onChange={handleChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Label>Date Of Birth*</Form.Label>
+                                  <Form.Control
+                                    type="date"
+                                    required
+                                    name="dateOfBirth"
+                                    defaultValue={employee.dateOfBirth}
+                                    onChange={handleChange}
+                                  />
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -138,27 +228,36 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <div className="input-group">
-                                    <Form.Control
-                                      type="date"
-                                      required
-                                      name="dateJoined"
-                                      defaultValue={employee.dateJoined}
-                                      onChange={handleChange}
-                                    />
-                                    <Form.Text className="text-muted"></Form.Text>
-                                  </div>
+                                  <Form.Label>Date Of Joining*</Form.Label>
+                                  <Form.Control
+                                    type="date"
+                                    required
+                                    name="dateJoined"
+                                    defaultValue={employee.dateJoined}
+                                    onChange={handleChange}
+                                  />
                                 </Form.Group>
                               </Col>
                             </Row>
                             <Row className="form-group">
                               <Col md={12}>
-                                <select
-                                  name=""
-                                  id=""
-                                  className="form-control">
-                                  <option value="">Designation*</option>
-                                </select>
+                                <Form.Group className="mb-3">
+                                  <Form.Label>Designation*</Form.Label>
+                                  <Form.Select
+                                    required
+                                    name="designation"
+                                    className="form-control"
+                                    aria-label="Default select example"
+                                    defaultValue={employee.designation}
+                                    onChange={handleChange}>
+                                    <option value=""></option>
+                                    <option value="Developer">Developer</option>
+                                    <option value="Sr. Developer">
+                                      Sr. Developer
+                                    </option>
+                                    <option value="Tester">Tester</option>
+                                  </Form.Select>
+                                </Form.Group>
                               </Col>
                             </Row>
                             <Row className="form-group">
@@ -166,6 +265,7 @@ export default function AddEmployee() {
                                 <Form.Group
                                   controlId="formFile"
                                   className="mb-3">
+                                  <Form.Label>Employee Photo*</Form.Label>
                                   <Row>
                                     <Col sm={9}>
                                       <Form.Control
@@ -177,7 +277,6 @@ export default function AddEmployee() {
                                     </Col>
                                     <Col sm={3}>
                                       <Button
-                                        type="submit"
                                         className="mb-2"
                                         onClick={handleUpload}>
                                         Upload
@@ -192,17 +291,16 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <div className="input-group">
-                                    <Form.Control
-                                      type="text"
-                                      required
-                                      name="linkedIn"
-                                      placeholder="LinkedIn url"
-                                      defaultValue={employee.linkedIn}
-                                      onChange={handleChange}
-                                    />
-                                    <Form.Text className="text-muted"></Form.Text>
-                                  </div>
+                                  <Form.Label>LinkedIn url*</Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    required
+                                    name="linkedIn"
+                                    placeholder="LinkedIn url"
+                                    defaultValue={employee.linkedIn}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -211,17 +309,16 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <div className="input-group">
-                                    <Form.Control
-                                      type="text"
-                                      required
-                                      name="salary"
-                                      placeholder="Salary"
-                                      defaultValue={employee.salary}
-                                      onChange={handleChange}
-                                    />
-                                    <Form.Text className="text-muted"></Form.Text>
-                                  </div>
+                                  <Form.Label>Salary*</Form.Label>
+                                  <Form.Control
+                                    type="number"
+                                    required
+                                    name="salary"
+                                    placeholder="Salary"
+                                    defaultValue={employee.salary}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -238,20 +335,18 @@ export default function AddEmployee() {
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicName">
-                                        <div className="input-group">
-                                          <Form.Control
-                                            type="text"
-                                            required
-                                            className="form-control"
-                                            name="recommendationFrom"
-                                            placeholder="Recommendation from (Name)"
-                                            defaultValue={
-                                              employee.recommendationFrom
-                                            }
-                                            onChange={handleChange}
-                                          />
-                                          <Form.Text className="text-muted"></Form.Text>
-                                        </div>
+                                        <Form.Control
+                                          type="text"
+                                          required
+                                          className="form-control"
+                                          name="recommendationFrom"
+                                          placeholder="Recommendation from (Name)"
+                                          defaultValue={
+                                            employee.recommendationFrom
+                                          }
+                                          onChange={handleChange}
+                                        />
+                                        <Form.Text className="text-muted"></Form.Text>
                                       </Form.Group>
                                     </Col>
                                   </Row>
@@ -260,18 +355,18 @@ export default function AddEmployee() {
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicName">
-                                        <div className="input-group">
-                                          <Form.Control
-                                            type="text"
-                                            required
-                                            className="form-control"
-                                            name="designation"
-                                            placeholder="Designation"
-                                            defaultValue={employee.designation}
-                                            onChange={handleChange}
-                                          />
-                                          <Form.Text className="text-muted"></Form.Text>
-                                        </div>
+                                        <Form.Control
+                                          type="text"
+                                          required
+                                          className="form-control"
+                                          name="recommenderDesignation"
+                                          placeholder="Designation"
+                                          defaultValue={
+                                            employee.recommenderDesignation
+                                          }
+                                          onChange={handleChange}
+                                        />
+                                        <Form.Text className="text-muted"></Form.Text>
                                       </Form.Group>
                                     </Col>
                                   </Row>
@@ -280,22 +375,20 @@ export default function AddEmployee() {
                                       <Form.Group
                                         className="mb-3"
                                         controlId="formBasicName">
-                                        <div className="input-group">
-                                          <Form.Control
-                                            as="textarea"
-                                            required
-                                            cols={30}
-                                            rows={5}
-                                            style={{ resize: "none" }}
-                                            className="form-control"
-                                            name="recommendationMessage"
-                                            placeholder="Recommendation Message"
-                                            defaultValue={
-                                              employee.recommendationMessage
-                                            }
-                                            onChange={handleChange}
-                                          />
-                                        </div>
+                                        <Form.Control
+                                          as="textarea"
+                                          required
+                                          cols={30}
+                                          rows={5}
+                                          style={{ resize: "none" }}
+                                          className="form-control"
+                                          name="recommendationMessage"
+                                          placeholder="Recommendation Message"
+                                          defaultValue={
+                                            employee.recommendationMessage
+                                          }
+                                          onChange={handleChange}
+                                        />
                                       </Form.Group>
                                     </Col>
                                   </Row>
@@ -303,291 +396,183 @@ export default function AddEmployee() {
                               </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Communication
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  color="success"
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="1"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="communication"
+                                  rating={employee.communication}
+                                  onRatingChange={onCommunicationRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Attitude
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="2"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="attitude"
+                                  rating={employee.attitude}
+                                  onRatingChange={onAttitudeRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Ability to learn
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="3"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="abilityToLearn"
+                                  rating={employee.abilityToLearn}
+                                  onRatingChange={onAbilityToLearnRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Punctuality
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="4"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="punctuality"
+                                  rating={employee.punctuality}
+                                  onRatingChange={onPunctualityRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Commitment
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="5"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="commitment"
+                                  rating={employee.commitment}
+                                  onRatingChange={onCommitmentRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Trustworthiness
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="6"
+                                  size={32}
+                                  numberOfStar={5}
+                                  noBorder="true"
+                                  colors={{ mask: "#00823b" }}
+                                  name="trustworthiness"
+                                  rating={employee.trustworthiness}
+                                  onRatingChange={onTrustworthinessRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Skill
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="7"
+                                  size={32}
+                                  numberOfStar={5}
+                                  colors={{ mask: "#00823b" }}
+                                  name="skill"
+                                  noBorder="true"
+                                  rating={employee.skill}
+                                  onRatingChange={onSkillRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
-                              <label
-                                for=""
-                                className="col-md-4">
+                              <Col
+                                md={4}
+                                className="add-emp-rating">
                                 Team Player
-                              </label>
-                              <div className="col-md-8 add-emp-rating">
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                                <IconButton
-                                  aria-label="star"
-                                  size="small">
-                                  <StarRateIcon />
-                                </IconButton>
-                              </div>
+                              </Col>
+                              <Col md={8}>
+                                <RatingStar
+                                  clickable
+                                  maxScore={5}
+                                  id="8"
+                                  size={32}
+                                  numberOfStar={5}
+                                  colors={{ mask: "#00823b" }}
+                                  name="teamPlayer"
+                                  noBorder="true"
+                                  rating={employee.teamPlayer}
+                                  onRatingChange={onTeamPlayerRatingChange}
+                                />
+                              </Col>
                             </Row>
                             <Row className="form-group">
                               <Col
                                 md={12}
-                                className=" mt-4">
-                                <Link to="/employee-details">
-                                  <Button
-                                    block
-                                    onClick={handleSubmit}
-                                    variant="success"
-                                    className="w-100">
-                                    Add Employee
-                                  </Button>
-                                </Link>
+                                className="mt-4">
+                                <Button
+                                  onClick={handleSubmit}
+                                  variant="success"
+                                  className="w-100">
+                                  Add Employee
+                                </Button>
                               </Col>
                             </Row>
                           </div>

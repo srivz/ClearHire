@@ -342,7 +342,12 @@ a:hover {
   text-align: center;
 }
 .beforeuploadpic img {
-  width: 36px;
+  box-shadow: inset 0px 3px 6px #00000029;
+  width: 110px;
+  height: 110px;
+  border-radius: 65px;
+  text-align: center;
+  padding: 5px;
 }
 @media (max-width: 767px) {
   .button-container .btn {
@@ -376,7 +381,7 @@ a:hover {
 }
 .serach-list {
   border: 1px solid #d1d1d1;
-  padding: 20px;
+  padding: 10px;
   margin: 0 0 30px;
 }
 .company-info {
@@ -509,11 +514,13 @@ a:hover {
   padding: 25px;
   margin: 0 0 20px;
 }
+/* infos[0].companyName */
 .addemp-form {
   padding-bottom: 50px;
 }
-.add-emp-rating img {
-  margin: 0 5px;
+.add-emp-rating {
+  padding-top: 15px;
+  margin: 1 5px;
 }
 .empdetails-wrap {
   padding: 150px 0 0;
@@ -591,8 +598,8 @@ a:hover {
   margin: 0 0 30px;
 }
 .outline-circle-logo {
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border: 1px solid #00823b;
   margin: 0 auto;

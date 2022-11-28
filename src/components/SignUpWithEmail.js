@@ -9,14 +9,18 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
     name: "",
     companyName: "",
     website: "",
-    yourDesign: "",
+    yourDesignation: "",
     profileImage: "",
     yearStarted: "",
   });
@@ -29,6 +33,7 @@ export default function SignUpWithEmail() {
   const [counter, setCounter] = useState(1);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+
   const registerLogin = async () => {
     await createUserWithEmailAndPassword(
       auth,
@@ -41,11 +46,32 @@ export default function SignUpWithEmail() {
       }
     });
   };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.email;
+      console.log(uid);
+    }
+  });
   const registerUser = async () => {
+    console.log(userId);
     await setDoc(doc(database, "users", userId), user)
       .then(() => {
         console.log("Data Added " + user);
-        window.location.href = "/";
+        signOut(auth)
+          .then(() => {
+            console.log("Logged out");
+          })
+          .catch((error) => {
+            console.log("Error while signing out " + error);
+          });
+        setDoc(doc(database, "companies", user.companyName), {})
+          .then(() => {
+            console.log("Company Added " + user);
+            window.location.href = "/";
+          })
+          .catch((err1) => {
+            console.log(err1.message + " " + user);
+          });
       })
       .catch((err) => {
         console.log(err.message + " " + user);
@@ -323,17 +349,15 @@ export default function SignUpWithEmail() {
                           <Col md={12}>
                             <Form.Group className="mb-3">
                               <Form.Label>Your Designation</Form.Label>
-                              <div className="input-group">
-                                <Form.Select
-                                  required
-                                  name="yourDesign"
-                                  defaultValue={user.yourDesign}
-                                  onChange={handleChange}
-                                  className="form-control">
-                                  <option value=""></option>
-                                  <option value="Founder">Founder</option>
-                                </Form.Select>
-                              </div>
+                              <Form.Select
+                                required
+                                name="yourDesignation"
+                                defaultValue={user.yourDesignation}
+                                onChange={handleChange}
+                                className="form-control">
+                                <option value=""></option>
+                                <option value="Founder">Founder</option>
+                              </Form.Select>
                             </Form.Group>
                           </Col>
                         </Row>

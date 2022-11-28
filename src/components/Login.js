@@ -10,7 +10,7 @@ import "../assets/css/style.css";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config.js";
 
 export default function Login() {
@@ -23,7 +23,11 @@ export default function Login() {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
   };
-
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // console.log(user.email);
+    }
+  });
   const login = async () => {
     try {
       const user1 = await signInWithEmailAndPassword(
@@ -31,6 +35,8 @@ export default function Login() {
         user.emailId,
         user.password
       );
+      localStorage.setItem("userId", user1.user.uid);
+
       if (user1) {
         window.location.href = "/searchResults";
       }
