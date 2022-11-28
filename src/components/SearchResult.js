@@ -166,7 +166,7 @@ export default function SearchResult() {
                                   <div className="title-3">06 years</div>
                                 </Col>
                                 <Col md={4}>
-                                  <small>Current Comapany</small>
+                                  <small>Current Company</small>
                                   <div className="title-3">02 years</div>
                                 </Col>
                                 <Col md={4}>
