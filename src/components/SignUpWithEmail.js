@@ -46,12 +46,6 @@ export default function SignUpWithEmail() {
       }
     });
   };
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.email;
-      console.log(uid);
-    }
-  });
   const registerUser = async () => {
     console.log(userId);
     await setDoc(doc(database, "users", userId), user)
@@ -79,23 +73,19 @@ export default function SignUpWithEmail() {
   };
   const handleNextButton = (event) => {
     setCounter(counter + 1);
-    console.log(counter);
   };
   const handleBackButton = (event) => {
     if (counter === 1) {
-      console.log(counter);
+      return;
     } else setCounter(counter - 1);
-    console.log(counter);
   };
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
-    console.log(user);
   };
   const handleChangeLog = (event) => {
     let newInput1 = { [event.target.name]: event.target.value };
     setUserLog({ ...userLog, ...newInput1 });
-    console.log(userLog);
   };
   function handleFileChange(event) {
     if (event.target.files[0]) {
@@ -121,12 +111,12 @@ export default function SignUpWithEmail() {
   }
   const handleSubmit = (event) => {
     if (userLog.password < 6) {
-      alert("Password should be atleast 6 characters.");
+      alert("Password should be atleast 6 characters!!!");
     } else {
       if (userLog.password === userLog.confirmPassword) {
         registerLogin().then(registerUser());
       } else {
-        alert("Passwords does not match");
+        alert("Passwords does not match!!");
       }
     }
   };
