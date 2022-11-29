@@ -36,6 +36,39 @@ export default function SearchResult() {
       window.location.href = "/";
     }
   });
+
+  const addFavourite = async (employeeid) => {
+    // const empRef = doc(
+    //   database,
+    //   "companies",
+    //   auth.currentUser.uid,
+    //   "employees",
+    //   employeeid
+    // );
+    // await empRef
+    //   .update({
+    //     favourite: "true",
+    //   })
+    //   .then(() => {
+    //     console.log("Done");
+    //   });
+  };
+  const deleteFavourite = async (employeeid) => {
+    // const empRef = doc(
+    //   database,
+    //   "companies",
+    //   auth.currentUser.uid,
+    //   "employees",
+    //   employeeid
+    // );
+    // await empRef
+    //   .update({
+    //     favourite: "false",
+    //   })
+    //   .then(() => {
+    //     console.log("Done");
+    //   });
+  };
   return (
     <div>
       <NavBar2 />
@@ -56,7 +89,7 @@ export default function SearchResult() {
                       <div className="total-emp-dtls">
                         <small>No.Of</small>
                         <small>Employees</small>
-                        <div className="count">54</div>
+                        <div className="count">{employeeInfos.length}</div>
                       </div>
                     </div>
                     <div className="cmpny-other-dtls">
@@ -128,6 +161,7 @@ export default function SearchResult() {
                                 <div className="pl-3">
                                   <div className="wishlist">
                                     <IconButton
+                                      onClick={addFavourite(id)}
                                       aria-label="delete"
                                       size="small">
                                       <FavoriteRoundedIcon />
@@ -230,6 +264,7 @@ export default function SearchResult() {
                                   <div className="pl-3">
                                     <div className="wishlist">
                                       <IconButton
+                                        onClick={deleteFavourite(id)}
                                         color="success"
                                         aria-label="delete"
                                         size="small">
