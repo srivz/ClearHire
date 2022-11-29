@@ -9,7 +9,6 @@ import upload_pic from "../assets/img/upload-pic.jpg";
 import rating_icon from "../assets/img/rating-icon.svg";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
-// import { onAuthStateChanged } from "firebase/auth";
 import { database } from "../firebase-config.js";
 import { collection, onSnapshot } from "firebase/firestore";
 import { RatingStar } from "rating-star";
@@ -75,6 +74,8 @@ export default function SearchResult() {
                           <p>Since {info.yearStarted}</p>
                           <p>
                             <a
+                              target="_blank"
+                              rel="noreferrer noopener"
                               href={info.website}
                               style={{ color: "#4B9CBB" }}>
                               {info.website}

@@ -9,11 +9,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
