@@ -14,6 +14,7 @@ import {
   browserSessionPersistence,
   setPersistence,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../firebase-config.js";
 
@@ -22,7 +23,7 @@ export default function Login() {
     emailId: "",
     password: "",
   });
-
+  signOut(auth);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
