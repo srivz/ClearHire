@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import image_icon from "../assets/img/image-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
-import { onAuthStateChanged } from "firebase/auth";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -32,20 +31,7 @@ export default function AddEmployee() {
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
-  const [infos, setInfos] = useState([]);
 
-  const userId = localStorage.getItem("userId");
-  useEffect(
-    () =>
-      onSnapshot(collection(database, "users"), (snapshot) => {
-        setInfos(
-          snapshot.docs
-            .filter((info) => info.id === userId)
-            .map((doc) => ({ ...doc.data(), id: doc.id }))
-        );
-      }),
-    [userId]
-  );
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setEmployee({ ...employee, ...newInput });
@@ -54,10 +40,6 @@ export default function AddEmployee() {
     registerEmployee();
   };
 
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser) {
-    }
-  });
   function handleFileChange(event) {
     if (event.target.files[0]) {
       setFile(event.target.files[0]);
@@ -104,9 +86,10 @@ export default function AddEmployee() {
         skill: employee.skill,
         teamPlayer: employee.teamPlayer,
       },
+      favourite: "false",
     };
     await addDoc(
-      collection(database, "companies", infos[0].companyName, "employees"),
+      collection(database, "companies", auth.currentUser.uid, "employees"),
       docData
     )
       .then(() => {
