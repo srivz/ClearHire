@@ -167,6 +167,8 @@ export default function EmployeeDetails() {
                             {info2.name}
                           </Col>
                           <Col md={3}>{info2.designation}</Col>
+                          <Col md={3}>{info2.salary}</Col>
+                          <Col md={3}>{info2.linkedIn}</Col>
                         </Row>
                       ))}
                       <Row>
