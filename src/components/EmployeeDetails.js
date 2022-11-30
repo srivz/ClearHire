@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import rating from "../assets/img/rating.svg";
-import upload_pic from "../assets/img/upload-pic.jpg";
-import linkedin_icon from "../assets/img/linkedin-icon.svg";
 import company_logo_1 from "../assets/img/company-logo-1.png";
 import clogo_1 from "../assets/img/clogo-1.png";
 import user_logo_1 from "../assets/img/user-logo-1.png";
@@ -14,6 +11,8 @@ import { useLocation } from "react-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../firebase-config";
+import { RatingStar } from "rating-star";
+import { LinkedIn } from "@mui/icons-material";
 
 export default function EmployeeDetails() {
   const location = useLocation();
@@ -24,6 +23,8 @@ export default function EmployeeDetails() {
   const [companiesToFetch, setCompaniesToFetch] = useState();
   const [employeeInfos, setEmployeeInfo] = useState([{}]);
   const [fetched, setFetched] = useState(true);
+  const d = new Date();
+  let year = d.getFullYear();
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -84,19 +85,19 @@ export default function EmployeeDetails() {
                           return id === 0 ? (
                             <div className="emp-header">
                               <Row>
-                                <Col md={6}>
+                                <Col md={4}>
                                   <Row>
                                     <Col md={3}>
                                       <div className="userprofile">
                                         <Image
-                                          src={upload_pic}
+                                          src={info2.employeeImage}
                                           alt=""
                                           width="60"
                                         />
                                       </div>
                                     </Col>
 
-                                    <Col md={9}>
+                                    <Col md={6}>
                                       <div className="empifo">
                                         <h4 className="username">
                                           {info2.name}
@@ -112,39 +113,48 @@ export default function EmployeeDetails() {
                                     </Col>
                                   </Row>
                                 </Col>
-
                                 <Col
-                                  md={4}
-                                  className="text-center">
+                                  md={5}
+                                  className="align-me text-center">
                                   <ul className="expdetails">
                                     <li>
                                       <small>Total Experience</small>
-                                      <div className="title-3">
-                                        {info2.dateJoined}
-                                      </div>
+                                      <div className="title-3">02 years</div>
                                     </li>
                                     <li>
                                       <small>Current Comapny</small>
-                                      <div className="title-3">02 years</div>
+                                      <div className="title-3">
+                                        {year -
+                                          info2.dateJoined.substring(0, 4)}{" "}
+                                        years
+                                      </div>
                                     </li>
                                   </ul>
                                 </Col>
 
                                 <Col
                                   md={2}
-                                  className="text-right">
+                                  className="align-me text-right">
                                   <div className="rating-dtls mb-2">
-                                    <Image
-                                      src={info2.linkedIn}
-                                      alt=""
+                                    <RatingStar
+                                      unclickable
+                                      maxScore={5}
+                                      id="0"
+                                      size={32}
+                                      numberOfStar={5}
+                                      noBorder="true"
+                                      colors={{ mask: "#00823b" }}
+                                      rating={info2.rating.overall}
                                     />
                                   </div>
-                                  <a href="/">
-                                    <Image
-                                      src={info2.linkedIn}
-                                      alt=""
-                                      width="18"
-                                    />
+                                </Col>
+                                <Col
+                                  md={1}
+                                  className="align-me text-center justify-content-center">
+                                  <a
+                                    target="_block"
+                                    href={info2.linkedIn}>
+                                    <LinkedIn fontSize="large" />
                                   </a>
                                 </Col>
                               </Row>
@@ -178,30 +188,6 @@ export default function EmployeeDetails() {
                           </div>
                         </Col>
                       </Row>
-
-                      {employeeInfos
-                        .sort((a, b) =>
-                          a.yearOfJoining > b.yearOfJoining ? 1 : -1
-                        )
-                        .filter((info2, id) => info2.name !== null)
-                        .map((info2, id) => {
-                          return id < 5 ? (
-                            <Row>
-                              <Col
-                                key={id}
-                                md={2}>
-                                111 {info2.name} : {id}
-                              </Col>
-                              <Col md={2}>222 {info2.designation}</Col>
-                              <Col md={2}>333 {info2.salary}</Col>
-                              <Col md={2}>444 {info2.linkedIn}</Col>
-                              <Col md={2}>555 {info2.companyName}</Col>
-                              <Col md={2}>666 {info2.dateJoined}</Col>
-                            </Row>
-                          ) : (
-                            <></>
-                          );
-                        })}
                       <Row>
                         <Col md={12}>
                           <div
@@ -209,460 +195,226 @@ export default function EmployeeDetails() {
                             id="accordionExample">
                             <ul>
                               {/* Startttttttt */}
-                              <li id="">
-                                <Row className="h-100">
-                                  <Col md={1}>
-                                    <div className="yearinfo float-left">
-                                      2020
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    md={11}
-                                    onClick={() => {
-                                      setOpen1(!open1);
-                                      setOpen2(open2);
-                                      setOpen3(open3);
-                                    }}>
-                                    <div className="company-info-dtls">
-                                      <Row className="h-100 justify-content-center align-items-center">
-                                        <Col md={6}>
-                                          <div className="cmpny-logo">
-                                            <Image
-                                              src={company_logo_1}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <h5 className="company-name">
-                                            The Madras Branding Company
-                                          </h5>
-                                        </Col>
-                                        <Col
-                                          md={2}
-                                          className="text-center">
-                                          <div className="pkg-text">
-                                            5.4 L PA
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md={4}
-                                          className="text-right">
-                                          <div className="cmpny-rating">
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                              width="140"
-                                            />
-                                          </div>
-                                          <div className="arrow-icon">
-                                            <Image
-                                              src={down_icon}
-                                              alt=""
-                                              className="Image-fluid"
-                                            />
-                                          </div>
-                                        </Col>
-                                      </Row>
-                                      <Collapse in={open1}>
-                                        <div className="rating-details">
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Communication</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Attitude</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Ability to learn</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Punctuality</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Commitment</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Trustworthiness</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Skill</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
-                                          <Row>
-                                            <Col md={3}>
-                                              <p>Team Player</p>
-                                            </Col>
-                                            <Col md={4}>
-                                              <Image
-                                                src={rating}
-                                                alt=""
-                                              />
-                                            </Col>
-                                          </Row>
+                              {employeeInfos.map((info3, id1) => {
+                                return id1 !== 0 ? (
+                                  <li
+                                    key={id1}
+                                    id="">
+                                    <Row className="h-100">
+                                      <Col md={1}>
+                                        <div className="yearinfo float-left">
+                                          {info3.dateJoined.substring(0, 4)}
                                         </div>
-                                      </Collapse>
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </li>
-
+                                      </Col>
+                                      <Col
+                                        md={11}
+                                        onClick={() => {
+                                          setOpen1(!open1);
+                                          setOpen2(open2);
+                                          setOpen3(open3);
+                                        }}>
+                                        <div className="company-info-dtls">
+                                          <Row className="h-100 justify-content-center align-items-center">
+                                            <Col md={6}>
+                                              <div className="cmpny-logo">
+                                                <Image
+                                                  src={info3.companyLogo}
+                                                  alt=""
+                                                />
+                                              </div>
+                                              <h5 className="company-name">
+                                                {info3.companyName}
+                                              </h5>
+                                            </Col>
+                                            <Col
+                                              md={2}
+                                              className="text-center">
+                                              <div className="pkg-text">
+                                                {info3.salary} LPA
+                                              </div>
+                                            </Col>
+                                            <Col
+                                              md={4}
+                                              className="text-right">
+                                              <div className="cmpny-rating">
+                                                <RatingStar
+                                                  unclickable
+                                                  maxScore={5}
+                                                  id={id1 + "0"}
+                                                  size={32}
+                                                  numberOfStar={5}
+                                                  noBorder="true"
+                                                  colors={{ mask: "#00823b" }}
+                                                  rating={info3.rating.overall}
+                                                />
+                                              </div>
+                                              <div className="arrow-icon">
+                                                <Image
+                                                  src={down_icon}
+                                                  alt=""
+                                                  className="Image-fluid"
+                                                />
+                                              </div>
+                                            </Col>
+                                          </Row>
+                                          <Collapse in={open1}>
+                                            <div className="rating-details">
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Communication</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "1"}
+                                                    size={32}
+                                                    numberOfStar={5}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating.communication
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Attitude</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "2"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating.attitude
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Ability to learn</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "3"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating
+                                                        .abilityToLearn
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Punctuality</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "4"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating.punctuality
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Commitment</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "5"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating.commitment
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Trustworthiness</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "6"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating
+                                                        .trustworthiness
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Skill</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "7"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={info3.rating.skill}
+                                                  />
+                                                </Col>
+                                              </Row>
+                                              <Row>
+                                                <Col md={3}>
+                                                  <p>Team Player</p>
+                                                </Col>
+                                                <Col md={4}>
+                                                  <RatingStar
+                                                    unclickable
+                                                    maxScore={5}
+                                                    id={id1 + "8"}
+                                                    size={32}
+                                                    noBorder="true"
+                                                    colors={{ mask: "#00823b" }}
+                                                    rating={
+                                                      info3.rating.teamPlayer
+                                                    }
+                                                  />
+                                                </Col>
+                                              </Row>
+                                            </div>
+                                          </Collapse>
+                                        </div>
+                                      </Col>
+                                    </Row>
+                                  </li>
+                                ) : (
+                                  <></>
+                                );
+                              })}
                               {/* endddddddddd */}
-                              <li id="">
-                                <Row
-                                  className="h-100 collapsed"
-                                  data-toggle="collapse"
-                                  data-target="#collapseTwo"
-                                  aria-expanded="false"
-                                  aria-controls="collapseTwo">
-                                  <Col md={1}>
-                                    <div className="yearinfo float-left">
-                                      2020
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    md={11}
-                                    onClick={() => {
-                                      setOpen1(open1);
-                                      setOpen2(!open2);
-                                      setOpen3(open3);
-                                    }}>
-                                    <div className="company-info-dtls">
-                                      <Row className=" h-100 justify-content-center align-items-center">
-                                        <Col md={6}>
-                                          <div className="cmpny-logo">
-                                            <Image
-                                              src={company_logo_1}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <h5 className="company-name">
-                                            The Madras Branding Company
-                                          </h5>
-                                        </Col>
-                                        <Col
-                                          md={2}
-                                          className="text-center">
-                                          <div className="pkg-text">
-                                            5.4 L PA
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md={4}
-                                          className="text-right">
-                                          <div className="cmpny-rating">
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                              width="140"
-                                            />
-                                          </div>
-                                          <div className="arrow-icon">
-                                            <Image
-                                              src={down_icon}
-                                              alt=""
-                                              className="Image-fluid"
-                                            />
-                                          </div>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                    <Collapse in={open2}>
-                                      <div className="rating-details">
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Communication</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Attitude</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Ability to learn</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Punctuality</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Commitment</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Trustworthiness</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Skill</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Team Player</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                      </div>
-                                    </Collapse>
-                                  </Col>
-                                </Row>
-                              </li>
-                              <li id="">
-                                <Row className="h-100 collapsed">
-                                  <Col md={1}>
-                                    <div className="yearinfo float-left">
-                                      2020
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    md={11}
-                                    onClick={() => {
-                                      setOpen1(open1);
-                                      setOpen2(open2);
-                                      setOpen3(!open3);
-                                    }}>
-                                    <div className="company-info-dtls">
-                                      <Row className="h-100 justify-content-center align-items-center">
-                                        <Col md={6}>
-                                          <div className="cmpny-logo">
-                                            <Image
-                                              src={company_logo_1}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <h5 className="company-name">
-                                            The Madras Branding Company
-                                          </h5>
-                                        </Col>
-                                        <Col
-                                          md={2}
-                                          className="text-center">
-                                          <div className="pkg-text">
-                                            5.4 L PA
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md={4}
-                                          className="text-right">
-                                          <div className="cmpny-rating">
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                              width="140"
-                                            />
-                                          </div>
-                                          <div className="arrow-icon">
-                                            <Image
-                                              src={down_icon}
-                                              alt=""
-                                              className="Image-fluid"
-                                            />
-                                          </div>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                    <Collapse in={open3}>
-                                      <div className="rating-details">
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Communication</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Attitude</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Ability to learn</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Punctuality</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Commitment</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Trustworthiness</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Skill</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                        <Row>
-                                          <Col md={3}>
-                                            <p>Team Player</p>
-                                          </Col>
-                                          <Col md={4}>
-                                            <Image
-                                              src={rating}
-                                              alt=""
-                                            />
-                                          </Col>
-                                        </Row>
-                                      </div>
-                                    </Collapse>
-                                  </Col>
-                                </Row>
-                              </li>
                             </ul>
                           </div>
                         </Col>

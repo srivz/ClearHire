@@ -81,6 +81,7 @@ export default function AddEmployee() {
     const docData = {
       name: employee.name,
       companyName: info.companyName,
+      companyLogo: info.profileImage,
       employeeImage: employee.employeeImage,
       dateOfBirth: employee.dateOfBirth,
       dateJoined: employee.dateJoined,
@@ -93,6 +94,16 @@ export default function AddEmployee() {
         recommendationMessage: employee.recommendationMessage,
       },
       rating: {
+        overall:
+          (employee.communication +
+            employee.attitude +
+            employee.abilityToLearn +
+            employee.punctuality +
+            employee.commitment +
+            employee.trustworthiness +
+            employee.skill +
+            employee.teamPlayer) /
+          8,
         communication: employee.communication,
         attitude: employee.attitude,
         abilityToLearn: employee.abilityToLearn,

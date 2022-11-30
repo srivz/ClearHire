@@ -7,6 +7,10 @@ body {
   background: #fff;
   font-size: 16px;
 }
+.align-me {
+  display: flex;
+  align-items: center;
+}
 .text-right {
   float: right;
 }
