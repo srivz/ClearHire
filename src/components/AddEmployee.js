@@ -4,7 +4,7 @@ import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
-import { addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
 
@@ -17,6 +17,7 @@ export default function AddEmployee() {
     designation: "",
     linkedIn: "",
     salary: "",
+    adhaarCardNumber: "",
     recommendationFrom: "",
     recommenderDesignation: "",
     recommendationMessage: "",
@@ -31,12 +32,14 @@ export default function AddEmployee() {
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+  const [disabledButton, setDisabledButton] = useState(false);
 
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setEmployee({ ...employee, ...newInput });
   };
   const handleSubmit = () => {
+    setDisabledButton(true);
     registerEmployee();
   };
 
@@ -88,15 +91,37 @@ export default function AddEmployee() {
       },
       favourite: "false",
     };
-    await addDoc(
-      collection(database, "companies", auth.currentUser.uid, "employees"),
+    await setDoc(
+      doc(
+        database,
+        "companies",
+        auth.currentUser.uid,
+        "employees",
+        employee.adhaarCardNumber
+      ),
       docData
     )
       .then(() => {
-        window.location.href = "/searchResults";
+        updateDoc(doc(database, "employees", employee.adhaarCardNumber), {
+          companies: arrayUnion(auth.currentUser.uid),
+        })
+          .then(() => {
+            window.location.href = "/searchResults";
+          })
+          .catch((err) => {
+            setDoc(doc(database, "employees", employee.adhaarCardNumber), {
+              companies: arrayUnion(auth.currentUser.uid),
+            })
+              .then(() => {
+                window.location.href = "/searchResults";
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          });
       })
       .catch((err) => {
-        console.log(err.message + " " + employee);
+        console.log(err.message);
       });
   };
   const onCommunicationRatingChange = (score) => {
@@ -266,6 +291,26 @@ export default function AddEmployee() {
                                       </Button>
                                     </Col>
                                   </Row>
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Label>Adhaar Card Number</Form.Label>
+                                  <Form.Control
+                                    type="number"
+                                    required
+                                    minLength={"12"}
+                                    maxLength={"12"}
+                                    name="adhaarCardNumber"
+                                    placeholder="Adhaar Card Number"
+                                    defaultValue={employee.linkedIn}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -551,6 +596,7 @@ export default function AddEmployee() {
                                 md={12}
                                 className="mt-4">
                                 <Button
+                                  disabled={disabledButton}
                                   onClick={handleSubmit}
                                   variant="success"
                                   className="w-100">

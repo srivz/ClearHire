@@ -215,6 +215,7 @@ export default function Login() {
                     consequuntur magni dolores eos qui ratione voluptatem sequ.
                   </p>
                   <Button
+                    href="/signUp"
                     variant="light"
                     className="w-50 mt-4 mb-4">
                     Sign up

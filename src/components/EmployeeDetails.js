@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import rating from "../assets/img/rating.svg";
 import upload_pic from "../assets/img/upload-pic.jpg";
 import linkedin_icon from "../assets/img/linkedin-icon.svg";
@@ -10,8 +10,58 @@ import down_icon from "../assets/img/down-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
+import { useLocation } from "react-router";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, database } from "../firebase-config";
 
 export default function EmployeeDetails() {
+  const location = useLocation();
+  const { empId } = location.state;
+  const [open1, setOpen1] = useState();
+  const [open2, setOpen2] = useState();
+  const [open3, setOpen3] = useState();
+  const [companiesToFetch, setCompaniesToFetch] = useState();
+  const [employeeInfos, setEmployeeInfo] = useState([{}]);
+  const [fetched, setFetched] = useState(true);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (fetched) {
+        getDoc(doc(database, "employees", empId))
+          .then((doc) => {
+            const data = doc.data();
+            setCompaniesToFetch(data.companies);
+          })
+          .then(() => {
+            if (companiesToFetch) {
+              employeeGet(companiesToFetch);
+              setFetched(false);
+            }
+          });
+      }
+    } else {
+      window.location.href = "/";
+    }
+  });
+  function employeeGet(companyId) {
+    companyId.forEach((employee) => {
+      const employeeRef = doc(
+        database,
+        "companies",
+        employee,
+        "employees",
+        empId
+      );
+      if (employeeRef) {
+        getDoc(employeeRef).then((doc) => {
+          const data = doc.data();
+          setEmployeeInfo((employeeInfos) => [...employeeInfos, data]);
+        });
+      }
+    });
+  }
+
   return (
     <div>
       <Container>
@@ -109,6 +159,16 @@ export default function EmployeeDetails() {
                         </Col>
                       </Row>
 
+                      {employeeInfos.map((info2, id) => (
+                        <Row>
+                          <Col
+                            key={id}
+                            md={3}>
+                            {info2.name}
+                          </Col>
+                          <Col md={3}>{info2.designation}</Col>
+                        </Row>
+                      ))}
                       <Row>
                         <Col md={12}>
                           <div
@@ -124,13 +184,11 @@ export default function EmployeeDetails() {
                                   </Col>
                                   <Col
                                     md={11}
-                                    onClick={() =>
-                                      this.setState({
-                                        open1: !this.state.open1,
-                                        open2: false,
-                                        open3: false,
-                                      })
-                                    }>
+                                    onClick={() => {
+                                      setOpen1(!open1);
+                                      setOpen2(open2);
+                                      setOpen3(open3);
+                                    }}>
                                     <div className="company-info-dtls">
                                       <Row className="h-100 justify-content-center align-items-center">
                                         <Col md={6}>
@@ -170,7 +228,7 @@ export default function EmployeeDetails() {
                                           </div>
                                         </Col>
                                       </Row>
-                                      <Collapse in={this.state.open1}>
+                                      <Collapse in={open1}>
                                         <div className="rating-details">
                                           <Row>
                                             <Col md={3}>
@@ -281,13 +339,11 @@ export default function EmployeeDetails() {
                                   </Col>
                                   <Col
                                     md={11}
-                                    onClick={() =>
-                                      this.setState({
-                                        open1: false,
-                                        open2: !this.state.open2,
-                                        open3: false,
-                                      })
-                                    }>
+                                    onClick={() => {
+                                      setOpen1(open1);
+                                      setOpen2(!open2);
+                                      setOpen3(open3);
+                                    }}>
                                     <div className="company-info-dtls">
                                       <Row className=" h-100 justify-content-center align-items-center">
                                         <Col md={6}>
@@ -328,7 +384,7 @@ export default function EmployeeDetails() {
                                         </Col>
                                       </Row>
                                     </div>
-                                    <Collapse in={this.state.open2}>
+                                    <Collapse in={open2}>
                                       <div className="rating-details">
                                         <Row>
                                           <Col md={3}>
@@ -432,13 +488,11 @@ export default function EmployeeDetails() {
                                   </Col>
                                   <Col
                                     md={11}
-                                    onClick={() =>
-                                      this.setState({
-                                        open1: false,
-                                        open2: false,
-                                        open3: !this.state.open3,
-                                      })
-                                    }>
+                                    onClick={() => {
+                                      setOpen1(open1);
+                                      setOpen2(open2);
+                                      setOpen3(!open3);
+                                    }}>
                                     <div className="company-info-dtls">
                                       <Row className="h-100 justify-content-center align-items-center">
                                         <Col md={6}>
@@ -479,7 +533,7 @@ export default function EmployeeDetails() {
                                         </Col>
                                       </Row>
                                     </div>
-                                    <Collapse in={this.state.open3}>
+                                    <Collapse in={open3}>
                                       <div className="rating-details">
                                         <Row>
                                           <Col md={3}>
@@ -718,6 +772,3 @@ export default function EmployeeDetails() {
     </div>
   );
 }
-
-// const company1 = doc(database, "employees", infos[0].companyName);
-// await setDoc(company1, docData);
