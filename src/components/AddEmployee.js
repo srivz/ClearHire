@@ -4,9 +4,10 @@ import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
-import { doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, setDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -33,6 +34,7 @@ export default function AddEmployee() {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
   const [disabledButton, setDisabledButton] = useState(false);
+  const [info, setInfo] = useState([]);
 
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
@@ -43,6 +45,16 @@ export default function AddEmployee() {
     registerEmployee();
   };
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      getDoc(doc(database, "users", uid)).then((doc) => {
+        setInfo({ ...doc.data(), id: doc.id });
+      });
+    } else {
+      window.location.href = "/";
+    }
+  });
   function handleFileChange(event) {
     if (event.target.files[0]) {
       setFile(event.target.files[0]);
@@ -68,6 +80,7 @@ export default function AddEmployee() {
   const registerEmployee = async () => {
     const docData = {
       name: employee.name,
+      companyName: info.companyName,
       employeeImage: employee.employeeImage,
       dateOfBirth: employee.dateOfBirth,
       dateJoined: employee.dateJoined,

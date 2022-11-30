@@ -56,7 +56,11 @@ export default function EmployeeDetails() {
       if (employeeRef) {
         getDoc(employeeRef).then((doc) => {
           const data = doc.data();
-          setEmployeeInfo((employeeInfos) => [...employeeInfos, data], data.id);
+          if (data !== null)
+            setEmployeeInfo(
+              (employeeInfos) => [...employeeInfos, data],
+              data.id
+            );
         });
       }
     });
@@ -73,68 +77,84 @@ export default function EmployeeDetails() {
                 <div className="empdetails-inner">
                   <Row className="justify-content-center align-items-center">
                     <Col md={12}>
-                      <div className="emp-header">
-                        <Row>
-                          <Col md={6}>
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={upload_pic}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
+                      {/* Startttttttt */}
+                      {employeeInfos
+                        .filter((info2, id) => id !== 0)
+                        .map((info2, id) => {
+                          return id === 0 ? (
+                            <div className="emp-header">
+                              <Row>
+                                <Col md={6}>
+                                  <Row>
+                                    <Col md={3}>
+                                      <div className="userprofile">
+                                        <Image
+                                          src={upload_pic}
+                                          alt=""
+                                          width="60"
+                                        />
+                                      </div>
+                                    </Col>
 
-                              <Col md={9}>
-                                <div className="empifo">
-                                  <h4 className="username">Raja Kamaraj</h4>
-                                  <p className="designation">
-                                    Portrait Artist ⋅ Then and There Agency
-                                  </p>
-                                  <small className="location">
-                                    Chennai, Tamil Nadu, India
-                                  </small>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Col>
+                                    <Col md={9}>
+                                      <div className="empifo">
+                                        <h4 className="username">
+                                          {info2.name}
+                                        </h4>
+                                        <p className="designation">
+                                          {info2.designation} ⋅{" "}
+                                          {info2.companyName}
+                                        </p>
+                                        <small className="location">
+                                          Chennai, Tamil Nadu, India
+                                        </small>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
 
-                          <Col
-                            md={4}
-                            className="text-center">
-                            <ul className="expdetails">
-                              <li>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </li>
-                              <li>
-                                <small>Current Comapny</small>
-                                <div className="title-3">02 years</div>
-                              </li>
-                            </ul>
-                          </Col>
+                                <Col
+                                  md={4}
+                                  className="text-center">
+                                  <ul className="expdetails">
+                                    <li>
+                                      <small>Total Experience</small>
+                                      <div className="title-3">
+                                        {info2.dateJoined}
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <small>Current Comapny</small>
+                                      <div className="title-3">02 years</div>
+                                    </li>
+                                  </ul>
+                                </Col>
 
-                          <Col
-                            md={2}
-                            className="text-right">
-                            <div className="rating-dtls mb-2">
-                              <Image
-                                src={rating}
-                                alt=""
-                              />
+                                <Col
+                                  md={2}
+                                  className="text-right">
+                                  <div className="rating-dtls mb-2">
+                                    <Image
+                                      src={info2.linkedIn}
+                                      alt=""
+                                    />
+                                  </div>
+                                  <a href="/">
+                                    <Image
+                                      src={info2.linkedIn}
+                                      alt=""
+                                      width="18"
+                                    />
+                                  </a>
+                                </Col>
+                              </Row>
                             </div>
-                            <a href="/">
-                              <Image
-                                src={linkedin_icon}
-                                alt=""
-                                width="18"
-                              />
-                            </a>
-                          </Col>
-                        </Row>
-                      </div>
+                          ) : (
+                            <></>
+                          );
+                        })}
+                      {/* endddddddddd */}
+
                       <Row>
                         <Col
                           md={12}
@@ -159,25 +179,37 @@ export default function EmployeeDetails() {
                         </Col>
                       </Row>
 
-                      {employeeInfos.map((info2, id) => (
-                        <Row>
-                          <Col
-                            key={id}
-                            md={3}>
-                            {info2.name}
-                          </Col>
-                          <Col md={3}>{info2.designation}</Col>
-                          <Col md={3}>{info2.salary}</Col>
-                          <Col md={3}>{info2.linkedIn}</Col>
-                        </Row>
-                      ))}
+                      {employeeInfos
+                        .sort((a, b) =>
+                          a.yearOfJoining > b.yearOfJoining ? 1 : -1
+                        )
+                        .filter((info2, id) => info2.name !== null)
+                        .map((info2, id) => {
+                          return id < 5 ? (
+                            <Row>
+                              <Col
+                                key={id}
+                                md={2}>
+                                111 {info2.name} : {id}
+                              </Col>
+                              <Col md={2}>222 {info2.designation}</Col>
+                              <Col md={2}>333 {info2.salary}</Col>
+                              <Col md={2}>444 {info2.linkedIn}</Col>
+                              <Col md={2}>555 {info2.companyName}</Col>
+                              <Col md={2}>666 {info2.dateJoined}</Col>
+                            </Row>
+                          ) : (
+                            <></>
+                          );
+                        })}
                       <Row>
                         <Col md={12}>
                           <div
                             className="timeline-bg"
                             id="accordionExample">
                             <ul>
-                              <li id="headingOne">
+                              {/* Startttttttt */}
+                              <li id="">
                                 <Row className="h-100">
                                   <Col md={1}>
                                     <div className="yearinfo float-left">
@@ -327,7 +359,8 @@ export default function EmployeeDetails() {
                                 </Row>
                               </li>
 
-                              <li id="headingTwo">
+                              {/* endddddddddd */}
+                              <li id="">
                                 <Row
                                   className="h-100 collapsed"
                                   data-toggle="collapse"
@@ -481,7 +514,7 @@ export default function EmployeeDetails() {
                                   </Col>
                                 </Row>
                               </li>
-                              <li id="headingThree">
+                              <li id="">
                                 <Row className="h-100 collapsed">
                                   <Col md={1}>
                                     <div className="yearinfo float-left">

@@ -182,7 +182,9 @@ export default function SearchResult() {
                                   <div className="user-role">
                                     {info2[0].designation}
                                   </div>
-                                  <p className="comments">Dot it agency</p>
+                                  <p className="comments">
+                                    {info2[0].companyName}
+                                  </p>
                                 </div>
                               </Col>
                             </Row>
