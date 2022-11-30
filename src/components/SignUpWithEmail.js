@@ -36,14 +36,10 @@ export default function SignUpWithEmail() {
       userLog.emailId,
       userLog.password
     ).then((cred) => {
-      const useridentity = setUserId(cred.user.uid);
-      if (useridentity) {
-        console.log("User Added");
-      }
+      setUserId(cred.user.uid);
     });
   };
   const registerUser = async () => {
-    console.log(userId);
     await setDoc(doc(database, "users", userId), user)
       .then(() => {
         setDoc(doc(database, "companies", userId), {})
@@ -51,11 +47,11 @@ export default function SignUpWithEmail() {
             window.location.href = "/";
           })
           .catch((err1) => {
-            console.log(err1.message + " " + user);
+            console.log(err1.message);
           });
       })
       .catch((err) => {
-        console.log(err.message + " " + user);
+        console.log(err.message);
       });
   };
   const handleNextButton = (event) => {
