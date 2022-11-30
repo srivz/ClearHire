@@ -56,7 +56,7 @@ export default function EmployeeDetails() {
       if (employeeRef) {
         getDoc(employeeRef).then((doc) => {
           const data = doc.data();
-          setEmployeeInfo((employeeInfos) => [...employeeInfos, data]);
+          setEmployeeInfo((employeeInfos) => [...employeeInfos, data], data.id);
         });
       }
     });
