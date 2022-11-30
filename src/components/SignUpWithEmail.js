@@ -9,7 +9,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
@@ -38,7 +38,7 @@ export default function SignUpWithEmail() {
     ).then((cred) => {
       const useridentity = setUserId(cred.user.uid);
       if (useridentity) {
-        console.log("User Added " + cred.user.uid + " " + userId);
+        console.log("User Added");
       }
     });
   };
@@ -46,17 +46,8 @@ export default function SignUpWithEmail() {
     console.log(userId);
     await setDoc(doc(database, "users", userId), user)
       .then(() => {
-        console.log("Data Added " + user);
-        signOut(auth)
+        setDoc(doc(database, "companies", userId), {})
           .then(() => {
-            console.log("Logged out");
-          })
-          .catch((error) => {
-            console.log("Error while signing out " + error);
-          });
-        setDoc(doc(database, "companies", user.companyName), {})
-          .then(() => {
-            console.log("Company Added " + user);
             window.location.href = "/";
           })
           .catch((err1) => {
