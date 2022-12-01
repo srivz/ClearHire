@@ -13,9 +13,7 @@ import { LinkedIn } from "@mui/icons-material";
 export default function EmployeeDetails() {
   const location = useLocation();
   const { empId } = location.state;
-  const [open1, setOpen1] = useState();
-  const [open2, setOpen2] = useState();
-  const [open3, setOpen3] = useState();
+  const [open, setOpen] = useState();
   const [companiesToFetch, setCompaniesToFetch] = useState();
   const [employeeInfos, setEmployeeInfo] = useState([{}]);
   const [fetched, setFetched] = useState(true);
@@ -194,9 +192,7 @@ export default function EmployeeDetails() {
                               {/* Startttttttt */}
                               {employeeInfos.map((info3, id1) => {
                                 return id1 !== 0 ? (
-                                  <li
-                                    key={id1}
-                                    id="">
+                                  <li key={id1}>
                                     <Row className="h-100">
                                       <Col md={1}>
                                         <div className="yearinfo float-left">
@@ -206,10 +202,9 @@ export default function EmployeeDetails() {
                                       <Col
                                         md={11}
                                         onClick={() => {
-                                          setOpen1(!open1);
-                                          setOpen2(open2);
-                                          setOpen3(open3);
+                                          setOpen(!open);
                                         }}>
+                                        {console.log(open)}
                                         <div className="company-info-dtls">
                                           <Row className="h-100 justify-content-center align-items-center">
                                             <Col md={6}>
@@ -254,7 +249,7 @@ export default function EmployeeDetails() {
                                               </div>
                                             </Col>
                                           </Row>
-                                          <Collapse in={open1}>
+                                          <Collapse in={open}>
                                             <div className="rating-details">
                                               <Row>
                                                 <Col md={3}>

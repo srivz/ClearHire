@@ -152,8 +152,8 @@ export default function SearchResult() {
                 <div className="searchlist-details-main">
                   <Row>
                     {employeeInfos
-                      .filter((info2, id) => info2[0].favourite === "false")
-                      .map((info2, id) => (
+                      .filter((info2, id1) => info2[0].favourite === "false")
+                      .map((info2, id1) => (
                         <Col
                           key={info2[1]}
                           md={6}>
@@ -210,13 +210,12 @@ export default function SearchResult() {
                                   <RatingStar
                                     unclickable
                                     maxScore={5}
-                                    id="2"
+                                    id={id1}
                                     size={32}
                                     numberOfStar={5}
                                     noBorder="true"
                                     colors={{ mask: "#00823b" }}
-                                    name="attitude"
-                                    // rating={info2.communication}
+                                    rating={info2[0].rating.overall}
                                   />
                                 </div>
                               </Col>
@@ -261,8 +260,8 @@ export default function SearchResult() {
                   <div className="searchlist-details-main">
                     <Row>
                       {employeeInfos
-                        .filter((info2, id) => info2[0].favourite === "true")
-                        .map((info2, id) => (
+                        .filter((info2, id2) => info2[0].favourite === "true")
+                        .map((info2, id2) => (
                           <Col
                             key={info2[1]}
                             md={6}>
@@ -322,13 +321,12 @@ export default function SearchResult() {
                                     <RatingStar
                                       unclickable
                                       maxScore={5}
-                                      id="2"
+                                      id={"favourite" + id2}
                                       size={32}
                                       numberOfStar={5}
                                       noBorder="true"
                                       colors={{ mask: "#00823b" }}
-                                      name="attitude"
-                                      // rating={info2.communication}
+                                      rating={info2[0].rating.overall}
                                     />
                                   </div>
                                 </Col>
