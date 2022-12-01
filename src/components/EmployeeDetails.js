@@ -79,8 +79,8 @@ export default function EmployeeDetails() {
                     <Col md={12}>
                       {/* Startttttttt */}
                       {employeeInfos
-                        .sort((a, b) => (a.dateJoined > b.dateJoined ? 1 : -1))
                         .filter((info2, id) => id !== 0)
+                        .sort((a, b) => (a.dateJoined > b.dateJoined ? 1 : -1))
                         .map((info2, id) => {
                           return id === 0 ? (
                             <div className="emp-header">
