@@ -424,128 +424,59 @@ export default function EmployeeDetails() {
                           <h3 className="title-text mb-4">Recommendations</h3>
                         </div>
                       </Row>
-                      <div className="recomdt-list">
-                        <Row>
-                          <Col md={12}>
-                            <div className="recomdt-list-inner">
-                              <Row>
-                                <Col
-                                  md={2}
-                                  className="text-center">
-                                  <div className="outline-circle-logo">
-                                    <Image
-                                      src={clogo_1}
-                                      alt=""
-                                      className="Image-fluid outline-circle-logo"
-                                    />
-                                  </div>
-                                </Col>
+                      {/* Startttttttt */}
 
-                                <Col md={10}>
-                                  <h4 className="emp-title">
-                                    C.Vignesh{" "}
-                                    <span className="designt-text">CEO</span>
-                                  </h4>
-                                  <p className="color-8B">
-                                    Nemo enim ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit Nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit
-                                  </p>
-                                  <p className="color-8B">
-                                    We wish him the success in future life.
-                                  </p>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                      <div className="recomdt-list">
-                        <Row>
-                          <Col md={12}>
-                            <div className="recomdt-list-inner">
-                              <Row>
-                                <Col
-                                  md={2}
-                                  className="text-center">
-                                  <div className="outline-circle-logo">
-                                    <Image
-                                      src={user_logo_2}
-                                      alt=""
-                                      className="Image-fluid outline-circle-logo"
-                                    />
-                                  </div>
-                                </Col>
+                      {employeeInfos.map((info4, id2) => {
+                        return id2 !== 0 ? (
+                          <div
+                            key={id2}
+                            className="recomdt-list">
+                            <Row>
+                              <Col md={12}>
+                                <div className="recomdt-list-inner">
+                                  <Row>
+                                    <Col
+                                      md={2}
+                                      className="text-center">
+                                      <div className="outline-circle-logo">
+                                        <Image
+                                          src={info4.companyLogo}
+                                          alt=""
+                                          className="Image-fluid outline-circle-logo"
+                                        />
+                                      </div>
+                                    </Col>
 
-                                <Col md={10}>
-                                  <h4 className="emp-title">
-                                    C.Vignesh{" "}
-                                    <span className="designt-text">CEO</span>
-                                  </h4>
-                                  <p className="color-8B">
-                                    Nemo enim ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit Nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit
-                                  </p>
-                                  <p className="color-8B">
-                                    We wish him the success in future life.
-                                  </p>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                      <div className="recomdt-list">
-                        <Row>
-                          <Col md={12}>
-                            <div className="recomdt-list-inner">
-                              <Row>
-                                <Col
-                                  md={2}
-                                  className="text-center">
-                                  <div className="outline-circle-logo">
-                                    <Image
-                                      src={user_logo_1}
-                                      alt=""
-                                      className="Image-fluid outline-circle-logo"
-                                    />
-                                  </div>
-                                </Col>
-                                <Col md={10}>
-                                  <h4 className="emp-title">
-                                    C.Vignesh{" "}
-                                    <span className="designt-text">CEO</span>
-                                  </h4>
-                                  <p className="color-8B">
-                                    Nemo enim ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit Nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit nemo enim
-                                    ipsam voluptatem quia voluptas sit
-                                    aspernatur aut odit aut fugit
-                                  </p>
-                                  <p className="color-8B">
-                                    We wish him the success in future life.
-                                  </p>
-                                </Col>
-                              </Row>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
+                                    <Col md={10}>
+                                      <h4 className="emp-title">
+                                        {
+                                          info4.recommendation
+                                            .recommendationFrom
+                                        }{" "}
+                                        <span className="designt-text">
+                                          {
+                                            info4.recommendation
+                                              .recommenderDesignation
+                                          }
+                                        </span>
+                                      </h4>
+                                      <p className="color-8B">
+                                        {
+                                          info4.recommendation
+                                            .recommendationMessage
+                                        }
+                                      </p>
+                                    </Col>
+                                  </Row>
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        ) : (
+                          <></>
+                        );
+                      })}
+                      {/* endddddddddd */}
                     </Col>
                     <div className="whitespace">&nbsp;</div>
                   </Row>
