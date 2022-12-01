@@ -80,7 +80,7 @@ export default function EmployeeDetails() {
                       {/* Startttttttt */}
                       {employeeInfos
                         .filter((info2, id) => id !== 0)
-                        .sort((a, b) => (a.dateJoined > b.dateJoined ? 1 : -1))
+                        .sort((a, b) => (a.dateJoined > b.dateJoined ? -1 : 1))
                         .map((info2, id) => {
                           return id === 0 ? (
                             <div className="emp-header">
