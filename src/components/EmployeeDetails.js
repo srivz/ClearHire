@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import clogo_1 from "../assets/img/clogo-1.png";
-import user_logo_1 from "../assets/img/user-logo-1.png";
-import user_logo_2 from "../assets/img/user-logo-2.png";
 import down_icon from "../assets/img/down-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
