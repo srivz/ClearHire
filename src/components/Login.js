@@ -27,7 +27,6 @@ export default function Login() {
   useEffect(() => {
     signOut(auth);
   }, []);
-  const [disabledButton, setDisabledButton] = useState(false);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
@@ -38,10 +37,8 @@ export default function Login() {
     }
   });
   function login() {
-    setDisabledButton(true);
     try {
       setPersistence(auth, browserSessionPersistence).then(() => {
-        console.log("HERE");
         return signInWithEmailAndPassword(auth, user.emailId, user.password);
       });
     } catch (error) {
@@ -115,7 +112,6 @@ export default function Login() {
                         <Row className="form-group">
                           <Col md={12}>
                             <Button
-                              disabled={disabledButton}
                               onClick={login}
                               variant="success"
                               className="mt-4 w-100">
