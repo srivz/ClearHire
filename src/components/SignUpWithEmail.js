@@ -9,7 +9,11 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
@@ -27,32 +31,32 @@ export default function SignUpWithEmail() {
   });
   const [counter, setCounter] = useState(1);
   const [file, setFile] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [url, setUrl] = useState(null);
   const [disabledButton, setDisabledButton] = useState(false);
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      registerUser();
+    }
+  });
   const registerLogin = () => {
     createUserWithEmailAndPassword(
       auth,
       userLog.emailId,
       userLog.password
     ).then((cred) => {
-      registerUser(cred.user.uid);
+      setUserId(cred.user.uid);
     });
   };
-  const registerUser = (userId) => {
-    const userDocRef = setDoc(doc(database, "users", userId), user);
-    if (userDocRef) {
-      const companyDocRef = setDoc(doc(database, "companies", userId), {});
-      if (companyDocRef) {
-        signOut(auth);
-        window.location.href = "/";
-      } else {
-        console.log("ERROR IN COMPANY DIR");
-      }
-    } else {
-      console.log("ERROR IN USER DIR");
-    }
+  const registerUser = () => {
+    setDoc(doc(database, "users", userId), user).then(() =>
+      setDoc(doc(database, "companies", userId), {}).then(
+        () => (window.location.href = "/")
+      )
+    );
   };
+
   const handleNextButton = (event) => {
     setCounter(counter + 1);
   };
@@ -563,7 +567,7 @@ export default function SignUpWithEmail() {
                           <Col sm={6}>
                             <Button
                               className="btn btn-prev"
-                              disabled={counter === 1}
+                              disabled={counter === 1 || disabledButton}
                               onClick={handleBackButton}>
                               <Image
                                 src={previous_icon}
@@ -573,7 +577,6 @@ export default function SignUpWithEmail() {
                           </Col>
                           <Col sm={counter === 9 ? 0 : 6}>
                             <Button
-                              disabled={disabledButton}
                               className="btn btn-next"
                               onClick={handleNextButton}
                               style={{
