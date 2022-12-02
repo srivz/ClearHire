@@ -111,7 +111,7 @@ export default function Login() {
                             <p className="mt-2 forgot-label">
                               Forgot password?
                               <a
-                                href="/"
+                                href="/forgotPassword"
                                 className="text-green">
                                 <strong>click here</strong>
                               </a>

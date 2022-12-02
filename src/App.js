@@ -7,6 +7,7 @@ import AddEmployee from "./components/AddEmployee";
 import EmployeeDetails from "./components/EmployeeDetails";
 import SignUpWithEmail from "./components/SignUpWithEmail";
 import SearchResult from "./components/SearchResult";
+import ForgotPassword from "./components/ForgotPassword";
 
 export default function App() {
   return (
@@ -15,6 +16,9 @@ export default function App() {
         <Route
           path="/"
           element={<Login />}></Route>
+        <Route
+          path="/forgotPassword"
+          element={<ForgotPassword />}></Route>
         <Route
           path="/signUp"
           element={<SignUp />}></Route>
