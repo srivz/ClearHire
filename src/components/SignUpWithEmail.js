@@ -4,7 +4,7 @@ import check_icon from "../assets/img/check-icon.svg";
 import next_icon from "../assets/img/next-icon.svg";
 import previous_icon from "../assets/img/previous-icon.svg";
 import image_icon from "../assets/img/image-icon.svg";
-import NavBar from "./Navs/NavBar";
+import NavBar1 from "./Navs/NavBar1";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
@@ -112,7 +112,7 @@ export default function SignUpWithEmail() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar1 />
       <main id="main">
         <section className="welcome h-100vh">
           <Container>

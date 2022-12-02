@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
-import NavBar from "./Navs/NavBar";
+import NavBar1 from "./Navs/NavBar1";
 import linkedin_icon from "../assets/img/linkedin-icon.svg";
 import mail_outline_icon from "../assets/img/mail-outline-icon.svg";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ class SignUp extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar1 />
         <main id="main">
           <section className="welcome h-100vh">
             <Container>

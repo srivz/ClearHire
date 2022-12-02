@@ -21,6 +21,8 @@ import { Add, PersonAdd } from "@mui/icons-material";
 export default function SearchResult() {
   const [info, setInfo] = useState([]);
   const [employeeInfos, setEmployeeInfo] = useState([]);
+  const [seeMore1, setSeeMore1] = useState(4);
+  const [seeMore2, setSeeMore2] = useState(4);
 
   const employeeGet = async (uid) => {
     const employeeRef = collection(database, "companies", uid, "employees");
@@ -153,115 +155,8 @@ export default function SearchResult() {
                   <Row>
                     {employeeInfos
                       .filter((info2, id1) => info2[0].favourite === "false")
-                      .map((info2, id1) => (
-                        <Col
-                          key={info2[1]}
-                          md={6}>
-                          <div className="serach-list">
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    src={info2[0].employeeImage}
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={9}>
-                                <div className="pl-3">
-                                  <div className="wishlist">
-                                    <IconButton
-                                      onClick={() => addFavourite(info2[1])}
-                                      aria-label="delete"
-                                      size="small">
-                                      <FavoriteRoundedIcon />
-                                    </IconButton>
-                                  </div>
-                                  <h4 className="username">{info2[0].name}</h4>
-                                  <div className="user-role">
-                                    {info2[0].designation}
-                                  </div>
-                                  <p className="comments">
-                                    {info2[0].companyName}
-                                  </p>
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row>
-                              <Col md={4}>
-                                <small>Total Experience</small>
-                                <div className="title-3">06 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Current Company</small>
-                                <div className="title-3">02 years</div>
-                              </Col>
-                              <Col md={4}>
-                                <small>Salary</small>
-                                <div className="title-3">
-                                  {info2[0].salary} LPA
-                                </div>
-                              </Col>
-                            </Row>
-                            <Row className="mt-4">
-                              <Col md={6}>
-                                <div className="rating">
-                                  <RatingStar
-                                    unclickable
-                                    maxScore={5}
-                                    id={id1}
-                                    size={32}
-                                    numberOfStar={5}
-                                    noBorder="true"
-                                    colors={{ mask: "#00823b" }}
-                                    rating={info2[0].rating.overall}
-                                  />
-                                </div>
-                              </Col>
-                              <Col md={6}>
-                                <div className="text-right">
-                                  <Link
-                                    to={"/employeeDetails"}
-                                    state={{ empId: info2[1] }}>
-                                    <Button variant="success">View</Button>
-                                  </Link>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        </Col>
-                      ))}
-                  </Row>
-
-                  <Row>
-                    <Col md={12}>
-                      <div className="seemore">
-                        <a href="/searchResults">See more recomendations</a>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-
-                <div className="result-right-wrap mt-4">
-                  <Row>
-                    <Col md={12}>
-                      <div className="section-title">
-                        <h2>Saved Profiles</h2>
-                      </div>
-                      <div className="tagline-text">
-                        <h5>
-                          Nemo enim ipsam voluptatem quia voluptas sit
-                          aspernatur aut odit aut fugit.
-                        </h5>
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className="searchlist-details-main">
-                    <Row>
-                      {employeeInfos
-                        .filter((info2, id2) => info2[0].favourite === "true")
-                        .map((info2, id2) => (
+                      .map((info2, id1) => {
+                        return id1 < seeMore1 ? (
                           <Col
                             key={info2[1]}
                             md={6}>
@@ -280,10 +175,7 @@ export default function SearchResult() {
                                   <div className="pl-3">
                                     <div className="wishlist">
                                       <IconButton
-                                        onClick={() =>
-                                          deleteFavourite(info2[1])
-                                        }
-                                        color="success"
+                                        onClick={() => addFavourite(info2[1])}
                                         aria-label="delete"
                                         size="small">
                                         <FavoriteRoundedIcon />
@@ -295,7 +187,9 @@ export default function SearchResult() {
                                     <div className="user-role">
                                       {info2[0].designation}
                                     </div>
-                                    <p className="comments">Dot it agency</p>
+                                    <p className="comments">
+                                      {info2[0].companyName}
+                                    </p>
                                   </div>
                                 </Col>
                               </Row>
@@ -321,7 +215,7 @@ export default function SearchResult() {
                                     <RatingStar
                                       unclickable
                                       maxScore={5}
-                                      id={"favourite" + id2}
+                                      id={id1}
                                       size={32}
                                       numberOfStar={5}
                                       noBorder="true"
@@ -342,12 +236,134 @@ export default function SearchResult() {
                               </Row>
                             </div>
                           </Col>
-                        ))}
+                        ) : (
+                          <></>
+                        );
+                      })}
+                  </Row>
+
+                  <Row>
+                    <Col md={12}>
+                      <div className="seemore">
+                        <span onClick={() => setSeeMore1(seeMore1 + 4)}>
+                          See more recomendations
+                        </span>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                <div className="result-right-wrap mt-4">
+                  <Row>
+                    <Col md={12}>
+                      <div className="section-title">
+                        <h2>Saved Profiles</h2>
+                      </div>
+                      <div className="tagline-text">
+                        <h5>
+                          Nemo enim ipsam voluptatem quia voluptas sit
+                          aspernatur aut odit aut fugit.
+                        </h5>
+                      </div>
+                    </Col>
+                  </Row>
+                  <div className="searchlist-details-main">
+                    <Row>
+                      {employeeInfos
+                        .filter((info2, id2) => info2[0].favourite === "true")
+                        .map((info2, id2) => {
+                          return id2 < seeMore2 ? (
+                            <Col
+                              key={info2[1]}
+                              md={6}>
+                              <div className="serach-list">
+                                <Row>
+                                  <Col md={3}>
+                                    <div className="userprofile">
+                                      <Image
+                                        src={info2[0].employeeImage}
+                                        alt=""
+                                        width="60"
+                                      />
+                                    </div>
+                                  </Col>
+                                  <Col md={9}>
+                                    <div className="pl-3">
+                                      <div className="wishlist">
+                                        <IconButton
+                                          onClick={() =>
+                                            deleteFavourite(info2[1])
+                                          }
+                                          color="success"
+                                          aria-label="delete"
+                                          size="small">
+                                          <FavoriteRoundedIcon />
+                                        </IconButton>
+                                      </div>
+                                      <h4 className="username">
+                                        {info2[0].name}
+                                      </h4>
+                                      <div className="user-role">
+                                        {info2[0].designation}
+                                      </div>
+                                      <p className="comments">Dot it agency</p>
+                                    </div>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col md={4}>
+                                    <small>Total Experience</small>
+                                    <div className="title-3">06 years</div>
+                                  </Col>
+                                  <Col md={4}>
+                                    <small>Current Company</small>
+                                    <div className="title-3">02 years</div>
+                                  </Col>
+                                  <Col md={4}>
+                                    <small>Salary</small>
+                                    <div className="title-3">
+                                      {info2[0].salary} LPA
+                                    </div>
+                                  </Col>
+                                </Row>
+                                <Row className="mt-4">
+                                  <Col md={6}>
+                                    <div className="rating">
+                                      <RatingStar
+                                        unclickable
+                                        maxScore={5}
+                                        id={"favourite" + id2}
+                                        size={32}
+                                        numberOfStar={5}
+                                        noBorder="true"
+                                        colors={{ mask: "#00823b" }}
+                                        rating={info2[0].rating.overall}
+                                      />
+                                    </div>
+                                  </Col>
+                                  <Col md={6}>
+                                    <div className="text-right">
+                                      <Link
+                                        to={"/employeeDetails"}
+                                        state={{ empId: info2[1] }}>
+                                        <Button variant="success">View</Button>
+                                      </Link>
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </div>
+                            </Col>
+                          ) : (
+                            <></>
+                          );
+                        })}
                     </Row>
                     <Row>
                       <Col md={12}>
                         <div className="seemore">
-                          <a href="/">See more recomendations</a>
+                          <span onClick={() => setSeeMore2(seeMore2 + 4)}>
+                            See more recomendations
+                          </span>
                         </div>
                       </Col>
                     </Row>

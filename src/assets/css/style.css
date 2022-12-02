@@ -7,6 +7,10 @@ body {
   background: #fff;
   font-size: 16px;
 }
+.seemore {
+  cursor: pointer;
+  color: #00823b;
+}
 .align-me {
   display: flex;
   align-items: center;
