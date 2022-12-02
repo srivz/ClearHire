@@ -38,9 +38,19 @@ export default function Login() {
   });
   function login() {
     try {
-      setPersistence(auth, browserSessionPersistence).then(() => {
-        return signInWithEmailAndPassword(auth, user.emailId, user.password);
-      });
+      setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, user.emailId, user.password);
+        })
+        .catch((error) => {
+          if (error.message === "Firebase: Error (auth/user-not-found).") {
+            alert("Wrong Email ID");
+          } else if (
+            error.message === "Firebase: Error (auth/wrong-password)."
+          ) {
+            alert("Wrong Password");
+          }
+        });
     } catch (error) {
       console.log(error.message);
     }
