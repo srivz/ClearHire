@@ -67,8 +67,8 @@ export default function Login() {
                 <Image
                   src={home_bg}
                   alt=""
-                  width={610}
-                  className="Image-fluid"
+                  style={{ height: "100vh" }}
+                  className="image-fluid"
                 />
               </Col>
               <Col md={6}>

@@ -17,6 +17,7 @@ export default function EmployeeDetails() {
   const [companiesToFetch, setCompaniesToFetch] = useState();
   const [employeeInfos, setEmployeeInfo] = useState([{}]);
   const [fetched, setFetched] = useState(true);
+  const [totalExperience, setTotalExperience] = useState(0);
   const d = new Date();
   let year = d.getFullYear();
 
@@ -56,6 +57,12 @@ export default function EmployeeDetails() {
               (employeeInfos) => [...employeeInfos, data],
               data.id
             );
+          setTotalExperience(
+            0
+            // totalExperience < year - data.dateJoined.substring(0, 4)
+            //   ? year - data.dateJoined.substring(0, 4)
+            //   : totalExperience
+          );
         });
       }
     });
@@ -72,7 +79,6 @@ export default function EmployeeDetails() {
                 <div className="empdetails-inner">
                   <Row className="justify-content-center align-items-center">
                     <Col md={12}>
-                      {/* Startttttttt */}
                       {employeeInfos
                         .filter((info2, id) => id !== 0)
                         .sort((a, b) => (a.dateJoined > b.dateJoined ? -1 : 1))
@@ -114,7 +120,9 @@ export default function EmployeeDetails() {
                                   <ul className="expdetails">
                                     <li>
                                       <small>Total Experience</small>
-                                      <div className="title-3">02 years</div>
+                                      <div className="title-3">
+                                        {totalExperience} years
+                                      </div>
                                     </li>
                                     <li>
                                       <small>Current Comapny</small>
@@ -204,7 +212,6 @@ export default function EmployeeDetails() {
                                         onClick={() => {
                                           setOpen(!open);
                                         }}>
-                                        {console.log(open)}
                                         <div className="company-info-dtls">
                                           <Row className="h-100 justify-content-center align-items-center">
                                             <Col md={6}>
@@ -416,8 +423,6 @@ export default function EmployeeDetails() {
                           <h3 className="title-text mb-4">Recommendations</h3>
                         </div>
                       </Row>
-                      {/* Startttttttt */}
-
                       {employeeInfos.map((info4, id2) => {
                         return id2 !== 0 ? (
                           <div
@@ -468,7 +473,6 @@ export default function EmployeeDetails() {
                           <></>
                         );
                       })}
-                      {/* endddddddddd */}
                     </Col>
                     <div className="whitespace">&nbsp;</div>
                   </Row>

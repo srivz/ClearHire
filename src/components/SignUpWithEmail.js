@@ -80,7 +80,7 @@ export default function SignUpWithEmail() {
   function handleUpload() {
     const imageRef = ref(
       storage,
-      `/profileImages/${user.companyName}/${file.name}`
+      `/profileImages/${user.companyName}/${user.name}/${file.name}`
     );
     uploadBytes(imageRef, file)
       .then(() => {
