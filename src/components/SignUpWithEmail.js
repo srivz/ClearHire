@@ -101,8 +101,8 @@ export default function SignUpWithEmail() {
     if (userLog.password < 6) {
       alert("Password should be atleast 6 characters!!!");
     } else {
-      setDisabledButton(true);
       if (userLog.password === userLog.confirmPassword) {
+        setDisabledButton(true);
         registerLogin();
       } else {
         alert("Passwords does not match!!");
