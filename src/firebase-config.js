@@ -4,12 +4,12 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCYoCl0fvWMlfmK7mlJ5_f955pR7SzIN2w",
-  authDomain: "clearhire-2dc9f.firebaseapp.com",
-  projectId: "clearhire-2dc9f",
-  storageBucket: "clearhire-2dc9f.appspot.com",
-  messagingSenderId: "809012905621",
-  appId: "1:809012905621:web:f2f3221aaa67dd08c0fd9c"
+  apiKey: "AIzaSyDdPebuGW0S2gYcoP_ZwufD8uJgoUXMvXM",
+  authDomain: "clearhire-da22a.firebaseapp.com",
+  projectId: "clearhire-da22a",
+  storageBucket: "clearhire-da22a.appspot.com",
+  messagingSenderId: "870368708557",
+  appId: "1:870368708557:web:e088db33182d38a7606684",
 };
 
 export const fire = initializeApp(firebaseConfig);

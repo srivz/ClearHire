@@ -126,7 +126,7 @@ export default function SearchResult() {
                   </div>
                   <br />
                   <div className="upload-emp-details">
-                    <Link to="/addEmployee">
+                    <Link to="/addRecruit">
                       <span className="uploaddtls">
                         <PersonAdd />
                         <br />

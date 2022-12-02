@@ -8,6 +8,7 @@ import EmployeeDetails from "./components/EmployeeDetails";
 import SignUpWithEmail from "./components/SignUpWithEmail";
 import SearchResult from "./components/SearchResult";
 import ForgotPassword from "./components/ForgotPassword";
+import AddRecruit from "./components/AddRecruit";
 
 export default function App() {
   return (
@@ -31,6 +32,9 @@ export default function App() {
         <Route
           path="/addEmployee"
           element={<AddEmployee />}></Route>
+        <Route
+          path="/addRecruit"
+          element={<AddRecruit />}></Route>
         <Route
           path="/employeeDetails"
           element={<EmployeeDetails />}></Route>

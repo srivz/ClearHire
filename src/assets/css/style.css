@@ -7,6 +7,36 @@ body {
   background: #fff;
   font-size: 16px;
 }
+.recruit-file input {
+  display: none;
+}
+.recruit-file .label {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  color: #00823b;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  border-color: #00823b;
+  border: 1px solid;
+}
+.recruit-file .label:hover {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  padding-left: 30px;
+  color: #00823b;
+  background-color: rgb(248, 253, 245);
+  border-color: #00823b;
+  border: 1px solid;
+}
+.label-icon {
+  float: right;
+  font-size: 18px;
+}
 .seemore {
   cursor: pointer;
   color: #00823b;
