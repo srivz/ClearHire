@@ -12,6 +12,7 @@ import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
 import {
   browserSessionPersistence,
+  onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -23,24 +24,28 @@ export default function Login() {
     emailId: "",
     password: "",
   });
-  signOut(auth);
+  const [disabledButton, setDisabledButton] = useState(false);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
   };
-  const login = async () => {
+  signOut(auth);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      window.location.href = "/searchResults";
+    }
+  });
+  function login() {
+    setDisabledButton(true);
     try {
       setPersistence(auth, browserSessionPersistence).then(() => {
+        console.log("HERE");
         return signInWithEmailAndPassword(auth, user.emailId, user.password);
       });
-
-      if (auth.currentUser) {
-        window.location.href = "/searchResults";
-      }
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }
 
   return (
     <div>
@@ -108,6 +113,7 @@ export default function Login() {
                         <Row className="form-group">
                           <Col md={12}>
                             <Button
+                              disabled={disabledButton}
                               onClick={login}
                               variant="success"
                               className="mt-4 w-100">

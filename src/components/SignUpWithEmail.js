@@ -9,7 +9,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
@@ -20,7 +20,6 @@ export default function SignUpWithEmail() {
     profileImage: "",
     yearStarted: "",
   });
-  const [userId, setUserId] = useState(null);
   const [userLog, setUserLog] = useState({
     emailId: "",
     password: "",
@@ -29,30 +28,30 @@ export default function SignUpWithEmail() {
   const [counter, setCounter] = useState(1);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+  const [disabledButton, setDisabledButton] = useState(false);
 
-  const registerLogin = async () => {
-    await createUserWithEmailAndPassword(
+  const registerLogin = () => {
+    createUserWithEmailAndPassword(
       auth,
       userLog.emailId,
       userLog.password
     ).then((cred) => {
-      setUserId(cred.user.uid);
+      registerUser(cred.user.uid);
     });
   };
-  const registerUser = async () => {
-    await setDoc(doc(database, "users", userId), user)
-      .then(() => {
-        setDoc(doc(database, "companies", userId), {})
-          .then(() => {
-            window.location.href = "/";
-          })
-          .catch((err1) => {
-            console.log(err1.message);
-          });
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  const registerUser = (userId) => {
+    const userDocRef = setDoc(doc(database, "users", userId), user);
+    if (userDocRef) {
+      const companyDocRef = setDoc(doc(database, "companies", userId), {});
+      if (companyDocRef) {
+        signOut(auth);
+        window.location.href = "/";
+      } else {
+        console.log("ERROR IN COMPANY DIR");
+      }
+    } else {
+      console.log("ERROR IN USER DIR");
+    }
   };
   const handleNextButton = (event) => {
     setCounter(counter + 1);
@@ -96,8 +95,9 @@ export default function SignUpWithEmail() {
     if (userLog.password < 6) {
       alert("Password should be atleast 6 characters!!!");
     } else {
+      setDisabledButton(true);
       if (userLog.password === userLog.confirmPassword) {
-        registerLogin().then(registerUser());
+        registerLogin();
       } else {
         alert("Passwords does not match!!");
       }
@@ -573,6 +573,7 @@ export default function SignUpWithEmail() {
                           </Col>
                           <Col sm={counter === 9 ? 0 : 6}>
                             <Button
+                              disabled={disabledButton}
                               className="btn btn-next"
                               onClick={handleNextButton}
                               style={{
@@ -584,6 +585,7 @@ export default function SignUpWithEmail() {
                               />
                             </Button>
                             <Button
+                              disabled={disabledButton}
                               className="btn btn-submit"
                               onClick={handleSubmit}
                               style={{
