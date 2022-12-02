@@ -12,7 +12,6 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
 } from "firebase/auth";
 
 export default function SignUpWithEmail() {

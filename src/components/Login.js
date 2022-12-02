@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import home_bg from "../assets/img/home-bg.png";
 import search_icon from "../assets/img/search-icon.svg";
 import chat_icon from "../assets/img/chat-icon.svg";
@@ -24,12 +24,14 @@ export default function Login() {
     emailId: "",
     password: "",
   });
+  useEffect(() => {
+    signOut(auth);
+  }, []);
   const [disabledButton, setDisabledButton] = useState(false);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
   };
-  signOut(auth);
   onAuthStateChanged(auth, (user) => {
     if (user) {
       window.location.href = "/searchResults";
