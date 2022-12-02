@@ -78,7 +78,10 @@ export default function SignUpWithEmail() {
     }
   }
   function handleUpload() {
-    const imageRef = ref(storage, `/profileImages/${file.name}`);
+    const imageRef = ref(
+      storage,
+      `/profileImages/${user.companyName}/${file.name}`
+    );
     uploadBytes(imageRef, file)
       .then(() => {
         getDownloadURL(imageRef)
@@ -576,6 +579,7 @@ export default function SignUpWithEmail() {
                           </Col>
                           <Col sm={counter === 9 ? 0 : 6}>
                             <Button
+                              disabled={counter === 5 && url === null}
                               className="btn btn-next"
                               onClick={handleNextButton}
                               style={{

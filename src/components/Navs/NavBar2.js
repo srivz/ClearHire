@@ -50,9 +50,9 @@ export default function NavBar2() {
                   className="mb-2 options"
                   aria-label="Default select example">
                   <option>Designation</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  <option value="srdeveloper">Sr. Developer</option>
+                  <option value="developer">Developer</option>
+                  <option value="tester">Tester</option>
                 </Form.Select>
               </Form>
               <Form className="d-flex">
