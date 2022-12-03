@@ -56,10 +56,22 @@ export default function AddEmployee() {
     }
   });
   function handleFileChange(event) {
-    if (event.target.files[0]) {
+    if (
+      event.target.files[0] &&
+      (event.target.files[0].type === "image/png" ||
+        event.target.files[0].type === "image/jpeg" ||
+        event.target.files[0].type === "image/jpg" ||
+        event.target.files[0].type === "image/bmp" ||
+        event.target.files[0].type === "image/gif" ||
+        event.target.files[0].type === "image/webp")
+    ) {
       setFile(event.target.files[0]);
+    } else {
+      alert(event.target.files[0].type);
+      alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
+
   function handleUpload() {
     const imageRef = ref(storage, `/employeeImages/${file.name}`);
     uploadBytes(imageRef, file)
@@ -304,6 +316,7 @@ export default function AddEmployee() {
                                         className="mb-2"
                                         type="file"
                                         name="file"
+                                        accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
                                         onChange={handleFileChange}
                                       />
                                     </Col>

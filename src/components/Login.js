@@ -32,7 +32,7 @@ export default function Login() {
     setUser({ ...user, ...newInput });
   };
   onAuthStateChanged(auth, (user) => {
-    if (user) {
+    if (user && user.emailVerified) {
       window.location.href = "/searchResults";
     }
   });
@@ -40,7 +40,11 @@ export default function Login() {
     try {
       setPersistence(auth, browserSessionPersistence)
         .then(() => {
-          return signInWithEmailAndPassword(auth, user.emailId, user.password);
+          signInWithEmailAndPassword(auth, user.emailId, user.password);
+          if (!auth.currentUser.emailVerified) {
+            alert("User not verified yet !!!");
+            window.location.href = "/emailVerification";
+          }
         })
         .catch((error) => {
           if (error.message === "Firebase: Error (auth/user-not-found).") {

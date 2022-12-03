@@ -42,9 +42,14 @@ export default function AddRecruit() {
     }
   });
   function handleFileChange(event) {
-    if (event.target.files[0]) {
+    if (
+      event.target.files[0] &&
+      event.target.files[0].type === "application/pdf"
+    ) {
       setFile(event.target.files[0]);
       handleUpload(event.target.files[0]);
+    } else {
+      alert("Upload .pdf file !!!");
     }
   }
 
@@ -334,6 +339,7 @@ export default function AddRecruit() {
                                   <Form.Control
                                     className="mb-2"
                                     type="file"
+                                    accept=".pdf"
                                     name="file"
                                     onChange={handleFileChange}
                                   />

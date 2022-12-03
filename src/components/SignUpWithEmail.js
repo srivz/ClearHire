@@ -51,7 +51,7 @@ export default function SignUpWithEmail() {
   const registerUser = () => {
     setDoc(doc(database, "users", userId), user).then(() =>
       setDoc(doc(database, "companies", userId), {}).then(
-        () => (window.location.href = "/")
+        () => (window.location.href = "/emailVerification")
       )
     );
   };
@@ -73,8 +73,20 @@ export default function SignUpWithEmail() {
     setUserLog({ ...userLog, ...newInput1 });
   };
   function handleFileChange(event) {
-    if (event.target.files[0]) {
+    if (
+      event.target.files[0] &&
+      (event.target.files[0].type === "image/png" ||
+        event.target.files[0].type === "image/jpeg" ||
+        event.target.files[0].type === "image/jpg" ||
+        event.target.files[0].type === "image/bmp" ||
+        event.target.files[0].type === "image/gif" ||
+        event.target.files[0].type === "image/webp")
+    ) {
+      alert(event.target.files[0].type);
       setFile(event.target.files[0]);
+    } else {
+      alert(event.target.files[0].type);
+      alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
   function handleUpload() {
@@ -381,6 +393,7 @@ export default function SignUpWithEmail() {
                                     <Form.Control
                                       className="mb-2"
                                       type="file"
+                                      accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
                                       name="file"
                                       onChange={handleFileChange}
                                     />

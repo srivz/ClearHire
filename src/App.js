@@ -10,6 +10,7 @@ import SearchResult from "./components/SearchResult";
 import ForgotPassword from "./components/ForgotPassword";
 import AddRecruit from "./components/AddRecruit";
 import SendNotificationToRecruit from "./components/SendNotificationToRecruit";
+import EmailSent from "./components/EmailSent";
 
 export default function App() {
   return (
@@ -24,6 +25,9 @@ export default function App() {
         <Route
           path="/signUp"
           element={<SignUp />}></Route>
+        <Route
+          path="/emailVerification"
+          element={<EmailSent />}></Route>
         <Route
           path="/signUp/email"
           element={<SignUpWithEmail />}></Route>
