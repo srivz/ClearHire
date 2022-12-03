@@ -82,10 +82,8 @@ export default function SignUpWithEmail() {
         event.target.files[0].type === "image/gif" ||
         event.target.files[0].type === "image/webp")
     ) {
-      alert(event.target.files[0].type);
       setFile(event.target.files[0]);
     } else {
-      alert(event.target.files[0].type);
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }

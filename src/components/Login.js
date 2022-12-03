@@ -56,7 +56,7 @@ export default function Login() {
           }
         });
     } catch (error) {
-      console.log(error.message);
+      alert("User not Found. Sign Up first !!");
     }
   }
 
