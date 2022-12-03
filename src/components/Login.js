@@ -48,7 +48,7 @@ export default function Login() {
         })
         .catch((error) => {
           if (error.message === "Firebase: Error (auth/user-not-found).") {
-            alert("Wrong Email ID");
+            alert("User not Found. Sign Up first !!");
           } else if (
             error.message === "Firebase: Error (auth/wrong-password)."
           ) {
