@@ -10,7 +10,6 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function AddRecruit() {
   const [recruit, setRecruit] = useState({
     name: "",
-    recruitImage: "",
     dateOfBirth: "",
     dateJoined: "",
     designation: "",
@@ -20,7 +19,7 @@ export default function AddRecruit() {
     offerLetter: "",
     bonus: "",
   });
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState({ name: "Upload Offer Letter" });
   const [disabledButton, setDisabledButton] = useState(false);
   const [info, setInfo] = useState([]);
 
@@ -29,8 +28,7 @@ export default function AddRecruit() {
     setRecruit({ ...recruit, ...newInput });
   };
   const handleSubmit = () => {
-    setDisabledButton(true);
-    registerRecruit();
+    if (recruit.offerLetter) registerRecruit();
   };
 
   onAuthStateChanged(auth, (user) => {
@@ -45,14 +43,15 @@ export default function AddRecruit() {
   });
   function handleFileChange(event) {
     if (event.target.files[0]) {
-      const file = setFile(event.target.files[0]);
-      if (file) handleUpload();
+      setFile(event.target.files[0]);
+      handleUpload(event.target.files[0]);
     }
   }
-  function handleUpload() {
+
+  function handleUpload(file) {
     const offerLetterRef = ref(
       storage,
-      `/offerLetters/${recruit.adhaarCardNumber}/${file.name}`
+      "/offerLetters/" + recruit.adhaarCardNumber + "/" + file.name
     );
     uploadBytes(offerLetterRef, file)
       .then(() => {
@@ -92,11 +91,12 @@ export default function AddRecruit() {
       docData
     )
       .then(() => {
+        setDisabledButton(true);
         // updateDoc(doc(database, "employees", recruit.adhaarCardNumber), {
         //   companies: arrayUnion(auth.currentUser.uid),
         // })
         //   .then(() => {
-        window.location.href = "/searchResults";
+        window.location.href = "/addRecruit/send";
         // })
         // .catch((err) => {
         //   setDoc(doc(database, "employees", recruit.adhaarCardNumber), {
@@ -142,13 +142,12 @@ export default function AddRecruit() {
                               aspernatur aut odit aut fugit.
                             </p>
                           </div>
-                          <div className="addemp-form">
+                          <div className="recruit-add-form ">
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Recruit Name*</Form.Label>
                                   <Form.Control
                                     type="text"
                                     required
@@ -164,16 +163,21 @@ export default function AddRecruit() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
-                                  className="mb-3"
+                                  className="mb-3 dob"
                                   controlId="formBasicName">
-                                  <Form.Label>Date Of Birth*</Form.Label>
                                   <Form.Control
                                     type="date"
                                     required
+                                    placeholder={
+                                      recruit.dateOfBirth === ""
+                                        ? "Date Of Birth*"
+                                        : recruit.dateOfBirth
+                                    }
                                     name="dateOfBirth"
                                     defaultValue={recruit.dateOfBirth}
                                     onChange={handleChange}
                                   />
+                                  <div class="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -182,35 +186,46 @@ export default function AddRecruit() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Date Of Joining*</Form.Label>
                                   <Form.Control
                                     type="date"
                                     required
+                                    placeholder={
+                                      recruit.dateJoined === ""
+                                        ? "Date Of Joined*"
+                                        : recruit.dateJoined
+                                    }
                                     name="dateJoined"
                                     defaultValue={recruit.dateJoined}
                                     onChange={handleChange}
                                   />
+                                  <div class="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group className="mb-3">
-                                  <Form.Label>Designation*</Form.Label>
                                   <Form.Select
                                     required
                                     name="designation"
-                                    className="form-control"
-                                    aria-label="Default select example"
+                                    placeholder="Designation*"
+                                    className="form-control select"
                                     defaultValue={recruit.designation}
                                     onChange={handleChange}>
-                                    <option value=""></option>
+                                    <option
+                                      value=""
+                                      hidden>
+                                      Designation*
+                                    </option>
                                     <option value="Developer">Developer</option>
                                     <option value="Sr. Developer">
                                       Sr. Developer
                                     </option>
                                     <option value="Tester">Tester</option>
                                   </Form.Select>
+                                  <div class="input-down-angle-icon">
+                                    <div class="input-down-angle-icon-hide"></div>
+                                  </div>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -219,7 +234,6 @@ export default function AddRecruit() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Adhaar Card Number*</Form.Label>
                                   <Form.Control
                                     type="number"
                                     required
@@ -239,7 +253,6 @@ export default function AddRecruit() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Location*</Form.Label>
                                   <Form.Control
                                     type="text"
                                     required
@@ -257,7 +270,6 @@ export default function AddRecruit() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Salary*</Form.Label>
                                   <Form.Control
                                     type="number"
                                     required
@@ -273,6 +285,7 @@ export default function AddRecruit() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
+                                  onChange={handleChange}
                                   controlId="formFile"
                                   className="mb-3">
                                   <Row>
@@ -286,8 +299,9 @@ export default function AddRecruit() {
                                         type="radio"
                                         name="bonus"
                                         label="Yes"
-                                        aria-label="radio 1"
-                                        id={`inline-radio-1`}
+                                        value="Yes"
+                                        aria-label="radio"
+                                        id="inline-radio-1"
                                       />
                                     </Col>
                                     <Col md="auto">
@@ -295,8 +309,9 @@ export default function AddRecruit() {
                                         type="radio"
                                         label="No"
                                         name="bonus"
-                                        aria-label="radio 1"
-                                        id={`inline-radio-2`}
+                                        value="No"
+                                        aria-label="radio"
+                                        id="inline-radio-2"
                                       />
                                     </Col>
                                   </Row>
@@ -309,9 +324,11 @@ export default function AddRecruit() {
                                   controlId="formFile"
                                   className="mb-3 recruit-file">
                                   <Form.Label className="mb-2 label">
-                                    Upload Offer Letter
+                                    {file !== null
+                                      ? file.name
+                                      : "Upload Offer Letter"}
                                     <span className="label-icon">
-                                      <i class="fa-solid fa-plus"></i>
+                                      <i className="fa-solid fa-plus"></i>
                                     </span>
                                   </Form.Label>
                                   <Form.Control
@@ -345,6 +362,8 @@ export default function AddRecruit() {
               </Container>
             </section>
           </main>
+          <p />
+          <p />
           <Footer />
         </Row>
       </Container>

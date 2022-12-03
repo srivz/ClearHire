@@ -7,10 +7,104 @@ body {
   background: #fff;
   font-size: 16px;
 }
-.recruit-file input {
+.recruit-add-form .recruit-file input {
   display: none;
 }
-.recruit-file .label {
+.recruit-add-form input[type="date"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 2px 2px #e7e7e7;
+}
+.recruit-add-form input[type="date"]::before {
+  content: attr(placeHolder);
+  width: 100%;
+}
+.recruit-add-form input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.recruit-add-form input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.recruit-add-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  width: 20%;
+  z-index: 5;
+  padding: 0px;
+}
+
+.recruit-add-form .select {
+  width: 100%;
+  content: attr(placeHolder);
+  padding: 5px;
+  padding-top: 10px;
+  padding-left: 30px;
+  border-radius: 0%;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 2px 2px #e7e7e7;
+}
+.recruit-add-form Form.Select::-ms-expand {
+  display: none;
+}
+.recruit-add-form .input-down-angle-icon {
+  position: relative;
+}
+Form.Select::-ms-expand {
+  display: none;
+}
+.input-down-angle-icon-hide {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: -35px;
+  right: 15px;
+  margin: auto;
+  pointer-events: none;
+  z-index: 4;
+}
+.recruit-add-form .input-down-angle-icon:after {
+  font-family: "FontAwesome";
+  content: "\f107";
+  border-radius: 50%;
+  pointer-events: none;
+  font-weight: bold;
+  border: 2px solid rgb(0, 0, 0);
+  padding: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  margin: auto;
+  margin-right: 50px;
+  top: -38px;
+  right: 0px;
+}
+.recruit-add-form .recruit-file .label {
   width: 100%;
   padding: 5px;
   padding-top: 10px;
@@ -20,21 +114,22 @@ body {
   color: #00823b;
   padding-bottom: 10px;
   background-color: rgb(255, 255, 255);
-  border-color: #00823b;
-  border: 1px solid;
+  border-color: #06b153;
+  border: 2px solid;
 }
-.recruit-file .label:hover {
+.recruit-add-form .recruit-file .label:hover {
   width: 100%;
   height: fit-content;
   padding: 10px;
   padding-left: 30px;
   color: #00823b;
-  background-color: rgb(248, 253, 245);
-  border-color: #00823b;
-  border: 1px solid;
+  background-color: rgb(248, 248, 248);
+  border-color: #06b153;
+  border: 2px solid;
 }
 .label-icon {
   float: right;
+  margin-right: 30px;
   font-size: 18px;
 }
 .seemore {
