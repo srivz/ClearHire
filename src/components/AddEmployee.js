@@ -67,7 +67,7 @@ export default function AddEmployee() {
     ) {
       setFile(event.target.files[0]);
     } else {
-      alert(event.target.files[0].type);
+      setFile(null);
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
@@ -311,7 +311,7 @@ export default function AddEmployee() {
                                   className="mb-3">
                                   <Form.Label>Employee Photo*</Form.Label>
                                   <Row>
-                                    <Col sm={9}>
+                                    <Col sm={10}>
                                       <Form.Control
                                         className="mb-2"
                                         type="file"
@@ -320,7 +320,7 @@ export default function AddEmployee() {
                                         onChange={handleFileChange}
                                       />
                                     </Col>
-                                    <Col sm={3}>
+                                    <Col sm={2}>
                                       <Button
                                         className="mb-2"
                                         onClick={handleUpload}>
