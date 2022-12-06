@@ -287,20 +287,14 @@ export default function AddEmployee() {
                               <Col md={12}>
                                 <Form.Group className="mb-3">
                                   <Form.Label>Designation*</Form.Label>
-                                  <Form.Select
+                                  <Form.Control
+                                    type="text"
                                     required
                                     name="designation"
-                                    className="form-control"
-                                    aria-label="Default select example"
+                                    placeholder="Designation"
                                     defaultValue={employee.designation}
-                                    onChange={handleChange}>
-                                    <option value=""></option>
-                                    <option value="Developer">Developer</option>
-                                    <option value="Sr. Developer">
-                                      Sr. Developer
-                                    </option>
-                                    <option value="Tester">Tester</option>
-                                  </Form.Select>
+                                    onChange={handleChange}
+                                  />
                                 </Form.Group>
                               </Col>
                             </Row>
