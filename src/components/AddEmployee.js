@@ -101,8 +101,8 @@ export default function AddEmployee() {
       linkedIn: employee.linkedIn,
       salary: employee.salary,
       recommendation: {
-        recommendationFrom: employee.recommendationFrom,
-        recommenderDesignation: employee.recommenderDesignation,
+        recommendationFrom: info.name,
+        recommenderDesignation: info.yourDesignation,
         recommendationMessage: employee.recommendationMessage,
       },
       rating: {
@@ -397,12 +397,11 @@ export default function AddEmployee() {
                                         <Form.Control
                                           type="text"
                                           required
+                                          disabled
                                           className="form-control"
                                           name="recommendationFrom"
-                                          placeholder="Recommendation from (Name)"
-                                          defaultValue={
-                                            employee.recommendationFrom
-                                          }
+                                          placeholder={info.name}
+                                          defaultValue={info.name}
                                           onChange={handleChange}
                                         />
                                         <Form.Text className="text-muted"></Form.Text>
@@ -417,12 +416,11 @@ export default function AddEmployee() {
                                         <Form.Control
                                           type="text"
                                           required
+                                          disabled
                                           className="form-control"
                                           name="recommenderDesignation"
-                                          placeholder="Designation"
-                                          defaultValue={
-                                            employee.recommenderDesignation
-                                          }
+                                          placeholder={info.yourDesignation}
+                                          defaultValue={info.yourDesignation}
                                           onChange={handleChange}
                                         />
                                         <Form.Text className="text-muted"></Form.Text>

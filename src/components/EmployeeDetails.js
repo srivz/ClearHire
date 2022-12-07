@@ -58,7 +58,7 @@ export default function EmployeeDetails() {
               data.id
             );
           setTotalExperience(
-            0
+            "--"
             // totalExperience < year - data.dateJoined.substring(0, 4)
             //   ? year - data.dateJoined.substring(0, 4)
             //   : totalExperience
@@ -259,148 +259,201 @@ export default function EmployeeDetails() {
                                           <Collapse in={open}>
                                             <div className="rating-details">
                                               <Row>
-                                                <Col md={3}>
-                                                  <p>Communication</p>
+                                                <Col>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Communication</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "1"}
+                                                        size={32}
+                                                        numberOfStar={5}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .communication
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Attitude</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "2"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating.attitude
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Ability to learn</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "3"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .abilityToLearn
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Punctuality</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "4"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .punctuality
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Commitment</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "5"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .commitment
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Trustworthiness</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "6"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .trustworthiness
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Skill</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "7"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating.skill
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
+                                                  <Row>
+                                                    <Col md={3}>
+                                                      <p>Team Player</p>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                      <RatingStar
+                                                        unclickable
+                                                        maxScore={5}
+                                                        id={id1 + "8"}
+                                                        size={32}
+                                                        noBorder="true"
+                                                        colors={{
+                                                          mask: "#00823b",
+                                                        }}
+                                                        rating={
+                                                          info3.rating
+                                                            .teamPlayer
+                                                        }
+                                                      />
+                                                    </Col>
+                                                  </Row>
                                                 </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "1"}
-                                                    size={32}
-                                                    numberOfStar={5}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating.communication
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Attitude</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "2"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating.attitude
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Ability to learn</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "3"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating
-                                                        .abilityToLearn
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Punctuality</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "4"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating.punctuality
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Commitment</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "5"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating.commitment
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Trustworthiness</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "6"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating
-                                                        .trustworthiness
-                                                    }
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Skill</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "7"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={info3.rating.skill}
-                                                  />
-                                                </Col>
-                                              </Row>
-                                              <Row>
-                                                <Col md={3}>
-                                                  <p>Team Player</p>
-                                                </Col>
-                                                <Col md={4}>
-                                                  <RatingStar
-                                                    unclickable
-                                                    maxScore={5}
-                                                    id={id1 + "8"}
-                                                    size={32}
-                                                    noBorder="true"
-                                                    colors={{ mask: "#00823b" }}
-                                                    rating={
-                                                      info3.rating.teamPlayer
-                                                    }
-                                                  />
+                                                <Col>
+                                                  <Row>
+                                                    <Col md={10}>
+                                                      <h4 className="emp-title">
+                                                        {
+                                                          info3.recommendation
+                                                            .recommendationFrom
+                                                        }
+                                                      </h4>
+                                                      {"  "}
+                                                      <h5>
+                                                        <span className="designt-text">
+                                                          {
+                                                            info3.recommendation
+                                                              .recommenderDesignation
+                                                          }
+                                                        </span>
+                                                      </h5>
+                                                      <p className="color-8B">
+                                                        {
+                                                          info3.recommendation
+                                                            .recommendationMessage
+                                                        }
+                                                      </p>
+                                                    </Col>
+                                                  </Row>
                                                 </Col>
                                               </Row>
                                             </div>
@@ -418,7 +471,7 @@ export default function EmployeeDetails() {
                           </div>
                         </Col>
                       </Row>
-                      <Row>
+                      {/* <Row>
                         <div className="col-md-12">
                           <h3 className="title-text mb-4">Recommendations</h3>
                         </div>
@@ -472,7 +525,7 @@ export default function EmployeeDetails() {
                         ) : (
                           <></>
                         );
-                      })}
+                      })} */}
                     </Col>
                     <div className="whitespace">&nbsp;</div>
                   </Row>

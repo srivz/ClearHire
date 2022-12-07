@@ -23,6 +23,8 @@ export default function SearchResult() {
   const [employeeInfos, setEmployeeInfo] = useState([]);
   const [seeMore1, setSeeMore1] = useState(4);
   const [seeMore2, setSeeMore2] = useState(4);
+  const d = new Date();
+  let year = d.getFullYear();
 
   const employeeGet = async (uid) => {
     const employeeRef = collection(database, "companies", uid, "employees");
@@ -196,11 +198,14 @@ export default function SearchResult() {
                               <Row>
                                 <Col md={4}>
                                   <small>Total Experience</small>
-                                  <div className="title-3">06 years</div>
+                                  <div className="title-3">-- years</div>
                                 </Col>
                                 <Col md={4}>
                                   <small>Current Company</small>
-                                  <div className="title-3">02 years</div>
+                                  <div className="title-3">
+                                    {year - info2[0].dateJoined.substring(0, 4)}{" "}
+                                    years
+                                  </div>
                                 </Col>
                                 <Col md={4}>
                                   <small>Salary</small>

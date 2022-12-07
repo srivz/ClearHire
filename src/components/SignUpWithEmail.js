@@ -338,15 +338,14 @@ export default function SignUpWithEmail() {
                           <Col md={12}>
                             <Form.Group className="mb-3">
                               <Form.Label>Your Designation</Form.Label>
-                              <Form.Select
+
+                              <Form.Control
+                                type="text"
                                 required
                                 name="yourDesignation"
                                 defaultValue={user.yourDesignation}
                                 onChange={handleChange}
-                                className="form-control">
-                                <option value=""></option>
-                                <option value="Founder">Founder</option>
-                              </Form.Select>
+                              />
                             </Form.Group>
                           </Col>
                         </Row>
