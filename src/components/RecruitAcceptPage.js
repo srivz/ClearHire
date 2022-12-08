@@ -1,257 +1,178 @@
-import React, { useState, useEffect } from "react";
-import home_bg from "../assets/img/home-bg.png";
-import search_icon from "../assets/img/search-icon.svg";
-import chat_icon from "../assets/img/chat-icon.svg";
-import work_icon from "../assets/img/work-icon.svg";
-import simple_work_icon from "../assets/img/simple-work-icon.svg";
-import youtube_searched_icon from "../assets/img/youtube-searched-icon.svg";
-import search_dollar_icon from "../assets/img/search-dollar-icon.svg";
+import React, { useState } from "react";
+
 import "../assets/css/style.css";
-import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
-import NavBar from "./Navs/NavBar";
+import { Button, Col, Container, Image, Row } from "react-bootstrap";
+import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
-import {
-  browserSessionPersistence,
-  onAuthStateChanged,
-  setPersistence,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { auth } from "../firebase-config.js";
+// import {
+//   browserSessionPersistence,
+//   onAuthStateChanged,
+//   setPersistence,
+//   signInWithEmailAndPassword,
+//   signOut,
+// } from "firebase/auth";
+// import { auth } from "../firebase-config.js";
 
 export default function RecruitAcceptPage() {
-//   const [user, setUser] = useState({
-//     emailId: "",
-//     password: "",
-//   });
-//   useEffect(() => {
-//     signOut(auth);
-//   }, []);
-//   const handleChangeForm = (event) => {
-//     let newInput = { [event.target.name]: event.target.value };
-//     setUser({ ...user, ...newInput });
-  };
-//   onAuthStateChanged(auth, (user) => {
-//     if (user && user.emailVerified) {
-//       window.location.href = "/searchResults";
-//     }
-//   });
-  function login() {
+  const [file, setFile] = useState(
+    "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/sample.pdf?alt=media&token=bcd4b969-c710-42da-b509-99f9a00668ad"
+  );
+
+  //   const [user, setUser] = useState({
+  //     emailId: "",
+  //     password: "",
+  //   });
+  //   useEffect(() => {
+  //     signOut(auth);
+  //   }, []);
+  //   const handleChangeForm = (event) => {
+  //     let newInput = { [event.target.name]: event.target.value };
+  //     setUser({ ...user, ...newInput });
+  // };
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user && user.emailVerified) {
+  //       window.location.href = "/searchResults";
+  //     }
+  //   });
+  function accept() {
     try {
-      setPersistence(auth, browserSessionPersistence)
-        .then(() => {
-          signInWithEmailAndPassword(auth, user.emailId, user.password);
-          if (!auth.currentUser.emailVerified) {
-            alert("User not verified yet !!!");
-            window.location.href = "/emailVerification";
-          }
-        })
-        .catch((error) => {
-          if (error.message === "Firebase: Error (auth/user-not-found).") {
-            alert("User not Found. Sign Up first !!");
-          } else if (
-            error.message === "Firebase: Error (auth/wrong-password)."
-          ) {
-            alert("Wrong Password");
-          }
-        });
+      // setPersistence(auth, browserSessionPersistence)
+      //   .then(() => {
+      //     signInWithEmailAndPassword(auth, user.emailId, user.password);
+      //     if (!auth.currentUser.emailVerified) {
+      //       alert("User not verified yet !!!");
+      //       window.location.href = "/emailVerification";
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     if (error.message === "Firebase: Error (auth/user-not-found).") {
+      //       alert("User not Found. Sign Up first !!");
+      //     } else if (
+      //       error.message === "Firebase: Error (auth/wrong-password)."
+      //     ) {
+      //       alert("Wrong Password");
+      //     }
+      //   });
     } catch (error) {
-      alert("User not Found. Sign Up first !!");
+      // alert("User not Found. Sign Up first !!");
     }
   }
 
   return (
     <div>
-      <NavBar />
-      <div className="main">
-        <section className="home-login">
-          <Container fluid>
-            <Row className="justify-content-center align-items-center">
-              <Col md={6}>
-                <Image
-                  src={home_bg}
-                  alt=""
-                  style={{ position: "relative", top: "10px", width: "50vw" }}
-                  className="image-fluid"
-                />
-              </Col>
-              <Col md={6}>
-                <Row>
-                  <Col md={3}>&nbsp;</Col>
-                  <Col md={6}>
-                    <div className="loginwrap">
-                      <div className="text-center">
-                        <h4 className="mb-5">Login to your account</h4>
-                      </div>
-                      <form action="">
-                        <Row className="form-group">
-                          <Col md={12}>
-                            <Form.Control
-                              type="text"
-                              name="emailId"
-                              onChange={handleChangeForm}
-                              className="form-control"
-                              defaultValue={user.emailId}
-                              placeholder="Email address"
+      <Container>
+        <Row>
+          <NavBar3 />
+          <main id="main">
+            <section className="empdetails-wrap">
+              <Container>
+                <div className="empdetails-inner">
+                  <Row className="justify-content-center align-items-center">
+                    <Col md={12}>
+                      <h1>Hi! Raja Kamaraj</h1>
+                      <p>
+                        Please check all the details and offer leter before
+                        accepting.
+                      </p>
+                    </Col>
+                    <div className="whitespace">&nbsp;</div>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Col md={6}>
+                      <h1>Employee Details</h1>
+                      <br />
+                      <Row className="justify-content-left align-items-left">
+                        <Col md={4}>
+                          <p>Name</p>
+                          <br />
+                          <p>Age</p>
+                          <br />
+                          <p>Designation</p>
+                          <br />
+                          <p>Location</p>
+                          <br />
+                          <p>Salary</p>
+                        </Col>
+                        <Col md={6}>
+                          <p>Raja Kamaraj</p>
+                          <br />
+                          <p>28</p>
+                          <br />
+                          <p>Portrait Artist. Then and There Agency</p>
+                          <br />
+                          <p>Chennai, Tamil Nadu, India</p>
+                          <br />
+                          <p>6.5 LPA + Bonus</p>
+                        </Col>
+                        <div className="whitespace">&nbsp;</div>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <h1>Employer</h1>
+                      <Row className="justify-content-center align-items-center">
+                        <Col md={2}>
+                          <p>
+                            <div className="userprofile">
+                              <Image
+                                src=""
+                                alt=""
+                                width="60"
+                              />
+                            </div>
+                          </p>
+                        </Col>
+                        <Col md={8}>
+                          <h4>Brand Moustache</h4>
+                          <p />
+                          Since 2009
+                        </Col>
+                        <div className="whitespace">&nbsp;</div>
+                      </Row>
+                    </Col>
+                    <div className="whitespace">&nbsp;</div>
+                  </Row>
+                  <Row className="justify-content-center">
+                    <Col md={12}>
+                      <h1>Offer Letter</h1>
+                      <Row className="justify-content-center align-items-center">
+                        <Col md={12}>
+                          <center>
+                            <embed
+                              type="application/pdf"
+                              src={file}
+                              width="1000"
+                              height="770"
                             />
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row className="form-group">
-                          <Col md={12}>
-                            <Form.Control
-                              type="password"
-                              name="password"
-                              onChange={handleChangeForm}
-                              defaultValue={user.password}
-                              className="form-control"
-                              placeholder="Password"
-                            />
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row className="form-group">
-                          <Col md={12}>
-                            <p className="mt-2 forgot-label">
-                              Forgot password?
-                              <a
-                                href="/forgotPassword"
-                                className="text-green">
-                                <strong>click here</strong>
-                              </a>
-                            </p>
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row className="form-group">
-                          <Col md={12}>
-                            <Button
-                              onClick={login}
-                              variant="success"
-                              className="mt-4 w-100">
-                              Login
-                            </Button>
-                          </Col>
-                        </Row>
-                      </form>
-                    </div>
-                  </Col>
-                  <Col md={3}>&nbsp;</Col>
-                </Row>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-        <section className="gray-bg ourservice pt-pb-50">
-          <Container>
-            <div className="text-center">
-              <h3 className="section-main-title">
-                Eprehenderit in voluptate velit esse cillum
-              </h3>
-            </div>
-            <Row>
-              <Col
-                md={3}
-                className="text-center">
-                <div className="s-icon">
-                  <Image
-                    src={search_icon}
-                    alt=""
-                    className="mb-4"
-                  />
+                          </center>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <div className="addemp-form">
+                    <Row className="form-group">
+                      <Col
+                        md={8}
+                        className="mt-4"></Col>
+                      <Col
+                        md={2}
+                        className="mt-4">
+                        <Button
+                          onClick={accept}
+                          variant="success"
+                          className="w-100">
+                          Accept{" "}
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
-                <div className="s-title">
-                  <h5>Voluptas sit aspernatu</h5>
-                </div>
-              </Col>
-              <Col
-                md={3}
-                className="text-center">
-                <div className="s-icon">
-                  <Image
-                    src={chat_icon}
-                    alt=""
-                    className="mb-4"
-                  />
-                </div>
-                <div className="s-title">
-                  <h5>Voluptas sit aspernatu</h5>
-                </div>
-              </Col>
-              <Col
-                md={3}
-                className="text-center">
-                <div className="s-icon">
-                  <Image
-                    src={work_icon}
-                    alt=""
-                    className="mb-4"
-                  />
-                </div>
-                <div className="s-title">
-                  <h5>Voluptas sit aspernatu</h5>
-                </div>
-              </Col>
-              <Col
-                md={3}
-                className="text-center">
-                <div className="s-icon">
-                  <Image
-                    src={simple_work_icon}
-                    alt=""
-                    className="mb-4"
-                  />
-                </div>
-                <div className="s-title">
-                  <h5>Voluptas sit aspernatu</h5>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-        <section className="green-bg pt-pb-50 signup-green">
-          <Container>
-            <Row className="justify-content-center align-items-center mt-4">
-              <Col md={2}>
-                <Image
-                  src={youtube_searched_icon}
-                  alt=""
-                  width="180"
-                />
-              </Col>
-              <Col md={8}>
-                <div className="text-center">
-                  <h3 className="section-main-title mt-5">
-                    Eprehenderit in voluptate velit esse cillum
-                  </h3>
-                </div>
-                <div className="text-center">
-                  <p>
-                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-                    odit aut fugit, sed quia
-                    <br />
-                    consequuntur magni dolores eos qui ratione voluptatem sequ.
-                  </p>
-                  <Button
-                    href="/signUp"
-                    variant="light"
-                    className="w-50 mt-4 mb-4">
-                    Sign up
-                  </Button>
-                </div>
-              </Col>
-              <div className="col-md-2">
-                <Image
-                  src={search_dollar_icon}
-                  alt=""
-                  width="180"
-                />
-              </div>
-            </Row>
-          </Container>
-        </section>
-      </div>
-      <Footer />
+                <div className="whitespace">&nbsp;</div>
+              </Container>
+            </section>
+          </main>
+          <Footer />
+        </Row>
+      </Container>
     </div>
   );
 }

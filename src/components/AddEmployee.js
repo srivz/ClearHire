@@ -11,25 +11,25 @@ import { onAuthStateChanged } from "firebase/auth";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
-    name: "",
-    employeeImage: "",
-    dateOfBirth: "",
-    dateJoined: "",
-    designation: "",
-    linkedIn: "",
-    salary: "",
-    adhaarCardNumber: "",
-    recommendationFrom: "",
-    recommenderDesignation: "",
-    recommendationMessage: "",
-    communication: 1,
-    attitude: 1,
-    abilityToLearn: 1,
-    punctuality: 1,
-    commitment: 1,
-    trustworthiness: 1,
-    skill: 1,
-    teamPlayer: 1,
+    name: null,
+    employeeImage: null,
+    dateOfBirth: null,
+    dateJoined: null,
+    designation: null,
+    linkedIn: null,
+    salary: null,
+    adhaarCardNumber: null,
+    recommendationFrom: null,
+    recommenderDesignation: null,
+    recommendationMessage: null,
+    communication: null,
+    attitude: null,
+    abilityToLearn: null,
+    punctuality: null,
+    commitment: null,
+    trustworthiness: null,
+    skill: null,
+    teamPlayer: null,
   });
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
@@ -40,9 +40,44 @@ export default function AddEmployee() {
     let newInput = { [event.target.name]: event.target.value };
     setEmployee({ ...employee, ...newInput });
   };
-  const handleSubmit = () => {
-    setDisabledButton(true);
-    registerEmployee();
+  const handleValidation = () => {
+    let fields = employee;
+    let formIsValid = true;
+    console.log(fields);
+    if (
+      !fields["name"] &&
+      !fields["employeeImage"] &&
+      !fields["dateOfBirth"] &&
+      !fields["dateJoined"] &&
+      !fields["designation"] &&
+      !fields["linkedIn"] &&
+      !fields["salary"] &&
+      !fields["adhaarCardNumber"] &&
+      !fields["recommendationMessage"] &&
+      !fields["communication"] &&
+      !fields["attitude"] &&
+      !fields["abilityToLearn"] &&
+      !fields["punctuality"] &&
+      !fields["commitment"] &&
+      !fields["trustworthiness"] &&
+      !fields["skill"] &&
+      !fields["teamPlayer"]
+    ) {
+      formIsValid = false;
+    }
+
+    return formIsValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (handleValidation()) {
+      setDisabledButton(true);
+      registerEmployee();
+    } else {
+      alert("Form has errors.");
+    }
   };
 
   onAuthStateChanged(auth, (user) => {
