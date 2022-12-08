@@ -19,42 +19,42 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase-config.js";
 
-export default function Login() {
-  const [user, setUser] = useState({
-    emailId: "",
-    password: "",
-  });
-  useEffect(() => {
-    signOut(auth);
-  }, []);
-  const handleChangeForm = (event) => {
-    let newInput = { [event.target.name]: event.target.value };
-    setUser({ ...user, ...newInput });
+export default function RecruitAcceptPage() {
+//   const [user, setUser] = useState({
+//     emailId: "",
+//     password: "",
+//   });
+//   useEffect(() => {
+//     signOut(auth);
+//   }, []);
+//   const handleChangeForm = (event) => {
+//     let newInput = { [event.target.name]: event.target.value };
+//     setUser({ ...user, ...newInput });
   };
-  onAuthStateChanged(auth, (user) => {
-    if (user && user.emailVerified) {
-      window.location.href = "/searchResults";
-    }
-  });
+//   onAuthStateChanged(auth, (user) => {
+//     if (user && user.emailVerified) {
+//       window.location.href = "/searchResults";
+//     }
+//   });
   function login() {
     try {
       setPersistence(auth, browserSessionPersistence)
         .then(() => {
-          signInWithEmailAndPassword(auth, user.emailId, user.password).catch((error) => {
-            if (error.message === "Firebase: Error (auth/user-not-found).") {
-              alert("User not Found. Sign Up first !!");
-            } else if (
-              error.message === "Firebase: Error (auth/wrong-password)."
-            ) {
-              alert("Wrong Password");
-            }
-          });
+          signInWithEmailAndPassword(auth, user.emailId, user.password);
           if (!auth.currentUser.emailVerified) {
             alert("User not verified yet !!!");
             window.location.href = "/emailVerification";
           }
         })
-        
+        .catch((error) => {
+          if (error.message === "Firebase: Error (auth/user-not-found).") {
+            alert("User not Found. Sign Up first !!");
+          } else if (
+            error.message === "Firebase: Error (auth/wrong-password)."
+          ) {
+            alert("Wrong Password");
+          }
+        });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
     }
