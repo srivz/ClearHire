@@ -14,7 +14,7 @@ import Footer from "./Footer/Footer";
 // import { auth } from "../firebase-config.js";
 
 export default function RecruitAcceptPage() {
-  const [file, setFile] = useState(
+  const file = useState(
     "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/sample.pdf?alt=media&token=bcd4b969-c710-42da-b509-99f9a00668ad"
   );
 
