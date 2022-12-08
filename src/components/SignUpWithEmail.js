@@ -83,11 +83,12 @@ export default function SignUpWithEmail() {
         event.target.files[0].type === "image/webp")
     ) {
       setFile(event.target.files[0]);
+      handleUpload(event.target.files[0]);
     } else {
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
-  function handleUpload() {
+  function handleUpload(file) {
     const imageRef = ref(
       storage,
       `/profileImages/${user.companyName}/${user.name}/${file.name}`
@@ -372,41 +373,30 @@ export default function SignUpWithEmail() {
                         </Row>
                         <Row>
                           <Col
-                            md={12}
-                            className="text-center">
-                            <Row className="align-items-center">
-                              <Form.Group
-                                controlId="formFile"
-                                className="mb-3">
-                                <Row>
-                                  <Col>
-                                    <Form.Label>
-                                      Default file input example
-                                    </Form.Label>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col sm={10}>
-                                    <Form.Control
-                                      className="mb-2"
-                                      type="file"
-                                      accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                      name="file"
-                                      onChange={handleFileChange}
-                                    />
-                                  </Col>
-                                  <Col sm={2}>
-                                    <Button
-                                      type="submit"
-                                      className="mb-2"
-                                      onClick={handleUpload}>
-                                      Upload
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </Form.Group>
+                            md={12}>
+                              <Row >
+                              <Col md={12}>
+                                <Form.Group
+                                  controlId="formFile"
+                                  className="mb-3 user-file">
+                                  <Form.Label className="mb-2 label">
+                                    {file !== null
+                                      ? file.name
+                                      : "Upload your Company Logo*"}
+                                    <span className="label-icon">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    className="mb-2"
+                                    type="file"
+                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
+                                    name="file"
+                                    onChange={handleFileChange}
+                                  />
+                                </Form.Group>
+                              </Col>
                             </Row>
-                            <br />
                             <div className="beforeuploadpic">
                               <Image
                                 src={url === "" ? image_icon : url}

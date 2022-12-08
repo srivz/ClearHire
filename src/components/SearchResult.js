@@ -379,6 +379,7 @@ export default function SearchResult() {
           </Container>
         </section>
       </main>
+      <br /><br /><br />
       <Footer />
     </div>
   );

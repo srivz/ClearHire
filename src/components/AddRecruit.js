@@ -168,7 +168,7 @@ export default function AddRecruit() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
-                                  className="mb-3 dob"
+                                  className="mb-3"
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="date"
@@ -210,27 +210,14 @@ export default function AddRecruit() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group className="mb-3">
-                                  <Form.Select
+                                  <Form.Control
+                                    type="text"
                                     required
                                     name="designation"
                                     placeholder="Designation*"
-                                    className="form-control select"
                                     defaultValue={recruit.designation}
-                                    onChange={handleChange}>
-                                    <option
-                                      value=""
-                                      hidden>
-                                      Designation*
-                                    </option>
-                                    <option value="Developer">Developer</option>
-                                    <option value="Sr. Developer">
-                                      Sr. Developer
-                                    </option>
-                                    <option value="Tester">Tester</option>
-                                  </Form.Select>
-                                  <div class="input-down-angle-icon">
-                                    <div class="input-down-angle-icon-hide"></div>
-                                  </div>
+                                    onChange={handleChange}
+                                  />
                                 </Form.Group>
                               </Col>
                             </Row>

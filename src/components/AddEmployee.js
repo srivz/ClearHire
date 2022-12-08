@@ -66,13 +66,14 @@ export default function AddEmployee() {
         event.target.files[0].type === "image/webp")
     ) {
       setFile(event.target.files[0]);
+      handleUpload(event.target.files[0]);
     } else {
       setFile(null);
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
 
-  function handleUpload() {
+  function handleUpload(file) {
     const imageRef = ref(storage, `/employeeImages/${file.name}`);
     uploadBytes(imageRef, file)
       .then(() => {
@@ -220,7 +221,7 @@ export default function AddEmployee() {
                               aspernatur aut odit aut fugit.
                             </p>
                           </div>
-                          <div className="addemp-form">
+                          <div className="employee-add-form">
                             <Row className="form-group">
                               <Col md={12}>
                                 <Row className="align-items-center"></Row>
@@ -231,6 +232,7 @@ export default function AddEmployee() {
                                     alt=""
                                   />
                                 </div>
+                                <br />
                               </Col>
                             </Row>
                             <Row className="form-group">
@@ -238,12 +240,11 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Employee Name*</Form.Label>
                                   <Form.Control
                                     type="text"
                                     required
                                     name="name"
-                                    placeholder="Employee Name"
+                                    placeholder="Employee Name*"
                                     defaultValue={employee.name}
                                     onChange={handleChange}
                                   />
@@ -256,14 +257,19 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Date Of Birth*</Form.Label>
                                   <Form.Control
                                     type="date"
                                     required
                                     name="dateOfBirth"
+                                    placeholder={
+                                      employee.dateOfBirth === ""
+                                        ? "Date Of Birth*"
+                                        : employee.dateOfBirth
+                                    }
                                     defaultValue={employee.dateOfBirth}
                                     onChange={handleChange}
                                   />
+                                  <div class="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -272,26 +278,30 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Date Of Joining*</Form.Label>
                                   <Form.Control
                                     type="date"
                                     required
                                     name="dateJoined"
+                                    placeholder={
+                                      employee.dateJoined === ""
+                                        ? "Date Of Joining*"
+                                        : employee.dateJoined
+                                    }
                                     defaultValue={employee.dateJoined}
                                     onChange={handleChange}
                                   />
+                                  <div class="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group className="mb-3">
-                                  <Form.Label>Designation*</Form.Label>
                                   <Form.Control
                                     type="text"
                                     required
                                     name="designation"
-                                    placeholder="Designation"
+                                    placeholder="Designation*"
                                     defaultValue={employee.designation}
                                     onChange={handleChange}
                                   />
@@ -302,26 +312,22 @@ export default function AddEmployee() {
                               <Col md={12}>
                                 <Form.Group
                                   controlId="formFile"
-                                  className="mb-3">
-                                  <Form.Label>Employee Photo*</Form.Label>
-                                  <Row>
-                                    <Col sm={10}>
-                                      <Form.Control
-                                        className="mb-2"
-                                        type="file"
-                                        name="file"
-                                        accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                        onChange={handleFileChange}
-                                      />
-                                    </Col>
-                                    <Col sm={2}>
-                                      <Button
-                                        className="mb-2"
-                                        onClick={handleUpload}>
-                                        Upload
-                                      </Button>
-                                    </Col>
-                                  </Row>
+                                  className="mb-3 employee-file">
+                                  <Form.Label className="mb-2 label">
+                                    {file !== null
+                                      ? file.name
+                                      : "Upload Employee Photo*"}
+                                    <span className="label-icon">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    className="mb-2"
+                                    type="file"
+                                    name="file"
+                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
+                                    onChange={handleFileChange}
+                                  />
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -330,15 +336,14 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Adhaar Card Number</Form.Label>
                                   <Form.Control
                                     type="number"
                                     required
                                     minLength={"12"}
                                     maxLength={"12"}
                                     name="adhaarCardNumber"
-                                    placeholder="Adhaar Card Number"
-                                    defaultValue={employee.linkedIn}
+                                    placeholder="Adhaar Card Number*"
+                                    defaultValue={employee.adhaarCardNumber}
                                     onChange={handleChange}
                                   />
                                   <Form.Text className="text-muted"></Form.Text>
@@ -350,12 +355,11 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>LinkedIn url*</Form.Label>
                                   <Form.Control
                                     type="text"
                                     required
                                     name="linkedIn"
-                                    placeholder="LinkedIn url"
+                                    placeholder="LinkedIn url*"
                                     defaultValue={employee.linkedIn}
                                     onChange={handleChange}
                                   />
@@ -368,12 +372,11 @@ export default function AddEmployee() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label>Salary*</Form.Label>
                                   <Form.Control
                                     type="number"
                                     required
                                     name="salary"
-                                    placeholder="Salary"
+                                    placeholder="Salary*"
                                     defaultValue={employee.salary}
                                     onChange={handleChange}
                                   />
@@ -438,9 +441,9 @@ export default function AddEmployee() {
                                           cols={30}
                                           rows={5}
                                           style={{ resize: "none" }}
-                                          className="form-control"
+                                          className="form-control recommendation-form"
                                           name="recommendationMessage"
-                                          placeholder="Recommendation Message"
+                                          placeholder="Recommendation Message*"
                                           defaultValue={
                                             employee.recommendationMessage
                                           }
@@ -463,7 +466,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="1"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -484,7 +487,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="2"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -505,7 +508,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="3"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -526,7 +529,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="4"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -547,7 +550,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="5"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -568,7 +571,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="6"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   noBorder="true"
                                   colors={{ mask: "#00823b" }}
@@ -589,7 +592,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="7"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   colors={{ mask: "#00823b" }}
                                   name="skill"
@@ -610,7 +613,7 @@ export default function AddEmployee() {
                                   clickable
                                   maxScore={5}
                                   id="8"
-                                  size={32}
+                                  size={40}
                                   numberOfStar={5}
                                   colors={{ mask: "#00823b" }}
                                   name="teamPlayer"
@@ -642,6 +645,10 @@ export default function AddEmployee() {
               </Container>
             </section>
           </main>
+          <p />
+          <p />
+          <p />
+          <p />
           <Footer />
         </Row>
       </Container>

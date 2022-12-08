@@ -55,38 +55,11 @@ body {
   padding: 0px;
 }
 
-.recruit-add-form .select {
-  width: 100%;
-  content: attr(placeHolder);
-  padding: 5px;
-  padding-top: 10px;
-  padding-left: 30px;
-  border-radius: 0%;
-  padding-right: 10px;
-  height: fit-content;
-  padding-bottom: 10px;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 2px 2px #e7e7e7;
-}
-.recruit-add-form Form.Select::-ms-expand {
-  display: none;
+.recruit-add-form input::placeholder {
+  font-size: 16px;
 }
 .recruit-add-form .input-down-angle-icon {
   position: relative;
-}
-Form.Select::-ms-expand {
-  display: none;
-}
-.input-down-angle-icon-hide {
-  width: 20px;
-  height: 20px;
-  background-color: rgb(255, 255, 255);
-  position: absolute;
-  top: -35px;
-  right: 15px;
-  margin: auto;
-  pointer-events: none;
-  z-index: 4;
 }
 .recruit-add-form .input-down-angle-icon:after {
   font-family: "FontAwesome";
@@ -127,6 +100,128 @@ Form.Select::-ms-expand {
   border-color: #06b153;
   border: 2px solid;
 }
+.employee-add-form .employee-file input {
+  display: none;
+}
+.user-file input {
+  display: none;
+}
+.user-file .label {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  color: #00823b;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  border-color: #06b153;
+  border: 2px solid;
+}
+.user-file .label:hover {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  padding-left: 30px;
+  color: #00823b;
+  background-color: rgb(248, 248, 248);
+  border-color: #06b153;
+  border: 2px solid;
+}
+.employee-add-form input::placeholder {
+  font-size: 16px;
+}
+.recommendation-form::placeholder {
+  font-size: 16px;
+}
+.employee-add-form input[type="date"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 2px 2px #e7e7e7;
+}
+.employee-add-form input[type="date"]::before {
+  content: attr(placeHolder);
+  width: 100%;
+}
+.employee-add-form input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.employee-add-form input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 0%;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+}
+.employee-add-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  width: 50%;
+  z-index: 5;
+  padding: 0px;
+}
+.employee-add-form .input-down-angle-icon {
+  position: relative;
+}
+.employee-add-form .input-down-angle-icon:after {
+  font-family: "FontAwesome";
+  content: "\f107";
+  border-radius: 50%;
+  pointer-events: none;
+  font-weight: bold;
+  border: 2px solid rgb(0, 0, 0);
+  padding: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: absolute;
+  margin: auto;
+  margin-right: 50px;
+  top: -38px;
+  right: 0px;
+}
+.employee-add-form .employee-file .label {
+  width: 100%;
+  padding: 5px;
+  padding-top: 10px;
+  padding-left: 30px;
+  padding-right: 10px;
+  height: fit-content;
+  color: #00823b;
+  padding-bottom: 10px;
+  background-color: rgb(255, 255, 255);
+  border-color: #06b153;
+  border: 2px solid;
+}
+.employee-add-form .employee-file .label:hover {
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+  padding-left: 30px;
+  color: #00823b;
+  background-color: rgb(248, 248, 248);
+  border-color: #06b153;
+  border: 2px solid;
+}
+
 .label-icon {
   float: right;
   margin-right: 30px;
@@ -648,11 +743,11 @@ a:hover {
   padding: 25px;
   margin: 0 0 20px;
 }
-/* infos[0].companyName */
 .addemp-form {
   padding-bottom: 50px;
 }
 .add-emp-rating {
+  font-size: 18px;
   padding-top: 15px;
   margin: 1 5px;
 }
