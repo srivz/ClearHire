@@ -358,6 +358,9 @@ a:hover {
 .welcome .loginwrap {
   margin-top: 50px;
 }
+.welcome .input-group input {
+  text-align: center;
+}
 #checkout-progress {
   position: relative;
 }

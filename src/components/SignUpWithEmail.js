@@ -342,13 +342,15 @@ export default function SignUpWithEmail() {
                             <Form.Group className="mb-3">
                               <Form.Label>Your Designation</Form.Label>
 
-                              <Form.Control
-                                type="text"
-                                required
-                                name="yourDesignation"
-                                defaultValue={user.yourDesignation}
-                                onChange={handleChange}
-                              />
+                              <div className="input-group">
+                                <Form.Control
+                                  type="text"
+                                  required
+                                  name="yourDesignation"
+                                  defaultValue={user.yourDesignation}
+                                  onChange={handleChange}
+                                />
+                              </div>
                             </Form.Group>
                           </Col>
                         </Row>

@@ -6,6 +6,7 @@ import { storage, database, auth } from "../firebase-config.js";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
+import moment from "moment";
 
 export default function AddRecruit() {
   const [recruit, setRecruit] = useState({
@@ -187,6 +188,7 @@ export default function AddRecruit() {
                                   <Form.Control
                                     type="date"
                                     required
+                                    max={moment().format("YYYY-MM-DD")}
                                     placeholder={
                                       recruit.dateOfBirth === ""
                                         ? "Date Of Birth*"
@@ -207,6 +209,7 @@ export default function AddRecruit() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="date"
+                                    max={moment().format("YYYY-MM-DD")}
                                     required
                                     placeholder={
                                       recruit.dateJoined === ""
@@ -243,11 +246,11 @@ export default function AddRecruit() {
                                   <Form.Control
                                     type="number"
                                     required
-                                    minLength={"12"}
-                                    maxLength={"12"}
+                                    minLength={12}
+                                    maxLength={12}
                                     name="adhaarCardNumber"
                                     placeholder="Adhaar Card Number*"
-                                    defaultValue={recruit.linkedIn}
+                                    defaultValue={recruit.adhaarCardNumber}
                                     onChange={handleChange}
                                   />
                                   <Form.Text className="text-muted"></Form.Text>
@@ -264,7 +267,7 @@ export default function AddRecruit() {
                                     required
                                     name="location"
                                     placeholder="Location*"
-                                    defaultValue={recruit.linkedIn}
+                                    defaultValue={recruit.location}
                                     onChange={handleChange}
                                   />
                                   <Form.Text className="text-muted"></Form.Text>

@@ -8,6 +8,7 @@ import { doc, updateDoc, setDoc, arrayUnion, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
 import { onAuthStateChanged } from "firebase/auth";
+import moment from "moment/moment";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -76,7 +77,7 @@ export default function AddEmployee() {
       setDisabledButton(true);
       registerEmployee();
     } else {
-      alert("Form has errors.");
+      alert("Fill the form properly!!");
     }
   };
 
@@ -277,7 +278,7 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="text"
-                                    required
+                                    required={true}
                                     name="name"
                                     placeholder="Employee Name*"
                                     defaultValue={employee.name}
@@ -294,10 +295,11 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="date"
-                                    required
+                                    required={true}
                                     name="dateOfBirth"
+                                    max={moment().format("YYYY-MM-DD")}
                                     placeholder={
-                                      employee.dateOfBirth === ""
+                                      employee.dateOfBirth === null
                                         ? "Date Of Birth*"
                                         : employee.dateOfBirth
                                     }
@@ -315,10 +317,11 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="date"
-                                    required
+                                    required={true}
                                     name="dateJoined"
+                                    max={moment().format("YYYY-MM-DD")}
                                     placeholder={
-                                      employee.dateJoined === ""
+                                      employee.dateJoined === null
                                         ? "Date Of Joining*"
                                         : employee.dateJoined
                                     }
@@ -334,7 +337,7 @@ export default function AddEmployee() {
                                 <Form.Group className="mb-3">
                                   <Form.Control
                                     type="text"
-                                    required
+                                    required={true}
                                     name="designation"
                                     placeholder="Designation*"
                                     defaultValue={employee.designation}
@@ -373,9 +376,9 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="number"
-                                    required
-                                    minLength={"12"}
-                                    maxLength={"12"}
+                                    required={true}
+                                    minLength={12}
+                                    maxLength={12}
                                     name="adhaarCardNumber"
                                     placeholder="Adhaar Card Number*"
                                     defaultValue={employee.adhaarCardNumber}
@@ -392,7 +395,7 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="text"
-                                    required
+                                    required={true}
                                     name="linkedIn"
                                     placeholder="LinkedIn url*"
                                     defaultValue={employee.linkedIn}
@@ -409,7 +412,7 @@ export default function AddEmployee() {
                                   controlId="formBasicName">
                                   <Form.Control
                                     type="number"
-                                    required
+                                    required={true}
                                     name="salary"
                                     placeholder="Salary*"
                                     defaultValue={employee.salary}
@@ -434,7 +437,6 @@ export default function AddEmployee() {
                                         controlId="formBasicName">
                                         <Form.Control
                                           type="text"
-                                          required
                                           disabled
                                           className="form-control"
                                           name="recommendationFrom"
@@ -453,7 +455,6 @@ export default function AddEmployee() {
                                         controlId="formBasicName">
                                         <Form.Control
                                           type="text"
-                                          required
                                           disabled
                                           className="form-control"
                                           name="recommenderDesignation"
@@ -472,7 +473,7 @@ export default function AddEmployee() {
                                         controlId="formBasicName">
                                         <Form.Control
                                           as="textarea"
-                                          required
+                                          required={true}
                                           cols={30}
                                           rows={5}
                                           style={{ resize: "none" }}

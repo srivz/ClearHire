@@ -251,7 +251,7 @@ export default function SearchResult() {
                     <Col md={12}>
                       <div className="seemore">
                         <span onClick={() => setSeeMore1(seeMore1 + 4)}>
-                          See more recomendations
+                          See more recommendations
                         </span>
                       </div>
                     </Col>
@@ -367,7 +367,7 @@ export default function SearchResult() {
                       <Col md={12}>
                         <div className="seemore">
                           <span onClick={() => setSeeMore2(seeMore2 + 4)}>
-                            See more recomendations
+                            See more recommendations
                           </span>
                         </div>
                       </Col>
@@ -379,7 +379,9 @@ export default function SearchResult() {
           </Container>
         </section>
       </main>
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
       <Footer />
     </div>
   );
