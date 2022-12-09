@@ -210,7 +210,9 @@ export default function EmployeeDetails() {
                                       <Col
                                         md={11}
                                         onClick={() => {
-                                          setOpen(!open);
+                                          open === id1
+                                            ? setOpen(null)
+                                            : setOpen(id1);
                                         }}>
                                         <div className="company-info-dtls">
                                           <Row className="h-100 justify-content-center align-items-center">
@@ -256,7 +258,7 @@ export default function EmployeeDetails() {
                                               </div>
                                             </Col>
                                           </Row>
-                                          <Collapse in={open}>
+                                          <Collapse in={open === id1}>
                                             <div className="rating-details">
                                               <Row>
                                                 <Col>
@@ -471,61 +473,6 @@ export default function EmployeeDetails() {
                           </div>
                         </Col>
                       </Row>
-                      {/* <Row>
-                        <div className="col-md-12">
-                          <h3 className="title-text mb-4">Recommendations</h3>
-                        </div>
-                      </Row>
-                      {employeeInfos.map((info4, id2) => {
-                        return id2 !== 0 ? (
-                          <div
-                            key={id2}
-                            className="recomdt-list">
-                            <Row>
-                              <Col md={12}>
-                                <div className="recomdt-list-inner">
-                                  <Row>
-                                    <Col
-                                      md={2}
-                                      className="text-center">
-                                      <div className="outline-circle-logo">
-                                        <Image
-                                          src={info4.companyLogo}
-                                          alt=""
-                                          className="Image-fluid outline-circle-logo"
-                                        />
-                                      </div>
-                                    </Col>
-
-                                    <Col md={10}>
-                                      <h4 className="emp-title">
-                                        {
-                                          info4.recommendation
-                                            .recommendationFrom
-                                        }{" "}
-                                        <span className="designt-text">
-                                          {
-                                            info4.recommendation
-                                              .recommenderDesignation
-                                          }
-                                        </span>
-                                      </h4>
-                                      <p className="color-8B">
-                                        {
-                                          info4.recommendation
-                                            .recommendationMessage
-                                        }
-                                      </p>
-                                    </Col>
-                                  </Row>
-                                </div>
-                              </Col>
-                            </Row>
-                          </div>
-                        ) : (
-                          <></>
-                        );
-                      })} */}
                     </Col>
                     <div className="whitespace">&nbsp;</div>
                   </Row>

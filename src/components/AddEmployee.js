@@ -274,6 +274,29 @@ export default function AddEmployee() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
+                                  controlId="formFile"
+                                  className="mb-3 employee-file">
+                                  <Form.Label className="mb-2 label">
+                                    {file !== null
+                                      ? file.name
+                                      : "Upload Employee Photo*"}
+                                    <span className="label-icon">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    className="mb-2"
+                                    type="file"
+                                    name="file"
+                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
+                                    onChange={handleFileChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
                                   <Form.Control
@@ -346,29 +369,7 @@ export default function AddEmployee() {
                                 </Form.Group>
                               </Col>
                             </Row>
-                            <Row className="form-group">
-                              <Col md={12}>
-                                <Form.Group
-                                  controlId="formFile"
-                                  className="mb-3 employee-file">
-                                  <Form.Label className="mb-2 label">
-                                    {file !== null
-                                      ? file.name
-                                      : "Upload Employee Photo*"}
-                                    <span className="label-icon">
-                                      <i className="fa-solid fa-plus"></i>
-                                    </span>
-                                  </Form.Label>
-                                  <Form.Control
-                                    className="mb-2"
-                                    type="file"
-                                    name="file"
-                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                    onChange={handleFileChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
+
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
