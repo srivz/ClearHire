@@ -108,7 +108,7 @@ export default function EmployeeDetails() {
                                           {info2.companyName}
                                         </p>
                                         <small className="location">
-                                          Chennai, Tamil Nadu, India
+                                          {info2.location}
                                         </small>
                                       </div>
                                     </Col>

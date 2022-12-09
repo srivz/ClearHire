@@ -19,6 +19,7 @@ export default function AddEmployee() {
     designation: null,
     linkedIn: null,
     salary: null,
+    location: null,
     adhaarCardNumber: null,
     recommendationFrom: null,
     recommenderDesignation: null,
@@ -52,6 +53,7 @@ export default function AddEmployee() {
       !fields["dateJoined"] &&
       !fields["designation"] &&
       !fields["linkedIn"] &&
+      !fields["location"] &&
       !fields["salary"] &&
       !fields["adhaarCardNumber"] &&
       !fields["recommendationMessage"] &&
@@ -136,6 +138,7 @@ export default function AddEmployee() {
       dateJoined: employee.dateJoined,
       designation: employee.designation,
       linkedIn: employee.linkedIn,
+      location: employee.location,
       salary: employee.salary,
       recommendation: {
         recommendationFrom: info.name,
@@ -364,6 +367,23 @@ export default function AddEmployee() {
                                     name="designation"
                                     placeholder="Designation*"
                                     defaultValue={employee.designation}
+                                    onChange={handleChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Control
+                                    type="text"
+                                    required={true}
+                                    name="location"
+                                    placeholder="Location*"
+                                    defaultValue={employee.location}
                                     onChange={handleChange}
                                   />
                                 </Form.Group>
