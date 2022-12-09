@@ -18,8 +18,11 @@ export default function AddRecruit() {
     adhaarCardNumber: "",
     offerLetter: "",
     bonus: "",
+    emailId: "",
+    phoneNumber: "",
   });
   const [file, setFile] = useState({ name: "Upload Offer Letter" });
+  const [counter, setCounter] = useState(1);
   const [disabledButton, setDisabledButton] = useState(false);
   const [info, setInfo] = useState([]);
 
@@ -31,6 +34,9 @@ export default function AddRecruit() {
     if (recruit.offerLetter) registerRecruit();
   };
 
+  const handleContinueButton = (event) => {
+    setCounter(counter + 1);
+  };
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
@@ -84,6 +90,8 @@ export default function AddRecruit() {
       salary: recruit.salary,
       bonus: recruit.bonus,
       offerLetter: recruit.offerLetter,
+      emailId: recruit.emailId,
+      phoneNumber: recruit.phoneNumber,
     };
     await setDoc(
       doc(
@@ -101,7 +109,7 @@ export default function AddRecruit() {
         //   companies: arrayUnion(auth.currentUser.uid),
         // })
         //   .then(() => {
-        window.location.href = "/addRecruit/send";
+        window.location.href = "/searchResults";
         // })
         // .catch((err) => {
         //   setDoc(doc(database, "employees", recruit.adhaarCardNumber), {
@@ -135,7 +143,9 @@ export default function AddRecruit() {
                         className="text-left ml-auto mr-auto">
                         <div
                           className="addemp-emp"
-                          style={{ marginTop: "150px" }}>
+                          style={{
+                            marginTop: "150px",
+                          }}>
                           <div className="text-center">
                             <h3 className="section-main-title mb-3">
                               Add New Recruit
@@ -147,7 +157,11 @@ export default function AddRecruit() {
                               aspernatur aut odit aut fugit.
                             </p>
                           </div>
-                          <div className="recruit-add-form ">
+                          <div
+                            className="recruit-add-form "
+                            style={{
+                              display: counter === 1 ? "block" : "none",
+                            }}>
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Group
@@ -339,10 +353,62 @@ export default function AddRecruit() {
                                 className="mt-4">
                                 <Button
                                   disabled={disabledButton}
-                                  onClick={handleSubmit}
+                                  onClick={handleContinueButton}
                                   variant="success"
                                   className="w-100">
                                   Continue
+                                </Button>
+                              </Col>
+                            </Row>
+                          </div>
+                          <div
+                            className="addemp-form"
+                            style={{
+                              display: counter === 2 ? "block" : "none",
+                            }}>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Control
+                                    type="text"
+                                    required
+                                    name="emailId"
+                                    placeholder="Recruit's Email*"
+                                    defaultValue={recruit.emailId}
+                                    onChange={handleChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Recruits's Phone Number*"
+                                    name="phoneNumber"
+                                    defaultValue={recruit.phoneNumber}
+                                    onChange={handleChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col
+                                md={12}
+                                className="mt-4">
+                                <Button
+                                  disabled={disabledButton}
+                                  onClick={handleSubmit}
+                                  variant="success"
+                                  className="w-100">
+                                  Send Offer Letter{" "}
+                                  <i class="fa-solid fa-circle-arrow-right fa-1x"></i>
                                 </Button>
                               </Col>
                             </Row>

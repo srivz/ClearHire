@@ -3,7 +3,6 @@ import Footer from "./Footer/Footer";
 import check_icon from "../assets/img/check-icon.svg";
 import next_icon from "../assets/img/next-icon.svg";
 import previous_icon from "../assets/img/previous-icon.svg";
-import image_icon from "../assets/img/image-icon.svg";
 import NavBar1 from "./Navs/NavBar1";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
@@ -31,7 +30,9 @@ export default function SignUpWithEmail() {
   const [counter, setCounter] = useState(1);
   const [file, setFile] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState(
+    "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/profileImages%2FSD-default-image.png?alt=media&token=065c9d85-44ad-4015-8806-d16d3919bc04"
+  );
   const [disabledButton, setDisabledButton] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
@@ -112,6 +113,7 @@ export default function SignUpWithEmail() {
     if (userLog.password < 6) {
       alert("Password should be atleast 6 characters!!!");
     } else {
+      user.profileImage = url;
       if (userLog.password === userLog.confirmPassword) {
         setDisabledButton(true);
         registerLogin();
@@ -372,9 +374,8 @@ export default function SignUpWithEmail() {
                           </Col>
                         </Row>
                         <Row>
-                          <Col
-                            md={12}>
-                              <Row >
+                          <Col md={12}>
+                            <Row>
                               <Col md={12}>
                                 <Form.Group
                                   controlId="formFile"
@@ -399,7 +400,7 @@ export default function SignUpWithEmail() {
                             </Row>
                             <div className="beforeuploadpic">
                               <Image
-                                src={url === "" ? image_icon : url}
+                                src={url}
                                 alt=""
                               />
                             </div>
@@ -579,7 +580,7 @@ export default function SignUpWithEmail() {
                           </Col>
                           <Col sm={counter === 9 ? 0 : 6}>
                             <Button
-                              disabled={counter === 5 && url === null}
+                              // disabled={counter === 5 && url === null}
                               className="btn btn-next"
                               onClick={handleNextButton}
                               style={{

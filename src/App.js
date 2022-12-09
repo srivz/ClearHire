@@ -9,7 +9,6 @@ import SignUpWithEmail from "./components/SignUpWithEmail";
 import SearchResult from "./components/SearchResult";
 import ForgotPassword from "./components/ForgotPassword";
 import AddRecruit from "./components/AddRecruit";
-import SendNotificationToRecruit from "./components/SendNotificationToRecruit";
 import EmailSent from "./components/EmailSent";
 import RecruitAcceptPage from "./components/RecruitAcceptPage";
 
@@ -44,9 +43,6 @@ export default function App() {
         <Route
           path="/recruitAcceptPage"
           element={<RecruitAcceptPage />}></Route>
-        <Route
-          path="/addRecruit/send"
-          element={<SendNotificationToRecruit />}></Route>
         <Route
           path="/employeeDetails"
           element={<EmployeeDetails />}></Route>
