@@ -42,6 +42,7 @@ export default function SearchResult() {
       getDoc(doc(database, "users", uid)).then((doc) => {
         setInfo({ ...doc.data(), id: doc.id });
       });
+      localStorage.setItem("currentUserDetails", JSON.stringify(info));
       employeeGet(uid);
     } else {
       window.location.href = "/";
@@ -220,7 +221,7 @@ export default function SearchResult() {
                                     <RatingStar
                                       unclickable
                                       maxScore={5}
-                                      id={id1}
+                                      id={"" + id1}
                                       size={32}
                                       numberOfStar={5}
                                       noBorder="true"

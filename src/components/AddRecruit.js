@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
 import moment from "moment";
@@ -38,12 +38,15 @@ export default function AddRecruit() {
   const handleContinueButton = (event) => {
     setCounter(counter + 1);
   };
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("currentUserDetails"));
+    if (items) {
+      setInfo(items);
+    }
+  }, []);
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const uid = user.uid;
-      getDoc(doc(database, "users", uid)).then((doc) => {
-        setInfo({ ...doc.data(), id: doc.id });
-      });
     } else {
       window.location.href = "/";
     }

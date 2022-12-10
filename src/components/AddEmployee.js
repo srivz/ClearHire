@@ -4,11 +4,12 @@ import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
 import { storage, database, auth } from "../firebase-config.js";
-import { doc, updateDoc, setDoc, arrayUnion, getDoc } from "firebase/firestore";
+import { doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
 import { onAuthStateChanged } from "firebase/auth";
 import moment from "moment/moment";
+import { useEffect } from "react";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -82,13 +83,14 @@ export default function AddEmployee() {
       alert("Fill the form properly!!");
     }
   };
-
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("currentUserDetails"));
+    if (items) {
+      setInfo(items);
+    }
+  }, []);
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const uid = user.uid;
-      getDoc(doc(database, "users", uid)).then((doc) => {
-        setInfo({ ...doc.data(), id: doc.id });
-      });
     } else {
       window.location.href = "/";
     }
