@@ -26,6 +26,7 @@ export default function Login() {
   });
   useEffect(() => {
     signOut(auth);
+    localStorage.clear();
   }, []);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
@@ -38,9 +39,9 @@ export default function Login() {
   });
   function login() {
     try {
-      setPersistence(auth, browserSessionPersistence)
-        .then(() => {
-          signInWithEmailAndPassword(auth, user.emailId, user.password).catch((error) => {
+      setPersistence(auth, browserSessionPersistence).then(() => {
+        signInWithEmailAndPassword(auth, user.emailId, user.password).catch(
+          (error) => {
             if (error.message === "Firebase: Error (auth/user-not-found).") {
               alert("User not Found. Sign Up first !!");
             } else if (
@@ -48,13 +49,13 @@ export default function Login() {
             ) {
               alert("Wrong Password");
             }
-          });
-          if (!auth.currentUser.emailVerified) {
-            alert("User not verified yet !!!");
-            window.location.href = "/emailVerification";
           }
-        })
-        
+        );
+        if (!auth.currentUser.emailVerified) {
+          alert("User not verified yet !!!");
+          window.location.href = "/emailVerification";
+        }
+      });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
     }
