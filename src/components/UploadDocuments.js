@@ -23,8 +23,8 @@ export default function UploadDocuments() {
     twelvethMark: null,
     recruitImage: null,
   });
-  // const [voterIdFile, setVoterIdFile] = useState(null);
-  // const [twelvethMarkFile, setTwelvethMarkFile] = useState(null);
+  const [voterIdFile, setVoterIdFile] = useState(null);
+  const [twelvethMarkFile, setTwelvethMarkFile] = useState(null);
   const [tenthMarkFile, setTenthMarkFile] = useState(null);
 
   const [imageFile, setImageFile] = useState(null);
@@ -68,23 +68,23 @@ export default function UploadDocuments() {
       alert("Fill the form properly!!");
     }
   };
-  // function handleImageChange(event) {
-  //   if (
-  //     event.target.files[0] &&
-  //     (event.target.files[0].type === "image/png" ||
-  //       event.target.files[0].type === "image/jpeg" ||
-  //       event.target.files[0].type === "image/jpg" ||
-  //       event.target.files[0].type === "image/bmp" ||
-  //       event.target.files[0].type === "image/gif" ||
-  //       event.target.files[0].type === "image/webp")
-  //   ) {
-  //     setImageUrl(event.target.files[0]);
-  //     handleImageUpload(event.target.files[0]);
-  //   } else {
-  //     setImageUrl(null);
-  //     alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
-  //   }
-  // }
+  function handleImageChange(event) {
+    if (
+      event.target.files[0] &&
+      (event.target.files[0].type === "image/png" ||
+        event.target.files[0].type === "image/jpeg" ||
+        event.target.files[0].type === "image/jpg" ||
+        event.target.files[0].type === "image/bmp" ||
+        event.target.files[0].type === "image/gif" ||
+        event.target.files[0].type === "image/webp")
+    ) {
+      setImageFile(event.target.files[0]);
+      // handleImageUpload(event.target.files[0]);
+    } else {
+      setImageFile(null);
+      alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
+    }
+  }
   // function handleImageUpload(file) {
   //   const recruitImageRef = ref(
   //     storage,
@@ -105,18 +105,18 @@ export default function UploadDocuments() {
   //       console.log(err.message);
   //     });
   // }
-  // function handleVoterIdChange(event) {
-  //   if (
-  //     event.target.files[0] &&
-  //     event.target.files[0].type === "application/pdf"
-  //   ) {
-  //     setVoterIdFile(event.target.files[0]);
-  //     handleVoterIdUpload(event.target.files[0]);
-  //   } else {
-  //     setVoterIdFile(null);
-  //     alert("Upload .pdf files only.");
-  //   }
-  // }
+  function handleVoterIdChange(event) {
+    if (
+      event.target.files[0] &&
+      event.target.files[0].type === "application/pdf"
+    ) {
+      setVoterIdFile(event.target.files[0]);
+      // handleVoterIdUpload(event.target.files[0]);
+    } else {
+      setVoterIdFile(null);
+      alert("Upload .pdf files only.");
+    }
+  }
   // function handleVoterIdUpload(file) {
   //   const recruitVoterIdRef = ref(
   //     storage,
@@ -137,18 +137,18 @@ export default function UploadDocuments() {
   //       console.log(err.message);
   //     });
   // }
-  // function handleTwelvethMarkChange(event) {
-  //   if (
-  //     event.target.files[0] &&
-  //     event.target.files[0].type === "application/pdf"
-  //   ) {
-  //     setTwelvethMarkFile(event.target.files[0]);
-  //     handleTwelvethMarkUpload(event.target.files[0]);
-  //   } else {
-  //     setTwelvethMarkFile(null);
-  //     alert("Upload .pdf files only.");
-  //   }
-  // }
+  function handleTwelvethMarkChange(event) {
+    if (
+      event.target.files[0] &&
+      event.target.files[0].type === "application/pdf"
+    ) {
+      setTwelvethMarkFile(event.target.files[0]);
+      // handleTwelvethMarkUpload(event.target.files[0]);
+    } else {
+      setTwelvethMarkFile(null);
+      alert("Upload .pdf files only.");
+    }
+  }
   // function handleTwelvethMarkUpload(file) {
   //   const recruitTwelvethMarkSheetRef = ref(
   //     storage,
@@ -258,7 +258,7 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                             </Row>
-                            {/* <Row className="form-group">
+                            <Row className="form-group">
                               <Col md={12}>
                                 <Form.Label className="mb-2 label">
                                   12th Pass Certificate*
@@ -284,7 +284,7 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                             </Row>
- */}
+
                             <h4 className="green-text">
                               Residential and Age proof
                             </h4>
@@ -310,7 +310,7 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                             </Row>
-                            {/*<p>(or)</p>
+                            <p>(or)</p>
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Label className="mb-2 label">
@@ -336,7 +336,7 @@ export default function UploadDocuments() {
                                   />
                                 </Form.Group>
                               </Col>
-                            </Row>*/}
+                            </Row>
                             <Row className="form-group text-center">
                               <Col
                                 md={3}
@@ -361,7 +361,7 @@ export default function UploadDocuments() {
                                     type="file"
                                     name="imageFile"
                                     accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                    // onChange={handleImageChange}
+                                    onChange={handleImageChange}
                                   />
                                 </Form.Group>
                               </Col>
