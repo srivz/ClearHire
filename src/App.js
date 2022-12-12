@@ -9,8 +9,9 @@ import SignUpWithEmail from "./components/SignUpWithEmail";
 import SearchResult from "./components/SearchResult";
 import ForgotPassword from "./components/ForgotPassword";
 import AddRecruit from "./components/AddRecruit";
-import EmailSent from "./components/EmailSent";
+import EmailVerification from "./components/EmailVerification";
 import RecruitAcceptPage from "./components/RecruitAcceptPage";
+import UploadDocuments from "./components/UploadDocuments";
 
 export default function App() {
   return (
@@ -27,7 +28,7 @@ export default function App() {
           element={<SignUp />}></Route>
         <Route
           path="/emailVerification"
-          element={<EmailSent />}></Route>
+          element={<EmailVerification />}></Route>
         <Route
           path="/signUp/email"
           element={<SignUpWithEmail />}></Route>
@@ -43,6 +44,9 @@ export default function App() {
         <Route
           path="/recruitAcceptPage"
           element={<RecruitAcceptPage />}></Route>
+        <Route
+          path="/uploadDocuments"
+          element={<UploadDocuments />}></Route>
         <Route
           path="/employeeDetails"
           element={<EmployeeDetails />}></Route>

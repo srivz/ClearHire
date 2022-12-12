@@ -15,7 +15,7 @@ import Footer from "./Footer/Footer";
 
 export default function RecruitAcceptPage() {
   const file = useState(
-    "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/sample.pdf?alt=media&token=bcd4b969-c710-42da-b509-99f9a00668ad"
+    "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/offerLetters%2F121212121212%2Fsample.pdf?alt=media&token=9f3db995-9c90-4a03-994f-b195abf7b88c"
   );
 
   //   const [user, setUser] = useState({
@@ -64,12 +64,14 @@ export default function RecruitAcceptPage() {
         <Row>
           <NavBar3 />
           <main id="main">
-            <section className="empdetails-wrap">
+            <section className="recruitdetails-wrap">
               <Container>
-                <div className="empdetails-inner">
+                <div className="recruitdetails-inner">
                   <Row className="justify-content-center align-items-center">
                     <Col md={12}>
-                      <h1>Hi! Raja Kamaraj</h1>
+                      <h2>
+                        <span className="green-text">Hi!</span> Raja Kamaraj
+                      </h2>
                       <p>
                         Please check all the details and offer leter before
                         accepting.
@@ -79,10 +81,10 @@ export default function RecruitAcceptPage() {
                   </Row>
                   <Row className="justify-content-center">
                     <Col md={6}>
-                      <h1>Employee Details</h1>
+                      <h2 className="green-text">Employee Details</h2>
                       <br />
                       <Row className="justify-content-left align-items-left">
-                        <Col md={4}>
+                        <Col md={3}>
                           <p>Name</p>
                           <br />
                           <p>Age</p>
@@ -93,7 +95,7 @@ export default function RecruitAcceptPage() {
                           <br />
                           <p>Salary</p>
                         </Col>
-                        <Col md={6}>
+                        <Col md={9}>
                           <p>Raja Kamaraj</p>
                           <br />
                           <p>28</p>
@@ -108,9 +110,9 @@ export default function RecruitAcceptPage() {
                       </Row>
                     </Col>
                     <Col md={6}>
-                      <h1>Employer</h1>
+                      <h2 className="green-text">Employer</h2>
                       <Row className="justify-content-center align-items-center">
-                        <Col md={2}>
+                        <Col md={3}>
                           <p>
                             <div className="userprofile">
                               <Image
@@ -122,7 +124,7 @@ export default function RecruitAcceptPage() {
                           </p>
                         </Col>
                         <Col md={8}>
-                          <h4>Brand Moustache</h4>
+                          <h4 className="green-text">Brand Moustache</h4>
                           <p />
                           Since 2009
                         </Col>
@@ -133,7 +135,7 @@ export default function RecruitAcceptPage() {
                   </Row>
                   <Row className="justify-content-center">
                     <Col md={12}>
-                      <h1>Offer Letter</h1>
+                      <h1 className="green-text">Offer Letter</h1>
                       <Row className="justify-content-center align-items-center">
                         <Col md={12}>
                           <center>
@@ -151,7 +153,7 @@ export default function RecruitAcceptPage() {
                   <div className="addemp-form">
                     <Row className="form-group">
                       <Col
-                        md={8}
+                        md={10}
                         className="mt-4"></Col>
                       <Col
                         md={2}

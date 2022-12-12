@@ -231,6 +231,9 @@ body {
   cursor: pointer;
   color: #00823b;
 }
+.green-text {
+  color: #00823b;
+}
 .align-me {
   display: flex;
   align-items: center;
@@ -756,6 +759,9 @@ a:hover {
 }
 .empdetails-wrap {
   padding: 150px 0 0;
+}
+.recruitdetails-wrap {
+  padding: 150px 150px 0;
 }
 .empdetails-inner .title-text {
   color: #00823b;

@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase-config";
 
-export default function EmailSent() {
+export default function EmailVerification() {
   const handleSubmit = () => {
     sendEmailVerification(auth.currentUser).then(() => {
       window.location.href = "/";
