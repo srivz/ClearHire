@@ -23,11 +23,10 @@ export default function UploadDocuments() {
     twelvethMark: null,
     recruitImage: null,
   });
-  const [voterIdFile, setVoterIdFile] = useState(null);
-  const [twelvethMarkFile, setTwelvethMarkFile] = useState(null);
+  // const [voterIdFile, setVoterIdFile] = useState(null);
+  // const [twelvethMarkFile, setTwelvethMarkFile] = useState(null);
   const [tenthMarkFile, setTenthMarkFile] = useState(null);
 
-  const [imageUrl, setImageUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
   const [show, setShow] = useState(false);
@@ -337,7 +336,7 @@ export default function UploadDocuments() {
                                   />
                                 </Form.Group>
                               </Col>
-                            </Row>
+                            </Row>*/}
                             <Row className="form-group text-center">
                               <Col
                                 md={3}
@@ -362,7 +361,7 @@ export default function UploadDocuments() {
                                     type="file"
                                     name="imageFile"
                                     accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                    onChange={handleImageChange}
+                                    // onChange={handleImageChange}
                                   />
                                 </Form.Group>
                               </Col>
@@ -378,7 +377,7 @@ export default function UploadDocuments() {
                                   <Image
                                     onClick={handleShow}
                                     src={
-                                      imageUrl === "" ? image_icon : imageUrl
+                                      imageFile === "" ? image_icon : imageFile
                                     }
                                     alt=""
                                   />
@@ -406,7 +405,7 @@ export default function UploadDocuments() {
                                   </Modal.Body>
                                 </Modal>
                               </Col>
-                            </Row> */}
+                            </Row>
 
                             <Row className="form-group">
                               <Col
