@@ -3,7 +3,7 @@ import { getFirestore } from "@firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAgZcM2BiyWl2BWNyBJUYOSRlCDpfRz25g",
   authDomain: "clearhire-28c23.firebaseapp.com",
   projectId: "clearhire-28c23",
@@ -16,4 +16,6 @@ const firebaseConfig = {
 export const fire = initializeApp(firebaseConfig);
 export const storage = getStorage(fire);
 export const auth = getAuth(fire);
+const fire2 = initializeApp(firebaseConfig, "secondary");
+export const auth2 = getAuth(fire2);
 export const database = getFirestore(fire);

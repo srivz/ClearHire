@@ -33,8 +33,10 @@ export default function Login() {
     setUser({ ...user, ...newInput });
   };
   onAuthStateChanged(auth, (user) => {
-    if (user && user.emailVerified) {
+    if (user && user.emailVerified && user.displayName === "Employer") {
       window.location.href = "/searchResults";
+    } else if (user && user.emailVerified && user.displayName === "Employee") {
+      window.location.href = "/profile";
     }
   });
   function login() {

@@ -221,7 +221,22 @@ body {
   border-color: #06b153;
   border: 2px solid;
 }
-
+.recruit-image input {
+  display: none;
+}
+.recruit-image .label {
+  width: fit-content;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  height: fit-content;
+  color: #00823b;
+  background-color: rgb(255, 255, 255);
+  border-color: #06b153;
+  border: 2px solid;
+}
 .label-icon {
   float: right;
   margin-right: 30px;

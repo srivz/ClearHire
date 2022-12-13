@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import image_icon from "../assets/img/image-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import {
@@ -23,11 +22,17 @@ export default function UploadDocuments() {
     twelvethMark: null,
     recruitImage: null,
   });
-  const [voterIdFile, setVoterIdFile] = useState(null);
-  const [twelvethMarkFile, setTwelvethMarkFile] = useState(null);
-  const [tenthMarkFile, setTenthMarkFile] = useState(null);
+  const [voterIdFile, setVoterIdFile] = useState({
+    name: "Add pdf",
+  });
+  const [twelvethMarkFile, setTwelvethMarkFile] = useState({
+    name: "Add pdf",
+  });
+  const [tenthMarkFile, setTenthMarkFile] = useState({
+    name: "Add pdf",
+  });
 
-  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const [show, setShow] = useState(false);
   const webRef = useRef(null);
@@ -36,6 +41,7 @@ export default function UploadDocuments() {
     let newInput = { [event.target.name]: event.target.value };
     setRecruit({ ...recruit, ...newInput });
   };
+
   function handleShow() {
     setShow(true);
   }
@@ -48,8 +54,7 @@ export default function UploadDocuments() {
     let formIsValid = true;
     console.log(fields);
     if (
-      !fields["adhaarCardNumber"] &&
-      !fields["voterId"] &&
+      (!fields["adhaarCardNumber"] || !fields["voterId"]) &&
       !fields["tenthMark"] &&
       !fields["twelvethMark"] &&
       !fields["recruitImage"]
@@ -78,97 +83,94 @@ export default function UploadDocuments() {
         event.target.files[0].type === "image/gif" ||
         event.target.files[0].type === "image/webp")
     ) {
-      setImageFile(event.target.files[0]);
-      // handleImageUpload(event.target.files[0]);
+      console.log(event.target.files[0]);
+      handleImageUpload(event.target.files[0]);
     } else {
-      setImageFile(null);
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");
     }
   }
-  // function handleImageUpload(file) {
-  //   const recruitImageRef = ref(
-  //     storage,
-  //     "/recruitImages/" + recruit.adhaarCardNumber + "/" + file.name
-  //   );
-  //   uploadBytes(recruitImageRef, file)
-  //     .then(() => {
-  //       getDownloadURL(recruitImageRef)
-  //         .then((url) => {
-  //           setImageFile(url);
-  //           recruit.recruitImage = url;
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.message);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }
+  function handleImageUpload(file) {
+    const recruitImageRef = ref(
+      storage,
+      "/recruits/" + recruit.adhaarCardNumber + "/image/" + file.name
+    );
+    uploadBytes(recruitImageRef, file)
+      .then(() => {
+        getDownloadURL(recruitImageRef)
+          .then((url) => {
+            setImageUrl(url);
+            recruit.recruitImage = url;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
   function handleVoterIdChange(event) {
     if (
       event.target.files[0] &&
       event.target.files[0].type === "application/pdf"
     ) {
       setVoterIdFile(event.target.files[0]);
-      // handleVoterIdUpload(event.target.files[0]);
+      handleVoterIdUpload(event.target.files[0]);
     } else {
       setVoterIdFile(null);
       alert("Upload .pdf files only.");
     }
   }
-  // function handleVoterIdUpload(file) {
-  //   const recruitVoterIdRef = ref(
-  //     storage,
-  //     "/recruitTwelveMarkSheet/" + recruit.adhaarCardNumber + "/" + file.name
-  //   );
-  //   uploadBytes(recruitVoterIdRef, file)
-  //     .then(() => {
-  //       getDownloadURL(recruitVoterIdRef)
-  //         .then((url) => {
-  //           setImageFile(url);
-  //           recruit.twelvethMark = url;
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.message);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }
+  function handleVoterIdUpload(file) {
+    const recruitVoterIdRef = ref(
+      storage,
+      "/recruits/" + recruit.adhaarCardNumber + "/VoterId/" + file.name
+    );
+    uploadBytes(recruitVoterIdRef, file)
+      .then(() => {
+        getDownloadURL(recruitVoterIdRef)
+          .then((url) => {
+            recruit.voterId = url;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
   function handleTwelvethMarkChange(event) {
     if (
       event.target.files[0] &&
       event.target.files[0].type === "application/pdf"
     ) {
       setTwelvethMarkFile(event.target.files[0]);
-      // handleTwelvethMarkUpload(event.target.files[0]);
+      handleTwelvethMarkUpload(event.target.files[0]);
     } else {
       setTwelvethMarkFile(null);
       alert("Upload .pdf files only.");
     }
   }
-  // function handleTwelvethMarkUpload(file) {
-  //   const recruitTwelvethMarkSheetRef = ref(
-  //     storage,
-  //     "/recruitTwelveMarkSheet/" + recruit.adhaarCardNumber + "/" + file.name
-  //   );
-  //   uploadBytes(recruitTwelvethMarkSheetRef, file)
-  //     .then(() => {
-  //       getDownloadURL(recruitTwelvethMarkSheetRef)
-  //         .then((url) => {
-  //           setImageFile(url);
-  //           recruit.twelvethMark = url;
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.message);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }
+  function handleTwelvethMarkUpload(file) {
+    const recruitTwelvethMarkSheetRef = ref(
+      storage,
+      "/recruits/" + recruit.adhaarCardNumber + "/TwelveMarkSheet/" + file.name
+    );
+    uploadBytes(recruitTwelvethMarkSheetRef, file)
+      .then(() => {
+        getDownloadURL(recruitTwelvethMarkSheetRef)
+          .then((url) => {
+            recruit.twelvethMark = url;
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
   function handleTenthMarkChange(event) {
     if (
       event.target.files[0] &&
@@ -184,13 +186,12 @@ export default function UploadDocuments() {
   function handleTenthMarkUpload(file) {
     const recruitTenthMarkSheetRef = ref(
       storage,
-      "/recruitTenthMarkSheet/" + recruit.adhaarCardNumber + "/" + file.name
+      "/recruits/" + recruit.adhaarCardNumber + "/TenthMarkSheet/" + file.name
     );
     uploadBytes(recruitTenthMarkSheetRef, file)
       .then(() => {
         getDownloadURL(recruitTenthMarkSheetRef)
           .then((url) => {
-            setImageFile(url);
             recruit.tenthMark = url;
           })
           .catch((err) => {
@@ -230,62 +231,6 @@ export default function UploadDocuments() {
                           </div>
                           <div className="employee-add-form">
                             <h4 className="green-text">
-                              Education Certificates
-                            </h4>
-                            <Row className="form-group">
-                              <Col md={12}>
-                                <Form.Label className="mb-2 label">
-                                  10th Pass Certificate*
-                                </Form.Label>
-                                <Form.Group
-                                  controlId="formFile"
-                                  className="mb-3 employee-file">
-                                  <Form.Label className="mb-2 label text-center">
-                                    {tenthMarkFile !== null
-                                      ? tenthMarkFile.name
-                                      : "Add pdf"}
-                                    <span className="label-icon">
-                                      <i className="fa-solid fa-plus"></i>
-                                    </span>
-                                  </Form.Label>
-                                  <Form.Control
-                                    className="mb-2"
-                                    type="file"
-                                    name="tenthMarkFile"
-                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                    onChange={handleTenthMarkChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-                            <Row className="form-group">
-                              <Col md={12}>
-                                <Form.Label className="mb-2 label">
-                                  12th Pass Certificate*
-                                </Form.Label>
-                                <Form.Group
-                                  controlId="formFile"
-                                  className="mb-3 employee-file">
-                                  <Form.Label className="mb-2 label text-center">
-                                    {twelvethMarkFile !== null
-                                      ? twelvethMarkFile.name
-                                      : "Add pdf"}
-                                    <span className="label-icon">
-                                      <i className="fa-solid fa-plus"></i>
-                                    </span>
-                                  </Form.Label>
-                                  <Form.Control
-                                    className="mb-2"
-                                    type="file"
-                                    name="twelvethMarkFile"
-                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
-                                    onChange={handleTwelvethMarkChange}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-
-                            <h4 className="green-text">
                               Residential and Age proof
                             </h4>
                             <Row className="form-group">
@@ -293,7 +238,7 @@ export default function UploadDocuments() {
                                 <Form.Group
                                   className="mb-3"
                                   controlId="formBasicName">
-                                  <Form.Label className="mb-2 label">
+                                  <Form.Label className="mb-2">
                                     Adhaar Number
                                   </Form.Label>
                                   <Form.Control
@@ -314,15 +259,13 @@ export default function UploadDocuments() {
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Label className="mb-2 label">
-                                  Vorter Id
+                                  Voter Id
                                 </Form.Label>
                                 <Form.Group
-                                  controlId="formFile"
+                                  controlId="formFile3"
                                   className="mb-3 employee-file">
                                   <Form.Label className="mb-2 label text-center">
-                                    {voterIdFile !== null
-                                      ? voterIdFile.name
-                                      : "Add pdf"}
+                                    {voterIdFile.name}
                                     <span className="label-icon">
                                       <i className="fa-solid fa-plus"></i>
                                     </span>
@@ -331,31 +274,78 @@ export default function UploadDocuments() {
                                     className="mb-2"
                                     type="file"
                                     name="voterIdFile"
-                                    accept=".png,.jpg,.jpeg,.bmp,.gif,.webp"
+                                    accept=".pdf"
                                     onChange={handleVoterIdChange}
                                   />
                                 </Form.Group>
                               </Col>
                             </Row>
+                            <h4 className="green-text">
+                              Education Certificates
+                            </h4>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <p className="mb-2">10th Pass Certificate*</p>
+                                <Form.Group
+                                  controlId="formFile1"
+                                  className="mb-3 employee-file">
+                                  <Form.Label className="mb-2 label text-center">
+                                    {tenthMarkFile.name}
+                                    <span className="label-icon">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    className="mb-2"
+                                    type="file"
+                                    name="tenthMarkFile"
+                                    accept=".pdf"
+                                    onChange={handleTenthMarkChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <p className="mb-2">12th Pass Certificate*</p>
+                                <Form.Group
+                                  controlId="formFile2"
+                                  className="mb-3 employee-file">
+                                  <Form.Label className="mb-2 label text-center">
+                                    {twelvethMarkFile.name}
+                                    <span className="label-icon">
+                                      <i className="fa-solid fa-plus"></i>
+                                    </span>
+                                  </Form.Label>
+                                  <Form.Control
+                                    className="mb-2"
+                                    type="file"
+                                    name="twelvethMarkFile"
+                                    accept=".pdf"
+                                    onChange={handleTwelvethMarkChange}
+                                  />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+
                             <Row className="form-group text-center">
                               <Col
-                                md={3}
+                                md={5}
                                 style={{ margin: "auto" }}>
+                                {" "}
                                 <Form.Group
-                                  controlId="formFile"
-                                  className="mb-3 employee-file">
+                                  controlId="formFile4"
+                                  className="mb-3 recruit-image">
                                   <Form.Label className="mb-2">
                                     <div className="beforeuploadpic">
                                       <Image
-                                        src={
-                                          imageFile === ""
-                                            ? image_icon
-                                            : imageFile.name
-                                        }
+                                        src={imageUrl}
                                         alt=""
                                       />
                                     </div>
                                   </Form.Label>
+                                  <br />
+                                  Upload your image
                                   <Form.Control
                                     className="mb-2"
                                     type="file"
@@ -370,18 +360,20 @@ export default function UploadDocuments() {
                                 style={{ margin: "auto" }}>
                                 (or)
                               </Col>
-                              <Col
-                                md={3}
-                                style={{ margin: "auto" }}>
-                                <div className="beforeuploadpic">
-                                  <Image
-                                    onClick={handleShow}
-                                    src={
-                                      imageFile === "" ? image_icon : imageFile
-                                    }
-                                    alt=""
-                                  />
-                                </div>
+                              <Col md={5}>
+                                <Form.Group className="mb-3 recruit-image">
+                                  <Form.Label className="mb-2">
+                                    <div className="beforeuploadpic">
+                                      <Image
+                                        onClick={handleShow}
+                                        src={imageUrl}
+                                        alt=""
+                                      />
+                                    </div>
+                                  </Form.Label>
+                                  <br />
+                                  Open Camera
+                                </Form.Group>
                                 <Modal
                                   show={show}
                                   fullscreen={true}

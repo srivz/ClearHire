@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Row, Form } from "react-bootstrap";
-import { storage, database, auth } from "../firebase-config.js";
-import { doc, setDoc } from "firebase/firestore";
+import { storage, database, auth, auth2 } from "../firebase-config.js";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
 import moment from "moment";
 
 export default function AddRecruit() {
@@ -47,6 +51,7 @@ export default function AddRecruit() {
   }, []);
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      console.log(auth.currentUser);
     } else {
       window.location.href = "/";
     }
@@ -82,6 +87,21 @@ export default function AddRecruit() {
         console.log(err.message);
       });
   }
+
+  const registerLogin = () => {
+    createUserWithEmailAndPassword(
+      auth2,
+      recruit.emailId,
+      recruit.dateOfBirth
+    ).then((cred) => {
+      const updated = updateProfile(auth2.currentUser, {
+        displayName: "Employee",
+        photoURL: recruit.adhaarCardNumber,
+      });
+      if (updated) auth2.signOut();
+    });
+  };
+
   const registerRecruit = async () => {
     const docData = {
       name: recruit.name,
@@ -93,6 +113,7 @@ export default function AddRecruit() {
       location: recruit.location,
       salary: recruit.salary,
       bonus: recruit.bonus,
+      adhaarCardNumber: recruit.adhaarCardNumber,
       offerLetter: recruit.offerLetter,
       emailId: recruit.emailId,
       phoneNumber: recruit.phoneNumber,
@@ -108,24 +129,25 @@ export default function AddRecruit() {
       docData
     )
       .then(() => {
+        registerLogin();
         setDisabledButton(true);
-        // updateDoc(doc(database, "employees", recruit.adhaarCardNumber), {
-        //   companies: arrayUnion(auth.currentUser.uid),
-        // })
-        //   .then(() => {
-        window.location.href = "/searchResults";
-        // })
-        // .catch((err) => {
-        //   setDoc(doc(database, "employees", recruit.adhaarCardNumber), {
-        //     companies: arrayUnion(auth.currentUser.uid),
-        //   })
-        //     .then(() => {
-        //       window.location.href = "/searchResults";
-        //     })
-        //     .catch((err) => {
-        //       console.log(err.message);
-        //     });
-        // });
+        updateDoc(doc(database, "recruit", recruit.adhaarCardNumber), {
+          companies: arrayUnion(auth.currentUser.uid),
+        })
+          .then(() => {
+            window.location.href = "/searchResults";
+          })
+          .catch((err) => {
+            setDoc(doc(database, "recruit", recruit.adhaarCardNumber), {
+              companies: arrayUnion(auth.currentUser.uid),
+            })
+              .then(() => {
+                window.location.href = "/searchResults";
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          });
       })
       .catch((err) => {
         console.log(err.message);
@@ -201,7 +223,7 @@ export default function AddRecruit() {
                                     defaultValue={recruit.dateOfBirth}
                                     onChange={handleChange}
                                   />
-                                  <div class="input-down-angle-icon"></div>
+                                  <div className="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -223,7 +245,7 @@ export default function AddRecruit() {
                                     defaultValue={recruit.dateJoined}
                                     onChange={handleChange}
                                   />
-                                  <div class="input-down-angle-icon"></div>
+                                  <div className="input-down-angle-icon"></div>
                                 </Form.Group>
                               </Col>
                             </Row>
@@ -414,7 +436,7 @@ export default function AddRecruit() {
                                   variant="success"
                                   className="w-100">
                                   Send Offer Letter{" "}
-                                  <i class="fa-solid fa-circle-arrow-right fa-1x"></i>
+                                  <i className="fa-solid fa-circle-arrow-right fa-1x"></i>
                                 </Button>
                               </Col>
                             </Row>

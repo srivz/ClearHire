@@ -12,6 +12,7 @@ import AddRecruit from "./components/AddRecruit";
 import EmailVerification from "./components/EmailVerification";
 import RecruitAcceptPage from "./components/RecruitAcceptPage";
 import UploadDocuments from "./components/UploadDocuments";
+import Profile from "./components/Profile";
 
 export default function App() {
   return (
@@ -50,6 +51,9 @@ export default function App() {
         <Route
           path="/employeeDetails"
           element={<EmployeeDetails />}></Route>
+        <Route
+          path="/profile"
+          element={<Profile />}></Route>
       </Routes>
     </Router>
   );

@@ -11,6 +11,7 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 
 export default function SignUpWithEmail() {
@@ -37,6 +38,9 @@ export default function SignUpWithEmail() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      updateProfile(auth.currentUser, {
+        displayName: "Employer",
+      });
       registerUser();
     }
   });
