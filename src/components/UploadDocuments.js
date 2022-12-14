@@ -92,7 +92,7 @@ export default function UploadDocuments() {
     };
     await updateDoc(doc(database, "recruit", auth.currentUser.email), docData)
       .then(() => {
-        window.location.href = "/recruitAcceptPages";
+        window.location.href = "/recruitAcceptPage";
       })
       .catch((err) => {
         console.log(err.message);
