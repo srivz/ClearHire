@@ -17,7 +17,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth, auth2 } from "../firebase-config.js";
+import { auth } from "../firebase-config.js";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -26,7 +26,6 @@ export default function Login() {
   });
   useEffect(() => {
     signOut(auth);
-    signOut(auth2);
     localStorage.clear();
   }, []);
   const handleChangeForm = (event) => {

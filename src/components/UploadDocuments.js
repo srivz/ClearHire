@@ -14,6 +14,7 @@ import Webcam from "react-webcam";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, database, storage } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({
@@ -37,6 +38,13 @@ export default function UploadDocuments() {
 
   const [show, setShow] = useState(false);
   const webRef = useRef(null);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+    } else {
+      window.location.href = "/";
+    }
+  });
 
   const handleChange = (event) => {
     let newInput = { [event.target.name]: event.target.value };
@@ -75,7 +83,6 @@ export default function UploadDocuments() {
     e.preventDefault();
 
     if (handleValidation()) {
-      console.log(recruit);
       registerRecruit();
     } else {
       alert("Fill the form properly!!");
@@ -108,7 +115,6 @@ export default function UploadDocuments() {
         event.target.files[0].type === "image/gif" ||
         event.target.files[0].type === "image/webp")
     ) {
-      console.log(event.target.files[0]);
       handleImageUpload(event.target.files[0]);
     } else {
       alert("Upload .png, .jpg, .jpeg, .bmp, .gif, .webp files only.");

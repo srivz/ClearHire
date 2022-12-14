@@ -4,44 +4,42 @@ import "../assets/css/style.css";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
-import { updateProfile } from "firebase/auth";
-import { auth2 } from "../firebase-config";
-// import {
-//   browserSessionPersistence,
-//   onAuthStateChanged,
-//   setPersistence,
-//   signInWithEmailAndPassword,
-//   signOut,
-// } from "firebase/auth";
-// import { auth } from "../firebase-config.js";
+// import { updateProfile } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, database } from "../firebase-config.js";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function RecruitAcceptPage() {
-  const file = useState(
-    "https://firebasestorage.googleapis.com/v0/b/clearhire-28c23.appspot.com/o/offerLetters%2F121212121212%2Fsample.pdf?alt=media&token=9f3db995-9c90-4a03-994f-b195abf7b88c"
-  );
+  const [info, setInfo] = useState([]);
+  const date_diff_indays = function (date1) {
+    const dt1 = new Date(date1);
+    const dt2 = new Date();
+    return Math.floor(
+      (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
+        Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
+        (1000 * 60 * 60 * 24 * 365)
+    );
+  };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // alert("Logged");
+      const uid = user.email;
+      getDoc(doc(database, "recruit", uid)).then((doc) => {
+        setInfo({ ...doc.data(), id: doc.id });
+      });
+    } else {
+      window.location.href = "/";
+    }
+  });
 
-  //   const [user, setUser] = useState({
-  //     emailId: "",
-  //     password: "",
-  //   });
-  //   useEffect(() => {
-  //     signOut(auth);
-  //   }, []);
-  //   const handleChangeForm = (event) => {
-  //     let newInput = { [event.target.name]: event.target.value };
-  //     setUser({ ...user, ...newInput });
-  // };
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user && user.emailVerified) {
-  //       window.location.href = "/searchResults";
-  //     }
-  //   });
   function accept() {
     try {
-      updateProfile(auth2.currentUser, {
-        displayName: "Employee",
-        photoURL: "adhaarCardNumber",
-      });
+      alert("Accept");
+      console.log(info);
+      // updateProfile(auth.currentUser, {
+      //   displayName: "Employee",
+      //   photoURL: "adhaarCardNumber",
+      // });
       // setPersistence(auth, browserSessionPersistence)
       //   .then(() => {
       //     signInWithEmailAndPassword(auth, user.emailId, user.password);
@@ -60,7 +58,7 @@ export default function RecruitAcceptPage() {
       //     }
       //   });
     } catch (error) {
-      // alert("User not Found. Sign Up first !!");
+      alert("User not Found. Sign Up first !!");
     }
   }
 
@@ -76,7 +74,7 @@ export default function RecruitAcceptPage() {
                   <Row className="justify-content-center align-items-center">
                     <Col md={12}>
                       <h2>
-                        <span className="green-text">Hi!</span> Raja Kamaraj
+                        <span className="green-text">Hi!</span> {info.name}
                       </h2>
                       <p>
                         Please check all the details and offer leter before
@@ -86,7 +84,7 @@ export default function RecruitAcceptPage() {
                     <div className="whitespace">&nbsp;</div>
                   </Row>
                   <Row className="justify-content-center">
-                    <Col md={6}>
+                    <Col md={7}>
                       <h2 className="green-text">Employee Details</h2>
                       <br />
                       <Row className="justify-content-left align-items-left">
@@ -102,31 +100,36 @@ export default function RecruitAcceptPage() {
                           <p>Salary</p>
                         </Col>
                         <Col md={9}>
-                          <p>Raja Kamaraj</p>
+                          <p>{info.name}</p>
                           <br />
-                          <p>28</p>
+                          <p>{date_diff_indays(info.dateOfBirth)}</p>
                           <br />
-                          <p>Portrait Artist. Then and There Agency</p>
+                          <p>
+                            {info.designation} ⋅ {info.companyName}
+                          </p>
                           <br />
-                          <p>Chennai, Tamil Nadu, India</p>
+                          <p>{info.location}</p>
                           <br />
-                          <p>6.5 LPA + Bonus</p>
+                          <p>
+                            {info.salary} LPA{" "}
+                            {info.bonus === "Yes" ? "+ Bonus" : ""}
+                          </p>
                         </Col>
                         <div className="whitespace">&nbsp;</div>
                       </Row>
                     </Col>
-                    <Col md={6}>
+                    <Col md={5}>
                       <h2 className="green-text">Employer</h2>
                       <Row className="justify-content-center align-items-center">
                         <Col md={3}>
                           <p>
-                            <div className="userprofile">
+                            <span className="userprofile">
                               <Image
-                                src=""
+                                src={info.companyLogo}
                                 alt=""
                                 width="60"
                               />
-                            </div>
+                            </span>
                           </p>
                         </Col>
                         <Col md={8}>
@@ -147,9 +150,9 @@ export default function RecruitAcceptPage() {
                           <center>
                             <embed
                               type="application/pdf"
-                              src={file}
-                              width="1000"
-                              height="770"
+                              src={info.offerLetter}
+                              width="850"
+                              height="800"
                             />
                           </center>
                         </Col>
