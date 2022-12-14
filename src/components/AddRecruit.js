@@ -8,7 +8,6 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  updateProfile,
 } from "firebase/auth";
 import moment from "moment";
 
@@ -20,7 +19,6 @@ export default function AddRecruit() {
     designation: "",
     location: "",
     salary: "",
-    adhaarCardNumber: "",
     offerLetter: "",
     bonus: "",
     emailId: "",
@@ -71,7 +69,7 @@ export default function AddRecruit() {
   function handleUpload(file) {
     const offerLetterRef = ref(
       storage,
-      "/offerLetters/" + recruit.adhaarCardNumber + "/" + file.name
+      "/offerLetters/" + recruit.emailId + "/" + file.name
     );
     uploadBytes(offerLetterRef, file)
       .then(() => {
@@ -94,11 +92,7 @@ export default function AddRecruit() {
       recruit.emailId,
       recruit.dateOfBirth
     ).then((cred) => {
-      const updated = updateProfile(auth2.currentUser, {
-        displayName: "Employee",
-        photoURL: recruit.adhaarCardNumber,
-      });
-      if (updated) auth2.signOut();
+      auth2.signOut();
     });
   };
 
@@ -106,6 +100,7 @@ export default function AddRecruit() {
     const docData = {
       name: recruit.name,
       companyName: info.companyName,
+      companyId: auth.currentUser.uid,
       companyLogo: info.profileImage,
       dateOfBirth: recruit.dateOfBirth,
       dateJoined: recruit.dateJoined,
@@ -113,33 +108,23 @@ export default function AddRecruit() {
       location: recruit.location,
       salary: recruit.salary,
       bonus: recruit.bonus,
-      adhaarCardNumber: recruit.adhaarCardNumber,
       offerLetter: recruit.offerLetter,
       emailId: recruit.emailId,
       phoneNumber: recruit.phoneNumber,
     };
-    await setDoc(
-      doc(
-        database,
-        "companies",
-        auth.currentUser.uid,
-        "recruit",
-        recruit.adhaarCardNumber
-      ),
-      docData
-    )
+    await setDoc(doc(database, "recruit", recruit.emailId), docData)
       .then(() => {
         registerLogin();
         setDisabledButton(true);
-        updateDoc(doc(database, "recruit", recruit.adhaarCardNumber), {
-          companies: arrayUnion(auth.currentUser.uid),
+        updateDoc(doc(database, "companies", auth.currentUser.uid), {
+          recruits: arrayUnion(recruit.emailId),
         })
           .then(() => {
             window.location.href = "/searchResults";
           })
           .catch((err) => {
-            setDoc(doc(database, "recruit", recruit.adhaarCardNumber), {
-              companies: arrayUnion(auth.currentUser.uid),
+            setDoc(doc(database, "companies", auth.currentUser.uid), {
+              recruits: arrayUnion(recruit.emailId),
             })
               .then(() => {
                 window.location.href = "/searchResults";
@@ -260,25 +245,6 @@ export default function AddRecruit() {
                                     defaultValue={recruit.designation}
                                     onChange={handleChange}
                                   />
-                                </Form.Group>
-                              </Col>
-                            </Row>
-                            <Row className="form-group">
-                              <Col md={12}>
-                                <Form.Group
-                                  className="mb-3"
-                                  controlId="formBasicName">
-                                  <Form.Control
-                                    type="number"
-                                    required
-                                    minLength={12}
-                                    maxLength={12}
-                                    name="adhaarCardNumber"
-                                    placeholder="Adhaar Card Number*"
-                                    defaultValue={recruit.adhaarCardNumber}
-                                    onChange={handleChange}
-                                  />
-                                  <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                               </Col>
                             </Row>

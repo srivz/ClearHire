@@ -12,7 +12,8 @@ import {
 } from "react-bootstrap";
 import Webcam from "react-webcam";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../firebase-config";
+import { auth2, database, storage } from "../firebase-config";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({
@@ -45,21 +46,27 @@ export default function UploadDocuments() {
   function handleShow() {
     setShow(true);
   }
+  function handleRemoveImage() {
+    setImageUrl(null);
+    recruit.recruitImage = null;
+  }
   const showImage = (event) => {
-    console.log(webRef.current.getScreenshot());
+    setImageUrl(webRef.current.getScreenshot());
+    recruit.recruitImage = webRef.current.getScreenshot();
+    setShow(false);
   };
-
   const handleValidation = () => {
     let fields = recruit;
-    let formIsValid = true;
+    let formIsValid = false;
     console.log(fields);
     if (
-      (!fields["adhaarCardNumber"] || !fields["voterId"]) &&
-      !fields["tenthMark"] &&
-      !fields["twelvethMark"] &&
-      !fields["recruitImage"]
+      fields["adhaarCardNumber"] !== null &&
+      fields["voterId"] !== null &&
+      fields["tenthMark"] !== null &&
+      fields["twelvethMark"] !== null &&
+      fields["recruitImage"] !== null
     ) {
-      formIsValid = false;
+      formIsValid = true;
     }
 
     return formIsValid;
@@ -68,10 +75,28 @@ export default function UploadDocuments() {
     e.preventDefault();
 
     if (handleValidation()) {
-      // registerEmployee();
+      console.log(recruit);
+      registerRecruit();
     } else {
       alert("Fill the form properly!!");
     }
+  };
+
+  const registerRecruit = async () => {
+    const docData = {
+      adhaarCardNumber: recruit.adhaarCardNumber,
+      voterId: recruit.voterId,
+      tenthMark: recruit.tenthMark,
+      twelvethMark: recruit.twelvethMark,
+      recruitImage: recruit.recruitImage,
+    };
+    await updateDoc(doc(database, "recruit", auth2.currentUser.email), docData)
+      .then(() => {
+        window.location.href = "/recruitAcceptPages";
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   function handleImageChange(event) {
     if (
@@ -239,7 +264,7 @@ export default function UploadDocuments() {
                                   className="mb-3"
                                   controlId="formBasicName">
                                   <Form.Label className="mb-2">
-                                    Adhaar Number
+                                    Aadhaar Number
                                   </Form.Label>
                                   <Form.Control
                                     type="number"
@@ -247,7 +272,7 @@ export default function UploadDocuments() {
                                     minLength={12}
                                     maxLength={12}
                                     name="adhaarCardNumber"
-                                    placeholder="Enter Adhaar Number"
+                                    placeholder="Enter Aadhaar Number"
                                     defaultValue={recruit.adhaarCardNumber}
                                     onChange={handleChange}
                                   />
@@ -255,7 +280,6 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                             </Row>
-                            <p>(or)</p>
                             <Row className="form-group">
                               <Col md={12}>
                                 <Form.Label className="mb-2 label">
@@ -327,19 +351,20 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                             </Row>
-
                             <Row className="form-group text-center">
                               <Col
-                                md={5}
-                                style={{ margin: "auto" }}>
-                                {" "}
+                                style={{
+                                  display: imageUrl ? "none" : "block",
+                                  margin: "auto",
+                                }}
+                                md={5}>
                                 <Form.Group
                                   controlId="formFile4"
                                   className="mb-3 recruit-image">
                                   <Form.Label className="mb-2">
                                     <div className="beforeuploadpic">
                                       <Image
-                                        src={imageUrl}
+                                        src={null}
                                         alt=""
                                       />
                                     </div>
@@ -356,17 +381,24 @@ export default function UploadDocuments() {
                                 </Form.Group>
                               </Col>
                               <Col
-                                md={1}
-                                style={{ margin: "auto" }}>
+                                style={{
+                                  display: imageUrl ? "none" : "block",
+                                  margin: "auto",
+                                }}
+                                md={1}>
                                 (or)
                               </Col>
-                              <Col md={5}>
+                              <Col
+                                md={5}
+                                style={{
+                                  display: imageUrl ? "none" : "block",
+                                }}>
                                 <Form.Group className="mb-3 recruit-image">
                                   <Form.Label className="mb-2">
                                     <div className="beforeuploadpic">
                                       <Image
                                         onClick={handleShow}
-                                        src={imageUrl}
+                                        src={null}
                                         alt=""
                                       />
                                     </div>
@@ -398,7 +430,26 @@ export default function UploadDocuments() {
                                 </Modal>
                               </Col>
                             </Row>
-
+                            <Row
+                              className="form-group1 text-center"
+                              style={{ display: imageUrl ? "block" : "none" }}>
+                              <Col>
+                                <Form.Group className="mb-3 recruit-image">
+                                  <Form.Label className="mb-2">
+                                    <div className="beforeuploadpic">
+                                      <Image
+                                        src={imageUrl}
+                                        alt=""
+                                      />
+                                    </div>
+                                  </Form.Label>
+                                  <br />
+                                  <span onClick={handleRemoveImage}>
+                                    Remove
+                                  </span>
+                                </Form.Group>
+                              </Col>
+                            </Row>
                             <Row className="form-group">
                               <Col
                                 md={12}

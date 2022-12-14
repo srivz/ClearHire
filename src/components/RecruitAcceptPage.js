@@ -4,6 +4,8 @@ import "../assets/css/style.css";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
+import { updateProfile } from "firebase/auth";
+import { auth2 } from "../firebase-config";
 // import {
 //   browserSessionPersistence,
 //   onAuthStateChanged,
@@ -36,6 +38,10 @@ export default function RecruitAcceptPage() {
   //   });
   function accept() {
     try {
+      updateProfile(auth2.currentUser, {
+        displayName: "Employee",
+        photoURL: "adhaarCardNumber",
+      });
       // setPersistence(auth, browserSessionPersistence)
       //   .then(() => {
       //     signInWithEmailAndPassword(auth, user.emailId, user.password);
