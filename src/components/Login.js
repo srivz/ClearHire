@@ -26,6 +26,7 @@ export default function Login() {
   });
   useEffect(() => {
     signOut(auth);
+    signOut(auth2);
     localStorage.clear();
   }, []);
   const handleChangeForm = (event) => {

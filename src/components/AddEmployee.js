@@ -73,6 +73,19 @@ export default function AddEmployee() {
     return formIsValid;
   };
 
+  // const registerLogin = () => {
+  //   createUserWithEmailAndPassword(
+  //     auth2,
+  //     employee.emailId,
+  //     employee.dateOfBirth
+  //   ).then((cred) => {
+  //     updateProfile(auth2.currentUser, {
+  //       displayName: "Employee",
+  //       photoURL: employee.adhaarCardNumber,
+  //     });
+  //     auth2.signOut();
+  //   });
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
 
