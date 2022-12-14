@@ -14,7 +14,6 @@ import Webcam from "react-webcam";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, database, storage } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({
