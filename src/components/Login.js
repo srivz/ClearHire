@@ -17,7 +17,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../firebase-config.js";
+import { auth, auth2 } from "../firebase-config.js";
 
 export default function Login() {
   const [user, setUser] = useState({
