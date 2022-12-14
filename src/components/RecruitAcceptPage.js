@@ -77,7 +77,7 @@ export default function RecruitAcceptPage() {
                         <span className="green-text">Hi!</span> {info.name}
                       </h2>
                       <p>
-                        Please check all the details and offer leter before
+                        Please check all the details and offer letter before
                         accepting.
                       </p>
                     </Col>
@@ -152,7 +152,7 @@ export default function RecruitAcceptPage() {
                               type="application/pdf"
                               src={info.offerLetter}
                               width="850"
-                              height="800"
+                              height="850"
                             />
                           </center>
                         </Col>
