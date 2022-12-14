@@ -12,8 +12,9 @@ import {
 } from "react-bootstrap";
 import Webcam from "react-webcam";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { auth2, database, storage } from "../firebase-config";
+import { auth, database, storage } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({
@@ -90,7 +91,7 @@ export default function UploadDocuments() {
       twelvethMark: recruit.twelvethMark,
       recruitImage: recruit.recruitImage,
     };
-    await updateDoc(doc(database, "recruit", auth2.currentUser.email), docData)
+    await updateDoc(doc(database, "recruit", auth.currentUser.email), docData)
       .then(() => {
         window.location.href = "/recruitAcceptPages";
       })
