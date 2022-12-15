@@ -39,7 +39,7 @@ export default function RecruitAcceptPage() {
 
   function reject() {
     try {
-      console.log(info);
+      alert("Will be rejected!!");
       // updateProfile(auth.currentUser, {
       //   displayName: "Employee",
       //   photoURL: "adhaarCardNumber",
@@ -68,7 +68,9 @@ export default function RecruitAcceptPage() {
 
   function accept() {
     try {
-      console.log(info);
+      alert(
+        "Will be accepted and added to employee database.Proceed to employee profile!!"
+      );
       // updateProfile(auth.currentUser, {
       //   displayName: "Employee",
       //   photoURL: "adhaarCardNumber",
