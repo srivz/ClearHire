@@ -11,7 +11,11 @@ import { doc, getDoc } from "firebase/firestore";
 
 export default function RecruitAcceptPage() {
   const [info, setInfo] = useState([]);
+  const [count, setCount] = useState(1);
   const date_diff_indays = function (date1) {
+    if (date1 === undefined) {
+      return 0;
+    }
     const dt1 = new Date(date1);
     const dt2 = new Date();
     return Math.floor(
@@ -22,11 +26,12 @@ export default function RecruitAcceptPage() {
   };
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // alert("Logged");
-      const uid = user.email;
-      getDoc(doc(database, "recruit", uid)).then((doc) => {
-        setInfo({ ...doc.data(), id: doc.id });
-      });
+      if (count) {
+        getDoc(doc(database, "recruit", user.email)).then((doc) => {
+          setInfo({ ...doc.data(), id: doc.id });
+        });
+        setCount(0);
+      }
     } else {
       window.location.href = "/";
     }
@@ -34,7 +39,6 @@ export default function RecruitAcceptPage() {
 
   function accept() {
     try {
-      alert("Accept");
       console.log(info);
       // updateProfile(auth.currentUser, {
       //   displayName: "Employee",
@@ -83,45 +87,75 @@ export default function RecruitAcceptPage() {
                     </Col>
                     <div className="whitespace">&nbsp;</div>
                   </Row>
-                  <Row className="justify-content-center">
+                  <Row className="">
                     <Col md={7}>
                       <h2 className="green-text">Employee Details</h2>
                       <br />
                       <Row className="justify-content-left align-items-left">
-                        <Col md={3}>
-                          <p>Name</p>
-                          <br />
-                          <p>Age</p>
-                          <br />
-                          <p>Designation</p>
-                          <br />
-                          <p>Location</p>
-                          <br />
-                          <p>Salary</p>
-                        </Col>
-                        <Col md={9}>
-                          <p>{info.name}</p>
-                          <br />
-                          <p>{date_diff_indays(info.dateOfBirth)}</p>
-                          <br />
-                          <p>
-                            {info.designation} ⋅ {info.companyName}
-                          </p>
-                          <br />
-                          <p>{info.location}</p>
-                          <br />
-                          <p>
-                            {info.salary} LPA{" "}
-                            {info.bonus === "Yes" ? "+ Bonus" : ""}
-                          </p>
+                        <Col md="auto">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  Name
+                                  <p />
+                                </td>
+                                <td className="employeeDetailstd">
+                                  {info.name}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Age
+                                  <p />
+                                </td>
+                                <td className="employeeDetailstd">
+                                  {date_diff_indays(info.dateOfBirth) === "NaN"
+                                    ? " "
+                                    : date_diff_indays(info.dateOfBirth)}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Designation
+                                  <p />
+                                </td>
+                                <td className="employeeDetailstd">
+                                  {" "}
+                                  {info.designation} ⋅ {info.companyName}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  Location
+                                  <p />
+                                </td>
+                                <td className="employeeDetailstd">
+                                  {info.location}
+                                </td>
+                              </tr>
+
+                              <tr>
+                                <td>
+                                  Salary
+                                  <p />
+                                </td>
+                                <td className="employeeDetailstd">
+                                  {" "}
+                                  {info.salary} LPA{" "}
+                                  {info.bonus === "Yes" ? "+ Bonus" : ""}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </Col>
                         <div className="whitespace">&nbsp;</div>
-                      </Row>
+                      </Row>{" "}
                     </Col>
-                    <Col md={5}>
+                    <Col md="auto">
                       <h2 className="green-text">Employer</h2>
                       <Row className="justify-content-center align-items-center">
-                        <Col md={3}>
+                        <Col md="auto">
                           <p>
                             <span className="userprofile">
                               <Image
@@ -132,7 +166,7 @@ export default function RecruitAcceptPage() {
                             </span>
                           </p>
                         </Col>
-                        <Col md={8}>
+                        <Col md="auto">
                           <h4 className="green-text">Brand Moustache</h4>
                           <p />
                           Since 2009
@@ -140,19 +174,19 @@ export default function RecruitAcceptPage() {
                         <div className="whitespace">&nbsp;</div>
                       </Row>
                     </Col>
-                    <div className="whitespace">&nbsp;</div>
                   </Row>
                   <Row className="justify-content-center">
                     <Col md={12}>
                       <h1 className="green-text">Offer Letter</h1>
+                      <div className="whitespace">&nbsp;</div>
                       <Row className="justify-content-center align-items-center">
-                        <Col md={12}>
+                        <Col
+                          md={12}
+                          className=" offer-letter-view">
                           <center>
                             <embed
                               type="application/pdf"
                               src={info.offerLetter}
-                              width="850"
-                              height="850"
                             />
                           </center>
                         </Col>
@@ -177,7 +211,6 @@ export default function RecruitAcceptPage() {
                     </Row>
                   </div>
                 </div>
-                <div className="whitespace">&nbsp;</div>
               </Container>
             </section>
           </main>

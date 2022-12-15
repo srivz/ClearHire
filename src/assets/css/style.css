@@ -776,7 +776,17 @@ a:hover {
   padding: 150px 0 0;
 }
 .recruitdetails-wrap {
-  padding: 150px 125px 0;
+  padding: 25vh 5vw 100px 5vw;
+}
+.employeeDetailstd {
+  padding-left: 5vw;
+}
+.offer-letter-view {
+  width: 90vw;
+}
+.offer-letter-view embed {
+  width: 70vw;
+  height: 100vh;
 }
 .empdetails-inner .title-text {
   color: #00823b;
