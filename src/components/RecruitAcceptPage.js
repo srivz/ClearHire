@@ -37,6 +37,35 @@ export default function RecruitAcceptPage() {
     }
   });
 
+  function reject() {
+    try {
+      console.log(info);
+      // updateProfile(auth.currentUser, {
+      //   displayName: "Employee",
+      //   photoURL: "adhaarCardNumber",
+      // });
+      // setPersistence(auth, browserSessionPersistence)
+      //   .then(() => {
+      //     signInWithEmailAndPassword(auth, user.emailId, user.password);
+      //     if (!auth.currentUser.emailVerified) {
+      //       alert("User not verified yet !!!");
+      //       window.location.href = "/emailVerification";
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     if (error.message === "Firebase: Error (auth/user-not-found).") {
+      //       alert("User not Found. Sign Up first !!");
+      //     } else if (
+      //       error.message === "Firebase: Error (auth/wrong-password)."
+      //     ) {
+      //       alert("Wrong Password");
+      //     }
+      //   });
+    } catch (error) {
+      alert("User not Found. Sign Up first !!");
+    }
+  }
+
   function accept() {
     try {
       console.log(info);
@@ -196,7 +225,17 @@ export default function RecruitAcceptPage() {
                   <div className="addemp-form">
                     <Row className="form-group">
                       <Col
-                        md={10}
+                        md={2}
+                        className="mt-4">
+                        <Button
+                          onClick={reject}
+                          variant="danger"
+                          className="w-100">
+                          Reject{" "}
+                        </Button>
+                      </Col>
+                      <Col
+                        md={8}
                         className="mt-4"></Col>
                       <Col
                         md={2}

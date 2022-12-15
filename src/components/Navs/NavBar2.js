@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Container, Form, Image, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/img/logo.svg";
-import upload_pic from "../../assets/img/upload-pic.jpg";
 
 export default function NavBar2() {
   return (
@@ -80,11 +79,14 @@ export default function NavBar2() {
                   Search
                 </Button>
               </Form>
-              <div
-                className="profile-pic-nav"
-                style={{ marginLeft: "15px" }}>
-                <Image src={upload_pic} />
-              </div>
+              <Button
+                style={{ marginLeft: "5px", marginTop: "7px" }}
+                href="/"
+                size="md"
+                className="mb-2"
+                variant="danger">
+                Log Out
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
