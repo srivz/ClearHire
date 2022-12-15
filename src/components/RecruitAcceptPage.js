@@ -69,7 +69,7 @@ export default function RecruitAcceptPage() {
   function accept() {
     try {
       alert(
-        "Will be accepted and added to employee database.Proceed to employee profile!!"
+        "Will be accepted and added to employee database. Proceed to employee profile!!"
       );
       // updateProfile(auth.currentUser, {
       //   displayName: "Employee",
