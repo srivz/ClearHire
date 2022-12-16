@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import down_icon from "../assets/img/down-icon.svg";
-import NavBar2 from "./Navs/NavBar2";
+import NavBar3 from "./Navs/NavBar3";
 import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
 import { onAuthStateChanged } from "firebase/auth";
@@ -81,7 +81,7 @@ export default function Profile() {
     <div>
       <Container>
         <Row>
-          <NavBar2 />
+          <NavBar3 />
           <main id="main">
             <section className="empdetails-wrap">
               <Container>

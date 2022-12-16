@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import {
   Button,
@@ -15,6 +14,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, database, storage } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import NavBar3 from "./Navs/NavBar3";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({
@@ -196,7 +196,6 @@ export default function UploadDocuments() {
         getDownloadURL(recruitTwelvethMarkSheetRef)
           .then((url) => {
             recruit.twelvethMark = url;
-            console.log(recruit);
           })
           .catch((err) => {
             console.log(err.message);
@@ -241,7 +240,7 @@ export default function UploadDocuments() {
     <div>
       <Container>
         <Row>
-          <NavBar2 />
+          <NavBar3 />
           <main id="main">
             <section className="addemployee-form-wrap">
               <Container>
@@ -365,7 +364,7 @@ export default function UploadDocuments() {
                               <Col md={12}>
                                 <Form.Group
                                   className="mb-3"
-                                  controlId="formBasicName">
+                                  controlId="formLinkedIn">
                                   <Form.Label className="mb-2">
                                     LinkedIn URL
                                   </Form.Label>

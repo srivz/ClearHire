@@ -13,6 +13,7 @@ import EmailVerification from "./components/EmailVerification";
 import RecruitAcceptPage from "./components/RecruitAcceptPage";
 import UploadDocuments from "./components/UploadDocuments";
 import Profile from "./components/Profile";
+import WelcomeOnboard from "./components/WelcomeOnboard";
 
 export default function App() {
   return (
@@ -54,6 +55,9 @@ export default function App() {
         <Route
           path="/profile"
           element={<Profile />}></Route>
+        <Route
+          path="/welcome"
+          element={<WelcomeOnboard />}></Route>
       </Routes>
     </Router>
   );

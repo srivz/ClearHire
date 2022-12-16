@@ -54,6 +54,8 @@ export default function RecruitAcceptPage() {
 
   function accept() {
     try {
+      localStorage.setItem("employeePhoto", JSON.stringify(info.recruitImage));
+      localStorage.setItem("employeeName", JSON.stringify(info.name));
       updateProfile(auth.currentUser, {
         displayName: "Employee",
         photoURL: info.adhaarCardNumber,
@@ -116,7 +118,7 @@ export default function RecruitAcceptPage() {
             });
           })
           .then(() => {
-            window.location.href = "/profile";
+            window.location.href = "/welcome";
           })
           .catch((err) => {
             setDoc(doc(database, "employees", info.adhaarCardNumber), {
@@ -129,7 +131,7 @@ export default function RecruitAcceptPage() {
                 });
               })
               .then(() => {
-                window.location.href = "/profile";
+                window.location.href = "/welcome";
               })
               .catch((err) => {
                 console.log(err.message);

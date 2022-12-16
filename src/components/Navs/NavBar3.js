@@ -22,12 +22,9 @@ export default function NavBar3() {
             className="justify-content-end"
             id="basic-navbar-nav">
             <Nav>
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/">How It Work</Nav.Link>
-              <Nav.Link href="/">Support</Nav.Link>
               <Button
                 href="/"
-                variant="success">
+                variant="danger">
                 Log Out
               </Button>
             </Nav>
