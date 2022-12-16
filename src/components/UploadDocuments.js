@@ -196,6 +196,7 @@ export default function UploadDocuments() {
         getDownloadURL(recruitTwelvethMarkSheetRef)
           .then((url) => {
             recruit.twelvethMark = url;
+            console.log(recruit);
           })
           .catch((err) => {
             console.log(err.message);
@@ -371,8 +372,6 @@ export default function UploadDocuments() {
                                   <Form.Control
                                     type="text"
                                     required={true}
-                                    minLength={12}
-                                    maxLength={12}
                                     name="linkedIn"
                                     placeholder="Enter LinkedIn URL*"
                                     defaultValue={recruit.linkedIn}

@@ -3,11 +3,15 @@ import image_icon from "../assets/img/image-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
-import { storage, database, auth } from "../firebase-config.js";
+import { storage, database, auth, auth2 } from "../firebase-config.js";
 import { doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
 import moment from "moment/moment";
 import { useEffect } from "react";
 
@@ -77,25 +81,30 @@ export default function AddEmployee() {
     return formIsValid;
   };
 
-  // const registerLogin = () => {
-  //   createUserWithEmailAndPassword(
-  //     auth2,
-  //     employee.emailId,
-  //     employee.dateOfBirth
-  //   ).then((cred) => {
-  //     updateProfile(auth2.currentUser, {
-  //       displayName: "Employee",
-  //       photoURL: employee.adhaarCardNumber,
-  //     });
-  //     auth2.signOut();
-  //   });
-  // };
+  const registerLogin = () => {
+    createUserWithEmailAndPassword(
+      auth2,
+      employee.emailId,
+      employee.dateOfBirth
+    )
+      .then((cred) => {
+        updateProfile(auth2.currentUser, {
+          displayName: "Employee",
+          photoURL: employee.adhaarCardNumber,
+        });
+        auth2.signOut();
+      })
+      .catch((error) => {
+        alert("User already has account!!");
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (handleValidation()) {
       setDisabledButton(true);
+      registerLogin();
       registerEmployee();
     } else {
       alert("Fill the form properly!!");

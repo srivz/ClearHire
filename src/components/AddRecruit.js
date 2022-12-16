@@ -223,7 +223,7 @@ export default function AddRecruit() {
                                     required
                                     placeholder={
                                       recruit.dateJoined === ""
-                                        ? "Date Of Joined*"
+                                        ? "Date Of Joining*"
                                         : recruit.dateJoined
                                     }
                                     name="dateJoined"

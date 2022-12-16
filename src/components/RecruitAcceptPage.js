@@ -111,14 +111,11 @@ export default function RecruitAcceptPage() {
         })
           .then(() => {
             deleteDoc(doc(database, "recruit", auth.currentUser.email));
-            doc(
-              database,
-              "companies",
-              info.companyId,
-              auth.currentUser.email
-            ).update({
+            updateDoc(doc(database, "companies", info.companyId), {
               recruits: arrayRemove(auth.currentUser.email),
             });
+          })
+          .then(() => {
             window.location.href = "/profile";
           })
           .catch((err) => {
@@ -127,14 +124,11 @@ export default function RecruitAcceptPage() {
             })
               .then(() => {
                 deleteDoc(doc(database, "recruit", auth.currentUser.email));
-                doc(
-                  database,
-                  "companies",
-                  info.companyId,
-                  auth.currentUser.email
-                ).update({
+                updateDoc(doc(database, "companies", info.companyId), {
                   recruits: arrayRemove(auth.currentUser.email),
                 });
+              })
+              .then(() => {
                 window.location.href = "/profile";
               })
               .catch((err) => {
