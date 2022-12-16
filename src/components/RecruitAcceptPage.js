@@ -4,10 +4,17 @@ import "../assets/css/style.css";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
-// import { updateProfile } from "firebase/auth";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth, database } from "../firebase-config.js";
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function RecruitAcceptPage() {
   const [info, setInfo] = useState([]);
@@ -103,6 +110,15 @@ export default function RecruitAcceptPage() {
           companies: arrayUnion(info.companyId),
         })
           .then(() => {
+            deleteDoc(doc(database, "recruit", auth.currentUser.email));
+            doc(
+              database,
+              "companies",
+              info.companyId,
+              auth.currentUser.email
+            ).update({
+              recruits: arrayRemove(auth.currentUser.email),
+            });
             window.location.href = "/profile";
           })
           .catch((err) => {
@@ -110,6 +126,15 @@ export default function RecruitAcceptPage() {
               companies: arrayUnion(info.companyId),
             })
               .then(() => {
+                deleteDoc(doc(database, "recruit", auth.currentUser.email));
+                doc(
+                  database,
+                  "companies",
+                  info.companyId,
+                  auth.currentUser.email
+                ).update({
+                  recruits: arrayRemove(auth.currentUser.email),
+                });
                 window.location.href = "/profile";
               })
               .catch((err) => {
