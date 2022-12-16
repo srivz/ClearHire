@@ -1,78 +1,81 @@
-import React from "react"; // useState
+import React, { useState } from "react";
 import down_icon from "../assets/img/down-icon.svg";
 import NavBar2 from "./Navs/NavBar2";
-import {
-  Col,
-  // Collapse,
-  Container,
-  Image,
-  Row,
-} from "react-bootstrap";
+import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
-// import { useLocation } from "react-router";
-// import { onAuthStateChanged } from "firebase/auth";
-// import { doc, getDoc } from "firebase/firestore";
-// import { auth2, database } from "../firebase-config";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, database } from "../firebase-config";
 import { RatingStar } from "rating-star";
 import { LinkedIn } from "@mui/icons-material";
 
 export default function Profile() {
-  //   const location = useLocation();
-  //   const { empId } = location.state;
-  //   const [open, setOpen] = useState();
-  //   const [companiesToFetch, setCompaniesToFetch] = useState();
-  //   const [employeeInfos, setEmployeeInfo] = useState([{}]);
-  //   const [fetched, setFetched] = useState(true);
-  //   const [totalExperience, setTotalExperience] = useState(0);
-  //   const d = new Date();
-  //   let year = d.getFullYear();
+  const [empId, setEmpId] = useState();
+  const [open, setOpen] = useState();
+  const [companiesToFetch, setCompaniesToFetch] = useState();
+  const [employeeInfos, setEmployeeInfo] = useState([{}]);
+  const [fetched, setFetched] = useState(true);
+  const [totalExperience, setTotalExperience] = useState(0);
+  const date_diff_indays = function (date1) {
+    if (date1 === undefined) {
+      return 0;
+    }
+    const dt1 = new Date(date1);
+    const dt2 = new Date();
+    return Math.floor(
+      (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
+        Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
+        (1000 * 60 * 60 * 24 * 365)
+    );
+  };
 
-  //   onAuthStateChanged(auth2, (user) => {
-  //     if (user) {
-  //   if (fetched) {
-  // getDoc(doc(database, "recruit", user.photoURL))
-  //   .then((doc) => {
-  //     const data = doc.data();
-  //     setCompaniesToFetch(data.companies);
-  //   })
-  //   .then(() => {
-  //     if (companiesToFetch) {
-  //       employeeGet(companiesToFetch);
-  //       setFetched(false);
-  //     }
-  //   });
-  //   }
-  //     } else {
-  //       window.location.href = "/";
-  //     }
-  //   });
-  //   function employeeGet(companyId) {
-  //     companyId.forEach((employee) => {
-  //       const employeeRef = doc(
-  //         database,
-  //         "companies",
-  //         employee,
-  //         "employees",
-  //         empId
-  //       );
-  //       if (employeeRef) {
-  //         getDoc(employeeRef).then((doc) => {
-  //           const data = doc.data();
-  //           if (data !== null)
-  //             setEmployeeInfo(
-  //               (employeeInfos) => [...employeeInfos, data],
-  //               data.id
-  //             );
-  //           setTotalExperience(
-  //             "--"
-  //             // totalExperience < year - data.dateJoined.substring(0, 4)
-  //             //   ? year - data.dateJoined.substring(0, 4)
-  //             //   : totalExperience
-  //           );
-  //         });
-  //       }
-  //     });
-  //   }
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (fetched) {
+        getDoc(doc(database, "employees", user.photoURL))
+          .then((doc) => {
+            const data = doc.data();
+            setCompaniesToFetch(data.companies);
+            setEmpId(user.photoURL);
+          })
+          .then(() => {
+            if (companiesToFetch) {
+              employeeGet(companiesToFetch);
+              setFetched(false);
+            }
+          });
+      }
+    } else {
+      window.location.href = "/";
+    }
+  });
+  function employeeGet(companyId) {
+    companyId.forEach((employee) => {
+      const employeeRef = doc(
+        database,
+        "companies",
+        employee,
+        "employees",
+        empId
+      );
+      if (employeeRef) {
+        getDoc(employeeRef).then((doc) => {
+          const data = doc.data();
+          if (data !== null)
+            setEmployeeInfo(
+              (employeeInfos) => [...employeeInfos, data],
+              data.id
+            );
+          setTotalExperience(
+            "--"
+            // totalExperience < year - data.dateJoined.substring(0, 4)
+            //   ? year - data.dateJoined.substring(0, 4)
+            //   : totalExperience
+          );
+        });
+      }
+    });
+  }
 
   return (
     <div>
@@ -85,92 +88,92 @@ export default function Profile() {
                 <div className="empdetails-inner">
                   <Row className="justify-content-center align-items-center">
                     <Col md={12}>
-                      {/* {employeeInfos
+                      {employeeInfos
                         .filter((info2, id) => id !== 0)
                         .sort((a, b) => (a.dateJoined > b.dateJoined ? -1 : 1))
                         .map((info2, id) => {
-                          return id === 0 ? ( */}
-                      <div className="emp-header">
-                        <Row>
-                          <Col md={4}>
-                            <Row>
-                              <Col md={3}>
-                                <div className="userprofile">
-                                  <Image
-                                    //   src={info2.employeeImage}
-                                    src=""
-                                    alt=""
-                                    width="60"
-                                  />
-                                </div>
-                              </Col>
+                          return id === 0 ? (
+                            <div className="emp-header">
+                              <Row>
+                                <Col md={4}>
+                                  <Row>
+                                    <Col md={3}>
+                                      <div className="userprofile">
+                                        <Image
+                                          src={info2.employeeImage}
+                                          alt=""
+                                          width="60"
+                                        />
+                                      </div>
+                                    </Col>
 
-                              <Col md={6}>
-                                <div className="empifo">
-                                  <h4 className="username">
-                                    {/* {info2.name} */}
-                                  </h4>
-                                  <p className="designation">
-                                    {/* {info2.designation} ⋅ {info2.companyName} */}
-                                  </p>
-                                  <small className="location">
-                                    {/* {info2.location} */}
-                                  </small>
-                                </div>
-                              </Col>
-                            </Row>
-                          </Col>
-                          <Col
-                            md={5}
-                            className="align-me text-center">
-                            <ul className="expdetails">
-                              <li>
-                                <small>Total Experience</small>
-                                <div className="title-3">
-                                  {/* {totalExperience} years */}
-                                </div>
-                              </li>
-                              <li>
-                                <small>Current Comapny</small>
-                                <div className="title-3">
-                                  {/* {year - info2.dateJoined.substring(0, 4)}{" "} */}
-                                  years
-                                </div>
-                              </li>
-                            </ul>
-                          </Col>
+                                    <Col md={6}>
+                                      <div className="empifo">
+                                        <h4 className="username">
+                                          {info2.name}
+                                        </h4>
+                                        <p className="designation">
+                                          {info2.designation} ⋅{" "}
+                                          {info2.companyName}
+                                        </p>
+                                        <small className="location">
+                                          {info2.location}
+                                        </small>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                                <Col
+                                  md={5}
+                                  className="align-me text-center">
+                                  <ul className="expdetails">
+                                    <li>
+                                      <small>Total Experience</small>
+                                      <div className="title-3">
+                                        {totalExperience} years
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <small>Current Comapny</small>
+                                      <div className="title-3">
+                                        {date_diff_indays(info2.dateJoined)}
+                                        years
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </Col>
 
-                          <Col
-                            md={2}
-                            className="align-me text-right">
-                            <div className="rating-dtls mb-2">
-                              <RatingStar
-                                unclickable
-                                maxScore={5}
-                                id="0"
-                                size={32}
-                                numberOfStar={5}
-                                noBorder="true"
-                                colors={{ mask: "#00823b" }}
-                                // rating={info2.rating.overall}
-                              />
+                                <Col
+                                  md={2}
+                                  className="align-me text-right">
+                                  <div className="rating-dtls mb-2">
+                                    <RatingStar
+                                      unclickable
+                                      maxScore={5}
+                                      id="0"
+                                      size={32}
+                                      numberOfStar={5}
+                                      noBorder="true"
+                                      colors={{ mask: "#00823b" }}
+                                      // rating={info2.rating.overall}
+                                    />
+                                  </div>
+                                </Col>
+                                <Col
+                                  md={1}
+                                  className="align-me text-center justify-content-center">
+                                  <a
+                                    target="_block"
+                                    href={info2.linkedIn}>
+                                    <LinkedIn fontSize="large" />
+                                  </a>
+                                </Col>
+                              </Row>
                             </div>
-                          </Col>
-                          <Col
-                            md={1}
-                            className="align-me text-center justify-content-center">
-                            <a
-                              href="https://in.linkedin.com"
-                              target="_block"
-                              //   href={info2.linkedIn}
-                            >
-                              <LinkedIn fontSize="large" />
-                            </a>
-                          </Col>
-                        </Row>
-                      </div>
-                      {/* ) : (<></>
-                      ); })} */}
+                          ) : (
+                            <></>
+                          );
+                        })}
                       {/* endddddddddd */}
                       <Row>
                         <Col
@@ -202,71 +205,67 @@ export default function Profile() {
                             id="accordionExample">
                             <ul>
                               {/* Startttttttt */}
-                              {/* {employeeInfos.map((info3, id1) => {
-                                return id1 !== 0 ? ( */}
-                              <li
-                              //   key={id1}
-                              >
-                                <Row className="h-100">
-                                  <Col md={1}>
-                                    <div className="yearinfo float-left">
-                                      {/* {info3.dateJoined.substring(0, 4)} */}
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    md={11}
-                                    // onClick={() => {
-                                    //   open === id1
-                                    //     ? setOpen(null)
-                                    //     : setOpen(id1);
-                                    //                               }}
-                                  >
-                                    <div className="company-info-dtls">
-                                      <Row className="h-100 justify-content-center align-items-center">
-                                        <Col md={6}>
-                                          <div className="cmpny-logo">
-                                            <Image
-                                              src=""
-                                              //   src={info3.companyLogo}
-                                              alt=""
-                                            />
-                                          </div>
-                                          <h5 className="company-name">
-                                            {/* {info3.companyName} */}
-                                          </h5>
-                                        </Col>
-                                        <Col
-                                          md={2}
-                                          className="text-center">
-                                          <div className="pkg-text">
-                                            {/* {info3.salary} LPA */}
-                                          </div>
-                                        </Col>
-                                        <Col
-                                          md={4}
-                                          className="text-right">
-                                          <div className="cmpny-rating">
-                                            <RatingStar
-                                              unclickable
-                                              maxScore={5}
-                                              //   id={id1 + "0"}
-                                              size={32}
-                                              numberOfStar={5}
-                                              noBorder="true"
-                                              colors={{ mask: "#00823b" }}
-                                              //   rating={info3.rating.overall}
-                                            />
-                                          </div>
-                                          <div className="arrow-icon">
-                                            <Image
-                                              src={down_icon}
-                                              alt=""
-                                              className="Image-fluid"
-                                            />
-                                          </div>
-                                        </Col>
-                                      </Row>
-                                      {/* <Collapse in={open === id1}>
+                              {employeeInfos.map((info3, id1) => {
+                                return id1 !== 0 ? (
+                                  <li key={id1}>
+                                    <Row className="h-100">
+                                      <Col md={1}>
+                                        <div className="yearinfo float-left">
+                                          {info3.dateJoined.substring(0, 4)}
+                                        </div>
+                                      </Col>
+                                      <Col
+                                        md={11}
+                                        onClick={() => {
+                                          open === id1
+                                            ? setOpen(null)
+                                            : setOpen(id1);
+                                        }}>
+                                        <div className="company-info-dtls">
+                                          <Row className="h-100 justify-content-center align-items-center">
+                                            <Col md={6}>
+                                              <div className="cmpny-logo">
+                                                <Image
+                                                  src={info3.companyLogo}
+                                                  alt=""
+                                                />
+                                              </div>
+                                              <h5 className="company-name">
+                                                {info3.companyName}
+                                              </h5>
+                                            </Col>
+                                            <Col
+                                              md={2}
+                                              className="text-center">
+                                              <div className="pkg-text">
+                                                {info3.salary} LPA
+                                              </div>
+                                            </Col>
+                                            <Col
+                                              md={4}
+                                              className="text-right">
+                                              <div className="cmpny-rating">
+                                                <RatingStar
+                                                  unclickable
+                                                  maxScore={5}
+                                                  id={id1 + "0"}
+                                                  size={32}
+                                                  numberOfStar={5}
+                                                  noBorder="true"
+                                                  colors={{ mask: "#00823b" }}
+                                                  // rating={info3.rating.overall}
+                                                />
+                                              </div>
+                                              <div className="arrow-icon">
+                                                <Image
+                                                  src={down_icon}
+                                                  alt=""
+                                                  className="Image-fluid"
+                                                />
+                                              </div>
+                                            </Col>
+                                          </Row>
+                                          <Collapse in={open === id1}>
                                             <div className="rating-details">
                                               <Row>
                                                 <Col>
@@ -285,10 +284,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .communication
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .communication
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -306,9 +305,9 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating.attitude
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating.attitude
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -326,10 +325,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .abilityToLearn
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .abilityToLearn
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -347,10 +346,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .punctuality
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .punctuality
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -368,10 +367,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .commitment
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .commitment
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -389,10 +388,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .trustworthiness
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .trustworthiness
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -410,9 +409,9 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating.skill
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating.skill
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -430,10 +429,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        rating={
-                                                          info3.rating
-                                                            .teamPlayer
-                                                        }
+                                                        // rating={
+                                                        //   info3.rating
+                                                        //     .teamPlayer
+                                                        // }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -442,40 +441,40 @@ export default function Profile() {
                                                   <Row>
                                                     <Col md={10}>
                                                       <h4 className="emp-title">
-                                                        {
+                                                        {/* {
                                                           info3.recommendation
                                                             .recommendationFrom
-                                                        }
+                                                        } */}
                                                       </h4>
                                                       {"  "}
                                                       <h5>
                                                         <span className="designt-text">
-                                                          {
+                                                          {/* {
                                                             info3.recommendation
                                                               .recommenderDesignation
-                                                          }
+                                                          } */}
                                                         </span>
                                                       </h5>
                                                       <p className="color-8B">
-                                                        {
+                                                        {/* {
                                                           info3.recommendation
                                                             .recommendationMessage
-                                                        }
+                                                        } */}
                                                       </p>
                                                     </Col>
                                                   </Row>
                                                 </Col>
                                               </Row>
                                             </div>
-                                          </Collapse> */}
-                                    </div>
-                                  </Col>
-                                </Row>
-                              </li>
-                              {/* ) : (
+                                          </Collapse>
+                                        </div>
+                                      </Col>
+                                    </Row>
+                                  </li>
+                                ) : (
                                   <></>
                                 );
-                              })} */}
+                              })}
                               {/* endddddddddd */}
                             </ul>
                           </div>

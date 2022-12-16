@@ -22,6 +22,7 @@ export default function UploadDocuments() {
     voterId: null,
     tenthMark: null,
     twelvethMark: null,
+    linkedIn: null,
     recruitImage: null,
   });
   const [voterIdFile, setVoterIdFile] = useState({
@@ -69,6 +70,7 @@ export default function UploadDocuments() {
     console.log(fields);
     if (
       fields["adhaarCardNumber"] !== null &&
+      fields["linkedIn"] !== null &&
       fields["voterId"] !== null &&
       fields["tenthMark"] !== null &&
       fields["twelvethMark"] !== null &&
@@ -94,6 +96,7 @@ export default function UploadDocuments() {
       adhaarCardNumber: recruit.adhaarCardNumber,
       voterId: recruit.voterId,
       tenthMark: recruit.tenthMark,
+      linkedIn: recruit.linkedIn,
       twelvethMark: recruit.twelvethMark,
       recruitImage: recruit.recruitImage,
     };
@@ -354,6 +357,28 @@ export default function UploadDocuments() {
                                     accept=".pdf"
                                     onChange={handleTwelvethMarkChange}
                                   />
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Label className="mb-2">
+                                    LinkedIn URL
+                                  </Form.Label>
+                                  <Form.Control
+                                    type="text"
+                                    required={true}
+                                    minLength={12}
+                                    maxLength={12}
+                                    name="linkedIn"
+                                    placeholder="Enter LinkedIn URL*"
+                                    defaultValue={recruit.linkedIn}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                               </Col>
                             </Row>

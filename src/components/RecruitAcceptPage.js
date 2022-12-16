@@ -5,9 +5,9 @@ import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
 // import { updateProfile } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth, database } from "../firebase-config.js";
-import { doc, getDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export default function RecruitAcceptPage() {
   const [info, setInfo] = useState([]);
@@ -40,27 +40,6 @@ export default function RecruitAcceptPage() {
   function reject() {
     try {
       alert("Will be rejected!!");
-      // updateProfile(auth.currentUser, {
-      //   displayName: "Employee",
-      //   photoURL: "adhaarCardNumber",
-      // });
-      // setPersistence(auth, browserSessionPersistence)
-      //   .then(() => {
-      //     signInWithEmailAndPassword(auth, user.emailId, user.password);
-      //     if (!auth.currentUser.emailVerified) {
-      //       alert("User not verified yet !!!");
-      //       window.location.href = "/emailVerification";
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     if (error.message === "Firebase: Error (auth/user-not-found).") {
-      //       alert("User not Found. Sign Up first !!");
-      //     } else if (
-      //       error.message === "Firebase: Error (auth/wrong-password)."
-      //     ) {
-      //       alert("Wrong Password");
-      //     }
-      //   });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
     }
@@ -68,35 +47,80 @@ export default function RecruitAcceptPage() {
 
   function accept() {
     try {
-      alert(
-        "Will be accepted and added to employee database. Proceed to employee profile!!"
-      );
-      // updateProfile(auth.currentUser, {
-      //   displayName: "Employee",
-      //   photoURL: "adhaarCardNumber",
-      // });
-      // setPersistence(auth, browserSessionPersistence)
-      //   .then(() => {
-      //     signInWithEmailAndPassword(auth, user.emailId, user.password);
-      //     if (!auth.currentUser.emailVerified) {
-      //       alert("User not verified yet !!!");
-      //       window.location.href = "/emailVerification";
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     if (error.message === "Firebase: Error (auth/user-not-found).") {
-      //       alert("User not Found. Sign Up first !!");
-      //     } else if (
-      //       error.message === "Firebase: Error (auth/wrong-password)."
-      //     ) {
-      //       alert("Wrong Password");
-      //     }
-      //   });
+      updateProfile(auth.currentUser, {
+        displayName: "Employee",
+        photoURL: info.adhaarCardNumber,
+      });
+      registerEmployee();
     } catch (error) {
       alert("User not Found. Sign Up first !!");
     }
   }
-
+  const registerEmployee = async () => {
+    const docData = {
+      name: info.name,
+      companyName: info.companyName,
+      companyLogo: info.companyLogo,
+      employeeImage: info.recruitImage,
+      dateOfBirth: info.dateOfBirth,
+      dateJoined: info.dateJoined,
+      designation: info.designation,
+      linkedIn: info.linkedIn,
+      emaild: info.emailId,
+      phoneNumber: info.phoneNumber,
+      location: info.location,
+      salary: info.salary,
+      recommendation: {
+        recommendationFrom: "",
+        recommenderDesignation: "",
+        recommendationMessage: "",
+      },
+      rating: {
+        overall: (0 + 0 + 0 + 0 + 0 + 0 + 0 + 0) / 8,
+        communication: 0,
+        attitude: 0,
+        abilityToLearn: 0,
+        punctuality: 0,
+        commitment: 0,
+        trustworthiness: 0,
+        skill: 0,
+        teamPlayer: 0,
+      },
+      favourite: "false",
+    };
+    await setDoc(
+      doc(
+        database,
+        "companies",
+        info.companyId,
+        "employees",
+        info.adhaarCardNumber
+      ),
+      docData
+    )
+      .then(() => {
+        updateDoc(doc(database, "employees", info.adhaarCardNumber), {
+          companies: arrayUnion(info.companyId),
+        })
+          .then(() => {
+            window.location.href = "/profile";
+          })
+          .catch((err) => {
+            setDoc(doc(database, "employees", info.adhaarCardNumber), {
+              companies: arrayUnion(info.companyId),
+            })
+              .then(() => {
+                window.location.href = "/profile";
+              })
+              .catch((err) => {
+                console.log(err.message);
+              });
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <div>
       <Container>

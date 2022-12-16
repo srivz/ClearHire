@@ -18,8 +18,18 @@ export default function EmployeeDetails() {
   const [employeeInfos, setEmployeeInfo] = useState([{}]);
   const [fetched, setFetched] = useState(true);
   const [totalExperience, setTotalExperience] = useState(0);
-  const d = new Date();
-  let year = d.getFullYear();
+  const date_diff_indays = function (date1) {
+    if (date1 === undefined) {
+      return 0;
+    }
+    const dt1 = new Date(date1);
+    const dt2 = new Date();
+    return Math.floor(
+      (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
+        Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
+        (1000 * 60 * 60 * 24 * 365)
+    );
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -127,8 +137,7 @@ export default function EmployeeDetails() {
                                     <li>
                                       <small>Current Comapny</small>
                                       <div className="title-3">
-                                        {year -
-                                          info2.dateJoined.substring(0, 4)}{" "}
+                                        {date_diff_indays(info2.dateJoined)}
                                         years
                                       </div>
                                     </li>

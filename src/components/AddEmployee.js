@@ -21,6 +21,8 @@ export default function AddEmployee() {
     linkedIn: null,
     salary: null,
     location: null,
+    emailId: null,
+    phoneNumber: null,
     adhaarCardNumber: null,
     recommendationFrom: null,
     recommenderDesignation: null,
@@ -57,6 +59,8 @@ export default function AddEmployee() {
       !fields["location"] &&
       !fields["salary"] &&
       !fields["adhaarCardNumber"] &&
+      !fields["emailId"] &&
+      !fields["phoneNumber"] &&
       !fields["recommendationMessage"] &&
       !fields["communication"] &&
       !fields["attitude"] &&
@@ -86,6 +90,7 @@ export default function AddEmployee() {
   //     auth2.signOut();
   //   });
   // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -155,6 +160,8 @@ export default function AddEmployee() {
       linkedIn: employee.linkedIn,
       location: employee.location,
       salary: employee.salary,
+      emailId: employee.emailId,
+      phoneNumber: employee.phoneNumber,
       recommendation: {
         recommendationFrom: info.name,
         recommenderDesignation: info.yourDesignation,
@@ -452,6 +459,40 @@ export default function AddEmployee() {
                                     name="salary"
                                     placeholder="Salary*"
                                     defaultValue={employee.salary}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Control
+                                    type="text"
+                                    required={true}
+                                    name="emailId"
+                                    placeholder="Email*"
+                                    defaultValue={employee.emailId}
+                                    onChange={handleChange}
+                                  />
+                                  <Form.Text className="text-muted"></Form.Text>
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                            <Row className="form-group">
+                              <Col md={12}>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="formBasicName">
+                                  <Form.Control
+                                    type="number"
+                                    required={true}
+                                    name="phoneNumber"
+                                    placeholder="Phone Number*"
+                                    defaultValue={employee.phoneNumber}
                                     onChange={handleChange}
                                   />
                                   <Form.Text className="text-muted"></Form.Text>
