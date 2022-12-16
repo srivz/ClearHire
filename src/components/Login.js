@@ -7,7 +7,15 @@ import simple_work_icon from "../assets/img/simple-work-icon.svg";
 import youtube_searched_icon from "../assets/img/youtube-searched-icon.svg";
 import search_dollar_icon from "../assets/img/search-dollar-icon.svg";
 import "../assets/css/style.css";
-import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import NavBar from "./Navs/NavBar";
 import Footer from "./Footer/Footer";
 import {
@@ -17,9 +25,17 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../firebase-config.js";
+import { auth, database } from "../firebase-config.js";
+import { Link } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
+  const [show, setShow] = useState(false);
+  const [info, setInfo] = useState([]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [user, setUser] = useState({
     emailId: "",
     password: "",
@@ -34,7 +50,14 @@ export default function Login() {
   };
   onAuthStateChanged(auth, (user) => {
     if (user && user.emailVerified && user.displayName === "Employer") {
-      window.location.href = "/searchResults";
+      getDoc(doc(database, "users", user.uid)).then((doc) => {
+        setInfo({ ...doc.data(), id: doc.id });
+      });
+      const saved = localStorage.setItem(
+        "currentUserDetails",
+        JSON.stringify(info)
+      );
+      if (saved) window.location.href = "/searchResults";
     } else if (user && user.emailVerified && user.displayName === null) {
       window.location.href = "/uploadDocuments";
     } else if (user && user.emailVerified && user.displayName === "Employee") {
@@ -56,8 +79,7 @@ export default function Login() {
           }
         );
         if (!auth.currentUser.emailVerified) {
-          alert("User not verified yet !!!");
-          window.location.href = "/emailVerification";
+          handleShow();
         }
       });
     } catch (error) {
@@ -88,7 +110,7 @@ export default function Login() {
                       <div className="text-center">
                         <h4 className="mb-5">Login to your account</h4>
                       </div>
-                      <form action="">
+                      <Form>
                         <Row className="form-group">
                           <Col md={12}>
                             <Form.Control
@@ -136,9 +158,33 @@ export default function Login() {
                               className="mt-4 w-100">
                               Login
                             </Button>
+                            <Modal
+                              show={show}
+                              onHide={handleClose}
+                              backdrop="static"
+                              keyboard={false}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Email Verification</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body>
+                                Do you want to get new verification link ?
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button
+                                  variant="secondary"
+                                  onClick={handleClose}>
+                                  Close
+                                </Button>
+                                <Link to={"/emailVerification"}>
+                                  <Button variant="primary">
+                                    Yes, Send Again
+                                  </Button>
+                                </Link>
+                              </Modal.Footer>
+                            </Modal>
                           </Col>
                         </Row>
-                      </form>
+                      </Form>
                     </div>
                   </Col>
                   <Col md={3}>&nbsp;</Col>

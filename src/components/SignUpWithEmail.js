@@ -13,6 +13,7 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 export default function SignUpWithEmail() {
   const [user, setUser] = useState({
@@ -136,6 +137,13 @@ export default function SignUpWithEmail() {
             <Row>
               <Col md={12}>
                 <Row className="h-100vh justify-content-center align-items-center">
+                  <div
+                    className="text-left"
+                    style={{ marginTop: "80px" }}>
+                    <Link to={"/signUp"}>
+                      <Button variant="success">Back</Button>
+                    </Link>
+                  </div>
                   <Col
                     md={6}
                     className="text-center ml-auto mr-auto">

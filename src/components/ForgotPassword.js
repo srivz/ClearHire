@@ -5,6 +5,7 @@ import NavBar from "./Navs/NavBar";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { auth } from "../firebase-config.js";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 export default function ForgotPassword() {
   const [userLog, setUserLog] = useState({
@@ -36,6 +37,13 @@ export default function ForgotPassword() {
             <Row>
               <Col md={12}>
                 <Row className="h-100vh justify-content-center align-items-center">
+                  <div
+                    className="text-left"
+                    style={{ marginTop: "80px" }}>
+                    <Link to={"/"}>
+                      <Button variant="success">Back</Button>
+                    </Link>
+                  </div>
                   <Col
                     md={6}
                     className="text-center ml-auto mr-auto">

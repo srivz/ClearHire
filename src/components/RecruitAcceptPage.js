@@ -15,6 +15,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 export default function RecruitAcceptPage() {
   const [info, setInfo] = useState([]);
@@ -152,6 +153,13 @@ export default function RecruitAcceptPage() {
               <Container>
                 <div className="recruitdetails-inner">
                   <Row className="justify-content-center align-items-center">
+                    <div
+                      className="text-left"
+                      style={{ marginTop: "80px" }}>
+                      <Link to={"/uploadDocuments"}>
+                        <Button variant="success">Back</Button>
+                      </Link>
+                    </div>
                     <Col md={12}>
                       <h2>
                         <span className="green-text">Hi!</span> {info.name}

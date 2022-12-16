@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import image_icon from "../assets/img/image-icon.svg";
-import NavBar2 from "./Navs/NavBar2";
+import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
 import { storage, database, auth, auth2 } from "../firebase-config.js";
@@ -14,6 +14,7 @@ import {
 } from "firebase/auth";
 import moment from "moment/moment";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -266,12 +267,19 @@ export default function AddEmployee() {
     <div>
       <Container>
         <Row>
-          <NavBar2 />
+          <NavBar3 />
           <main id="main">
             <section className="addemployee-form-wrap">
               <Container>
                 <Row>
                   <Col md={12}>
+                    <div
+                      className="text-left"
+                      style={{ marginTop: "80px" }}>
+                      <Link to={"/searchResults"}>
+                        <Button variant="success">Back</Button>
+                      </Link>
+                    </div>
                     <Row className="justify-content-center align-items-center">
                       <Col
                         md={6}

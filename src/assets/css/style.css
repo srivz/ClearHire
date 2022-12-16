@@ -256,6 +256,9 @@ body {
 .text-right {
   float: right;
 }
+.text-left {
+  float: left;
+}
 .pl-3 {
   margin-left: 15px;
 }

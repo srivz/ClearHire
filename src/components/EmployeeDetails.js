@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import down_icon from "../assets/img/down-icon.svg";
-import NavBar2 from "./Navs/NavBar2";
-import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
+import NavBar3 from "./Navs/NavBar3";
+import { Button, Col, Collapse, Container, Image, Row } from "react-bootstrap";
 import Footer from "./Footer/Footer";
 import { useLocation } from "react-router";
 import { onAuthStateChanged } from "firebase/auth";
@@ -9,6 +9,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../firebase-config";
 import { RatingStar } from "rating-star";
 import { LinkedIn } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 export default function EmployeeDetails() {
   const location = useLocation();
@@ -82,8 +83,15 @@ export default function EmployeeDetails() {
     <div>
       <Container>
         <Row>
-          <NavBar2 />
+          <NavBar3 />
           <main id="main">
+            <div
+              className="text-left"
+              style={{ marginTop: "80px" }}>
+              <Link to={"/searchResults"}>
+                <Button variant="success">Back</Button>
+              </Link>
+            </div>
             <section className="empdetails-wrap">
               <Container>
                 <div className="empdetails-inner">
