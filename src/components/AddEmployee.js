@@ -52,7 +52,6 @@ export default function AddEmployee() {
   const handleValidation = () => {
     let fields = employee;
     let formIsValid = true;
-    console.log(fields);
     if (
       !fields["name"] &&
       !fields["employeeImage"] &&

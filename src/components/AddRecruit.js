@@ -49,7 +49,6 @@ export default function AddRecruit() {
   }, []);
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(auth.currentUser);
     } else {
       window.location.href = "/";
     }

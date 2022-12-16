@@ -67,7 +67,6 @@ export default function UploadDocuments() {
   const handleValidation = () => {
     let fields = recruit;
     let formIsValid = false;
-    console.log(fields);
     if (
       fields["adhaarCardNumber"] !== null &&
       fields["linkedIn"] !== null &&
