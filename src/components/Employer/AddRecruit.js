@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import NavBar3 from "./Navs/NavBar3";
-import Footer from "./Footer/Footer";
+// import emailjs from "email-js";
+import NavBar3 from "../Navs/NavBar3";
+import Footer from "../Footer/Footer";
 import { Button, Col, Container, Row, Form } from "react-bootstrap";
-import { storage, database, auth, auth2 } from "../firebase-config.js";
+import { storage, database, auth, auth2 } from "../../firebase-config.js";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import {
@@ -86,6 +87,28 @@ export default function AddRecruit() {
       });
   }
 
+  // const sendEmail = (e) => {
+  //   e.preventDefault(); // prevents the page from reloading when you hit “Send”
+
+  //   emailjs
+  //     .sendForm(
+  //       "service_iko5v9k",
+  //       "template_xlecvxc",
+  //       {
+  //         username: "James",
+  //         "g-recaptcha-response": "03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...",
+  //       },
+  //       "D-v_esU_zvTmMY8DK"
+  //     )
+  //     .then(
+  //       (result) => {
+  //         // show the user a success message
+  //       },
+  //       (error) => {
+  //         // show the user an error
+  //       }
+  //     );
+  // };
   const registerLogin = () => {
     createUserWithEmailAndPassword(
       auth2,

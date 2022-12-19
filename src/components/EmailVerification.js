@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar2 from "./Navs/NavBar2";
+import NavBar3 from "./Navs/NavBar3";
 import Footer from "./Footer/Footer";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { sendEmailVerification } from "firebase/auth";
@@ -16,7 +16,7 @@ export default function EmailVerification() {
     <div>
       <Container>
         <Row>
-          <NavBar2 />
+          <NavBar3 />
           <main id="main">
             <section className="addemployee-form-wrap">
               <Container>

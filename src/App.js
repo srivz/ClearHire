@@ -1,19 +1,20 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/style.css";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import AddEmployee from "./components/AddEmployee";
-import EmployeeDetails from "./components/EmployeeDetails";
 import SignUpWithEmail from "./components/SignUpWithEmail";
-import SearchResult from "./components/SearchResult";
-import ForgotPassword from "./components/ForgotPassword";
-import AddRecruit from "./components/AddRecruit";
 import EmailVerification from "./components/EmailVerification";
-import RecruitAcceptPage from "./components/RecruitAcceptPage";
-import UploadDocuments from "./components/UploadDocuments";
-import Profile from "./components/Profile";
-import WelcomeOnboard from "./components/WelcomeOnboard";
+import AddEmployee from "./components/Employer/AddEmployee";
+import EmployeeDetails from "./components/Employer/EmployeeDetails";
+import SearchResult from "./components/Employer/SearchResult";
+import ForgotPassword from "./components/ForgotPassword";
+import AddRecruit from "./components/Employer/AddRecruit";
+import RecruitAcceptPage from "./components/Employee/RecruitAcceptPage";
+import UploadDocuments from "./components/Employee/UploadDocuments";
+import Profile from "./components/Employee/Profile";
+import WelcomeOnboard from "./components/Employee/WelcomeOnboard";
 
 export default function App() {
   return (

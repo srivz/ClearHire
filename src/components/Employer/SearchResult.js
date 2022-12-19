@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
-import Footer from "./Footer/Footer";
-import NavBar2 from "./Navs/NavBar2";
-import external_link_icon from "../assets/img/external-link-icon.svg";
+import Footer from "../Footer/Footer";
+import NavBar2 from "../Navs/NavBar2";
+import external_link_icon from "../../assets/img/external-link-icon.svg";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import { auth, database } from "../firebase-config.js";
+import { auth, database } from "../../firebase-config.js";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { RatingStar } from "rating-star";
 import { onAuthStateChanged } from "firebase/auth";

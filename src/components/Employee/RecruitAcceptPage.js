@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-
-import "../assets/css/style.css";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
-import NavBar3 from "./Navs/NavBar3";
-import Footer from "./Footer/Footer";
+import NavBar3 from "../Navs/NavBar3";
+import Footer from "../Footer/Footer";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import { auth, database } from "../firebase-config.js";
+import { auth, database } from "../../firebase-config.js";
 import {
   arrayRemove,
   arrayUnion,

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import down_icon from "../assets/img/down-icon.svg";
-import NavBar3 from "./Navs/NavBar3";
-import { Col, Collapse, Container, Image, Row } from "react-bootstrap";
-import Footer from "./Footer/Footer";
+import down_icon from "../../assets/img/down-icon.svg";
+import NavBar3 from "../Navs/NavBar3";
+import { Button, Col, Collapse, Container, Image, Row } from "react-bootstrap";
+import Footer from "../Footer/Footer";
+import { useLocation } from "react-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, database } from "../firebase-config";
+import { auth, database } from "../../firebase-config";
 import { RatingStar } from "rating-star";
 import { LinkedIn } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
-export default function Profile() {
-  const [empId, setEmpId] = useState();
+export default function EmployeeDetails() {
+  const location = useLocation();
+  const { empId } = location.state;
   const [open, setOpen] = useState();
   const [companiesToFetch, setCompaniesToFetch] = useState();
   const [employeeInfos, setEmployeeInfo] = useState([{}]);
@@ -32,11 +35,10 @@ export default function Profile() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       if (fetched) {
-        getDoc(doc(database, "employees", user.photoURL))
+        getDoc(doc(database, "employees", empId))
           .then((doc) => {
             const data = doc.data();
             setCompaniesToFetch(data.companies);
-            setEmpId(user.photoURL);
           })
           .then(() => {
             if (companiesToFetch) {
@@ -83,6 +85,13 @@ export default function Profile() {
         <Row>
           <NavBar3 />
           <main id="main">
+            <div
+              className="text-left"
+              style={{ marginTop: "80px" }}>
+              <Link to={"/searchResults"}>
+                <Button variant="success">Back</Button>
+              </Link>
+            </div>
             <section className="empdetails-wrap">
               <Container>
                 <div className="empdetails-inner">
@@ -155,7 +164,7 @@ export default function Profile() {
                                       numberOfStar={5}
                                       noBorder="true"
                                       colors={{ mask: "#00823b" }}
-                                      // rating={info2.rating.overall}
+                                      rating={info2.rating.overall}
                                     />
                                   </div>
                                 </Col>
@@ -175,6 +184,7 @@ export default function Profile() {
                           );
                         })}
                       {/* endddddddddd */}
+
                       <Row>
                         <Col
                           md={12}
@@ -253,7 +263,7 @@ export default function Profile() {
                                                   numberOfStar={5}
                                                   noBorder="true"
                                                   colors={{ mask: "#00823b" }}
-                                                  // rating={info3.rating.overall}
+                                                  rating={info3.rating.overall}
                                                 />
                                               </div>
                                               <div className="arrow-icon">
@@ -284,10 +294,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .communication
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .communication
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -305,9 +315,9 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating.attitude
-                                                        // }
+                                                        rating={
+                                                          info3.rating.attitude
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -325,10 +335,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .abilityToLearn
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .abilityToLearn
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -346,10 +356,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .punctuality
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .punctuality
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -367,10 +377,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .commitment
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .commitment
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -388,10 +398,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .trustworthiness
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .trustworthiness
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -409,9 +419,9 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating.skill
-                                                        // }
+                                                        rating={
+                                                          info3.rating.skill
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -429,10 +439,10 @@ export default function Profile() {
                                                         colors={{
                                                           mask: "#00823b",
                                                         }}
-                                                        // rating={
-                                                        //   info3.rating
-                                                        //     .teamPlayer
-                                                        // }
+                                                        rating={
+                                                          info3.rating
+                                                            .teamPlayer
+                                                        }
                                                       />
                                                     </Col>
                                                   </Row>
@@ -441,25 +451,25 @@ export default function Profile() {
                                                   <Row>
                                                     <Col md={10}>
                                                       <h4 className="emp-title">
-                                                        {/* {
+                                                        {
                                                           info3.recommendation
                                                             .recommendationFrom
-                                                        } */}
+                                                        }
                                                       </h4>
                                                       {"  "}
                                                       <h5>
                                                         <span className="designt-text">
-                                                          {/* {
+                                                          {
                                                             info3.recommendation
                                                               .recommenderDesignation
-                                                          } */}
+                                                          }
                                                         </span>
                                                       </h5>
                                                       <p className="color-8B">
-                                                        {/* {
+                                                        {
                                                           info3.recommendation
                                                             .recommendationMessage
-                                                        } */}
+                                                        }
                                                       </p>
                                                     </Col>
                                                   </Row>

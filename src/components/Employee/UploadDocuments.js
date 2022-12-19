@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Footer from "./Footer/Footer";
+import Footer from "../Footer/Footer";
 import {
   Button,
   Col,
@@ -11,10 +11,10 @@ import {
 } from "react-bootstrap";
 import Webcam from "react-webcam";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { auth, database, storage } from "../firebase-config";
+import { auth, database, storage } from "../../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import NavBar3 from "./Navs/NavBar3";
+import NavBar3 from "../Navs/NavBar3";
 
 export default function UploadDocuments() {
   const [recruit, setRecruit] = useState({

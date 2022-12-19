@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import Footer from "./Footer/Footer";
-import NavBar3 from "./Navs/NavBar3";
-import { auth } from "../firebase-config";
+import Footer from "../Footer/Footer";
+import NavBar3 from "../Navs/NavBar3";
+import { auth } from "../../firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function WelcomeOnboard() {

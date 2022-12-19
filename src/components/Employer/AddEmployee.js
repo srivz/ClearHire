@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import image_icon from "../assets/img/image-icon.svg";
-import NavBar3 from "./Navs/NavBar3";
-import Footer from "./Footer/Footer";
+import image_icon from "../../assets/img/image-icon.svg";
+import NavBar3 from "../Navs/NavBar3";
+import Footer from "../Footer/Footer";
 import { Button, Col, Container, Image, Row, Form } from "react-bootstrap";
-import { storage, database, auth, auth2 } from "../firebase-config.js";
+import { storage, database, auth, auth2 } from "../../firebase-config.js";
 import { doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { RatingStar } from "rating-star";
