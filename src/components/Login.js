@@ -49,6 +49,9 @@ export default function Login() {
     setUser({ ...user, ...newInput });
   };
   onAuthStateChanged(auth, (user) => {
+    if (!user.emailVerified) {
+      handleShow();
+    }
     if (user && user.emailVerified && user.displayName === "Employer") {
       getDoc(doc(database, "users", user.uid)).then((doc) => {
         setInfo({ ...doc.data(), id: doc.id });
@@ -78,9 +81,6 @@ export default function Login() {
             }
           }
         );
-        if (!auth.currentUser.emailVerified) {
-          handleShow();
-        }
       });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
