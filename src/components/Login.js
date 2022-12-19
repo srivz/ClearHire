@@ -49,26 +49,19 @@ export default function Login() {
     setUser({ ...user, ...newInput });
   };
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      if (user.emailVerified) {
-        if (user.displayName === "Employer") {
-          getDoc(doc(database, "users", user.uid)).then((doc) => {
-            setInfo({ ...doc.data(), id: doc.id });
-          });
-          const saved = localStorage.setItem(
-            "currentUserDetails",
-            JSON.stringify(info)
-          );
-          if (saved) window.location.href = "/searchResults";
-        } else if (user.displayName === null) {
-          window.location.href = "/uploadDocuments";
-        } else if (user.displayName === "Employee") {
-          window.location.href = "/profile";
-        }
-      } else {
-        console.log(user);
-        handleShow();
-      }
+    if (user && user.emailVerified && user.displayName === "Employer") {
+      getDoc(doc(database, "users", user.uid)).then((doc) => {
+        setInfo({ ...doc.data(), id: doc.id });
+      });
+      const saved = localStorage.setItem(
+        "currentUserDetails",
+        JSON.stringify(info)
+      );
+      if (saved) window.location.href = "/searchResults";
+    } else if (user && user.emailVerified && user.displayName === null) {
+      window.location.href = "/uploadDocuments";
+    } else if (user && user.emailVerified && user.displayName === "Employee") {
+      window.location.href = "/profile";
     }
   });
   function login() {
@@ -85,6 +78,9 @@ export default function Login() {
             }
           }
         );
+        if (!auth.currentUser.emailVerified) {
+          handleShow();
+        }
       });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
