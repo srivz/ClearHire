@@ -7,7 +7,13 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import { auth, database } from "../../firebase-config.js";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { RatingStar } from "rating-star";
 import { onAuthStateChanged } from "firebase/auth";
 import { Add, PersonAdd } from "@mui/icons-material";
@@ -33,10 +39,17 @@ export default function SearchResult() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const items = JSON.parse(localStorage.getItem("currentUserDetails"));
-      if (items) {
-        setInfo(items);
-      }
+      getDoc(doc(database, "users", user.uid))
+        .then((doc) => {
+          setInfo({ ...doc.data(), id: doc.id });
+        })
+        .then(() => {
+          localStorage.setItem("currentUserDetails", JSON.stringify(info));
+        });
+      // const items = JSON.parse(localStorage.getItem("currentUserDetails"));
+      // if (items) {
+      //   setInfo(items);
+      // }
       employeeGet(user.uid);
     } else {
       window.location.href = "/";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NavBar3 from "./Navs/NavBar3";
-import Footer from "./Footer/Footer";
+import NavBar3 from "../Navs/NavBar3";
+import Footer from "../Footer/Footer";
 import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { database, auth, auth2 } from "../firebase-config.js";
 import { doc, updateDoc } from "firebase/firestore";

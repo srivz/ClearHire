@@ -23,7 +23,6 @@ import {
   onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 import { auth, database } from "../firebase-config.js";
 import { Link } from "react-router-dom";
@@ -41,33 +40,38 @@ export default function Login() {
     password: "",
   });
   useEffect(() => {
-    signOut(auth);
     localStorage.clear();
   }, []);
   const handleChangeForm = (event) => {
     let newInput = { [event.target.name]: event.target.value };
     setUser({ ...user, ...newInput });
   };
-  onAuthStateChanged(auth, (user) => {
-    if (!user.emailVerified) {
-      handleShow();
-    }
-    if (user && user.emailVerified && user.displayName === "Employer") {
-      getDoc(doc(database, "users", user.uid)).then((doc) => {
-        setInfo({ ...doc.data(), id: doc.id });
-      });
-      const saved = localStorage.setItem(
-        "currentUserDetails",
-        JSON.stringify(info)
-      );
-      if (saved) window.location.href = "/searchResults";
-    } else if (user && user.emailVerified && user.displayName === null) {
-      window.location.href = "/uploadDocuments";
-    } else if (user && user.emailVerified && user.displayName === "Employee") {
-      window.location.href = "/profile";
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      console.log(user);
+      if (user.emailVerified) {
+        if (user.displayName === "Employer") {
+          // getDoc(doc(database, "users", user.uid))
+          //   .then((doc) => {
+          //     setInfo({ ...doc.data(), id: doc.id });
+          //   })
+          //   .then(() => {
+          //     localStorage.setItem("currentUserDetails", JSON.stringify(info));
+          //   })
+          // .then(() => {
+          window.location.href = "/searchResults";
+          // });
+        } else if (user.displayName === "Employee") {
+          window.location.href = "/profile";
+        } else if (user.displayName === null) {
+          window.location.href = "/uploadDocuments";
+        }
+      } else {
+        handleShow();
+      }
     }
   });
-  function login() {
+  const handleLogin = () => {
     try {
       setPersistence(auth, browserSessionPersistence).then(() => {
         signInWithEmailAndPassword(auth, user.emailId, user.password).catch(
@@ -78,14 +82,21 @@ export default function Login() {
               error.message === "Firebase: Error (auth/wrong-password)."
             ) {
               alert("Wrong Password");
+            } else {
+              alert("Not logged in");
             }
           }
         );
       });
+      // .then(() => {
+      //   if (!auth.currentUser.emailVerified) {
+      //     handleShow();
+      //   }
+      // });
     } catch (error) {
       alert("User not Found. Sign Up first !!");
     }
-  }
+  };
 
   return (
     <div>
@@ -153,7 +164,7 @@ export default function Login() {
                         <Row className="form-group">
                           <Col md={12}>
                             <Button
-                              onClick={login}
+                              onClick={handleLogin}
                               variant="success"
                               className="mt-4 w-100">
                               Login
@@ -163,11 +174,15 @@ export default function Login() {
                               onHide={handleClose}
                               backdrop="static"
                               keyboard={false}>
-                              <Modal.Header closeButton>
-                                <Modal.Title>Email Verification</Modal.Title>
+                              <Modal.Header>
+                                <Modal.Title>
+                                  Email Is Not Verified Yet
+                                </Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
-                                Do you want to get new verification link ?
+                                Your account hasn't been verified yet. For a
+                                verification link, check your email. Or would
+                                you require a new verification link?
                               </Modal.Body>
                               <Modal.Footer>
                                 <Button
