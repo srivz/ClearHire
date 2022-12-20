@@ -46,10 +46,6 @@ export default function SearchResult() {
         .then(() => {
           localStorage.setItem("currentUserDetails", JSON.stringify(info));
         });
-      // const items = JSON.parse(localStorage.getItem("currentUserDetails"));
-      // if (items) {
-      //   setInfo(items);
-      // }
       employeeGet(user.uid);
     } else {
       window.location.href = "/";

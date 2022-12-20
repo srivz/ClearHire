@@ -24,13 +24,11 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, database } from "../firebase-config.js";
+import { auth } from "../firebase-config.js";
 import { Link } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
   const [show, setShow] = useState(false);
-  const [info, setInfo] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -51,16 +49,7 @@ export default function Login() {
       console.log(user);
       if (user.emailVerified) {
         if (user.displayName === "Employer") {
-          // getDoc(doc(database, "users", user.uid))
-          //   .then((doc) => {
-          //     setInfo({ ...doc.data(), id: doc.id });
-          //   })
-          //   .then(() => {
-          //     localStorage.setItem("currentUserDetails", JSON.stringify(info));
-          //   })
-          // .then(() => {
           window.location.href = "/searchResults";
-          // });
         } else if (user.displayName === "Employee") {
           window.location.href = "/profile";
         } else if (user.displayName === null) {
